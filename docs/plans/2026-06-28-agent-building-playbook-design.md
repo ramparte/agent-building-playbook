@@ -52,28 +52,29 @@ agent-building-playbook/
 │   ├── eval-centered-development.md
 │   └── ...
 └── scripts/
-    └── build-index.sh   # tiny generator: patterns/*.md frontmatter → INDEX.md
+    └── build-index.sh   # tiny generator: patterns/*.md flat frontmatter (title, one_liner, dimensions) → INDEX.md
 ```
 
 ### Pattern File — the Atomic Unit
 
-Each pattern is one file: light frontmatter plus a markdown "pearl" body.
+Each pattern is one file. **The filename is the canonical identifier** (there is no `id` field) — convention `{kebab-title}.md`. The file is flat frontmatter plus a markdown "pearl" body.
 
-**Frontmatter (intentionally light):**
-- `id`
+**Frontmatter (intentionally light — flat scalars / inline values only, so the bash generator stays trivial):**
 - `title`
 - `one_liner`
-- `dimensions`
-- `exemplars` — each = name + url + one-line note
-- `related`
+- `dimensions` — a **comma-separated inline list** of tags, e.g. `dimensions: context-engineering, reliability`. A pattern may carry multiple tags.
 
-**Body (the "pearl"):** what the pattern is, when to reach for it, and a couple of exemplar implementations/tools as links.
+**Body (the "pearl"):** what the pattern is, when to reach for it, when **not** to, plus:
+- **Exemplars** — a markdown list of concrete implementations/tools, each `name — url — one-line note`. Exemplars live in the **body**, not in frontmatter.
+- **Related** — advisory cross-references to sibling patterns. Lives in the body (or a simple comma-separated frontmatter line); **not validated in v1**.
+
+Keeping frontmatter flat (only `title`, `one_liner`, `dimensions`) means `build-index.sh` parses three simple lines and never has to walk nested YAML objects.
 
 Schema is intentionally light — "good enough for now." Density and curation matter more than schema rigor.
 
 ### INDEX.md — the Hero Artifact
 
-A single **very dense ~1-page** list of 1–3-sentence, plain/common-language pattern descriptions, each linking to its pattern file, **grouped by `dimension`**. It is **generated** by `build-index.sh` from each pattern's `title` + `one_liner` (+ link), never hand-edited. Plain phrasing so a model can skim and select. Regenerating after a merge is one command.
+A single **very dense ~1-page** list of 1–3-sentence, plain/common-language pattern descriptions, each linking to its pattern file, **grouped by tag (`dimensions`)**. Because `dimensions` is multi-value, a pattern appears under **every** tag it carries — patterns are sortable/filterable by tag, and a single pattern may show under multiple headings. It is **generated** by `build-index.sh` from each pattern's `title`, `one_liner`, and `dimensions` (+ link), never hand-edited. Plain phrasing so a model can skim and select. Regenerating after a merge is one command.
 
 No provenance elevation: personal, battle-tested lessons and external literature are treated as peers.
 
@@ -107,11 +108,115 @@ This is the data flow for how new patterns enter and get curated.
   so accept/reject is fast. The human maintainer decides; on merge, regenerate `INDEX.md`.
 - **Curation discipline lives in PR review** at this scale — not in automation.
 
+## SUBMISSIONS.md Specification
+
+`SUBMISSIONS.md` is the **agent-authoring guide**: a contributor points their agent at it and the agent produces a valid pattern PR with zero ambiguity. The repo is **public under `ramparte`**, so anyone can fork and PR. `SUBMISSIONS.md` must contain all of the following.
+
+### 1. Filename convention
+
+- One pattern per file under `patterns/`.
+- Filename = `{kebab-title}.md` (lowercase, hyphen-separated). **The filename is the canonical identifier** — there is no `id` field.
+- Example: a pattern titled "Leverage the Dev Factory" → `patterns/leverage-dev-factory.md`.
+
+### 2. Required frontmatter vs optional body
+
+**Required frontmatter (flat YAML, three fields only):**
+
+| Field | Type | Notes |
+|-------|------|-------|
+| `title` | string | Human-readable pattern name |
+| `one_liner` | string | 1 sentence, plain language — feeds INDEX.md |
+| `dimensions` | comma-separated inline list | One or more tags from the vocabulary below |
+
+**Optional body sections:**
+
+- **Exemplars** — markdown list, each `name — url — one-line note`.
+- **Related** — advisory cross-references to sibling patterns (by filename or title). Not validated in v1.
+
+### 3. Dimension tag vocabulary
+
+`dimensions` is **multi-value** — comma-separated. Seed vocabulary (the 10 themes):
+
+1. `meta-principles`
+2. `workflow-discipline`
+3. `reliability` (anti-cheating)
+4. `context-engineering`
+5. `tool-design`
+6. `orchestration`
+7. `verification` (evals)
+8. `cost-routing`
+9. `observability`
+10. `taste`
+
+**Rule:** if no existing tag fits, **propose a new one in the PR description** — never invent a tag silently in the file. Maintainers fold approved new tags into the vocabulary.
+
+### 4. Body / "pearl" structure
+
+The body is the pearl. In order:
+
+1. **What it is** — the pattern in a few sentences.
+2. **When to reach for it** — the trigger / context where it applies.
+3. **When NOT to** — the anti-pattern boundary; where it misleads or costs more than it saves.
+4. **Exemplars** — concrete implementations/tools as links (`name — url — one-line note`).
+5. **Related** *(optional)* — sibling patterns.
+
+### 5. One complete worked example (agents copy this)
+
+````markdown
+---
+title: Eval-Centered Development
+one_liner: Write the eval before the implementation so the agent optimizes against a measurable target instead of vibes.
+dimensions: verification, workflow-discipline, reliability
+---
+
+## What it is
+
+Treat the evaluation harness as the primary artifact. Before building a capability,
+define how you will measure whether it works — a runnable eval with pass/fail cases —
+then let the agent iterate against that target.
+
+## When to reach for it
+
+Any task where "looks right" is not the same as "is right": code generation, extraction,
+classification, multi-step agent flows. Especially valuable when the agent will iterate
+unattended.
+
+## When NOT to
+
+One-off throwaway scripts, or exploratory spikes where the goal is still being discovered
+and a premature eval would lock in the wrong target.
+
+## Exemplars
+
+- promptfoo — https://github.com/promptfoo/promptfoo — declarative LLM eval runner.
+- Amplifier eval recipes — internal — eval-first recipe scaffolding.
+
+## Related
+
+- leverage-dev-factory
+- systematic-debugging
+````
+
+### 6. Contribution flow
+
+1. **Fork** the public `ramparte` repo.
+2. **Add** `patterns/{kebab-title}.md` following the spec above.
+3. **Open a PR.**
+4. **Do NOT edit `INDEX.md`** — it is generated by `build-index.sh` (and refreshed automatically by the GitHub Action on merge).
+
 ## Human-Readable Site (Tooling Pick + First Run)
 
 - **Tooling pick:** use the `llm-wiki` bundle (bkrabach's, in Amplifier) to generate the human-readable website from `patterns/`.
 - **Fallback:** if `llm-wiki` output isn't browsable enough for the offsite, use `amplifier-stories` (storyteller HTML). Try `llm-wiki` first. No new tooling is built.
 - **Deadline de-risking:** day-one contribution does **not** depend on the generated site. GitHub natively renders `patterns/*.md`, `INDEX.md`, and `SUBMISSIONS.md`, and PRs work immediately. The generated wiki is a **first run** done once content is seeded, and **regenerated on demand** thereafter.
+
+### Keeping INDEX.md Fresh — GitHub Action
+
+A small (~10-line) GitHub Action keeps the hero artifact from going stale while contributions land at the offsite. It uses the **existing `build-index.sh`** — not new tooling:
+
+- **Trigger:** push/merge to the `main` branch (under `paths: patterns/**`).
+- **Steps:** check out the repo → run `scripts/build-index.sh` → if `INDEX.md` changed, commit and push the regenerated `INDEX.md` back to `main`.
+- **Effect:** every merged pattern PR yields an up-to-date `INDEX.md` automatically; contributors never hand-edit it.
 
 ## Seed Content Plan
 
@@ -127,8 +232,9 @@ Execution work is mostly:
 
 ## Error Handling
 
-- `build-index.sh` must **fail loudly and name the offending file** if a pattern is missing required frontmatter (`title`, `one_liner`) rather than silently dropping it.
-- Pattern `id` collisions and broken `related:` links should be **surfaced by the build step** (warn, name the file).
+- **Required fields:** `build-index.sh` requires `title`, `one_liner`, and `dimensions` in each pattern's frontmatter. If any is missing it must **fail loudly and name the offending file** rather than silently dropping it.
+- **Atomic write:** the generator writes to a temp file and `mv`s it into place, so a mid-run failure never leaves a corrupt `INDEX.md`.
+- **Stays simple:** because frontmatter is flat (three inline fields), no defensive nested-YAML parsing is needed. `related:` cross-references are **not validated in v1** (advisory only; deferred to a later post-pass).
 - If the `llm-wiki` first run fails or produces an unbrowsable artifact, fall back to GitHub-rendered markdown for the offsite (contribution still works) and try the storyteller fallback afterward.
 
 ## Testing Strategy
@@ -151,11 +257,12 @@ Explicitly deferred — YAGNI:
 - Schema enforcement / validation tooling
 - Custom site generators
 - Strict provenance weighting
+- `related:` cross-reference validation — advisory only in v1; a later post-pass may validate that referenced patterns exist
 
 PR review plus the maintainer-agent triage cover curation by hand at this scale.
 
 ## Open Questions
 
-- Exact repo name and GitHub org/visibility (assume public; confirm at execution).
+- Exact repo name (the repo is **public, under the `ramparte` GitHub account** — visibility is decided; only the final name remains).
 - Final `dimensions` taxonomy labels (seed from the 10 themes; expect to refine as patterns land).
 - Whether `build-index.sh` stays bash or graduates to a small script later (bash is fine for v1).
