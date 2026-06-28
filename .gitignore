@@ -8,3 +8,8 @@
 
 # build-index scratch
 *.tmp
+
+# Generated wiki build output (regenerate via /wiki-publish)
+.wiki/dist/
+/wiki/index.html
+/wiki/patterns/
