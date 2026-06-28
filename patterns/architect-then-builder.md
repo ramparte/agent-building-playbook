@@ -1,0 +1,34 @@
+---
+title: Two-Phase Build: Architect Then Builder
+one_liner: Separate design from implementation by running an architect agent first to produce a complete specification, then a builder agent to implement it — never conflate the two roles in one pass.
+dimensions: orchestration, workflow-discipline
+---
+
+## What it is
+
+Design and implementation are cognitively distinct activities. A model that is simultaneously figuring out what to build and building it tends to make local decisions that look reasonable in isolation but are globally inconsistent — the early modules are designed differently from the late ones, the interfaces are discovered rather than specified, and refactoring is needed immediately because the design evolved as the code was written. The two-phase pattern separates these activities into distinct agent roles. The architect agent receives the goal and produces a specification: the module boundaries, the data models, the interface contracts, the sequencing of implementation tasks. The spec is the output — not code. Only when the spec is complete and reviewed does the builder agent begin. The builder implements exactly the spec. It does not redesign; it does not improve interfaces it considers suboptimal; it does not add features the spec did not include. If the builder discovers that the spec is incomplete or inconsistent, it surfaces that as a finding rather than silently resolving it through implementation choices. The architect and builder are cleanly separated, and the separation enforces a discipline that a single-agent approach cannot maintain: you cannot implement a design you have not finished making.
+
+## When to reach for it
+
+- When building anything with more than two or three modules — without a full design pass, interfaces drift as implementation proceeds.
+- When the work will be executed by multiple agents or multiple team members — a shared spec ensures each builder is implementing the same design.
+- When the scope is ambiguous enough that the implementer would need to make non-trivial design decisions — those decisions belong in the architect phase, not the implementation phase.
+- When quality review is required before merging — a spec gives the reviewer a target to check the implementation against, rather than requiring the reviewer to reverse-engineer the intended design from the code.
+
+## When NOT to
+
+- When the task is a single, self-contained change with no meaningful design surface — adding a parameter to an existing function, fixing a bug in a well-understood component — the architect phase adds no value and only delays delivery.
+- When the user or stakeholder has already provided a complete specification — the architect phase is complete; proceed directly to builder.
+- When the workflow is exploratory and the design must emerge from implementation — some problems cannot be fully specified upfront; a strict architect-then-builder split forces false specificity in the spec.
+
+## Exemplars
+
+- Amplifier — https://github.com/microsoft/amplifier — the superpowers bundle explicitly separates the zen-architect agent (design and specification) from the modular-builder agent (implementation); the modular-builder contract requires a complete spec before it accepts a task
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends decomposing complex tasks into planning and execution phases with explicit checkpoints between them; the architect-builder split is the orchestration-level application of this principle
+
+## Related
+
+- `patterns/bite-sized-tasks.md`
+- `patterns/gate-the-phases.md`
+- `patterns/proposer-authority-separation.md`
+- `patterns/composable-patterns.md`

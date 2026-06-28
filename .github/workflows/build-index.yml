@@ -1,0 +1,26 @@
+name: Build INDEX
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'patterns/**'
+      - 'scripts/build-index.sh'
+
+permissions:
+  contents: write
+
+jobs:
+  build-index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Regenerate INDEX.md
+        run: bash scripts/build-index.sh
+
+      - name: Commit if changed
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: regenerate INDEX.md [skip ci]'
+          file_pattern: INDEX.md

@@ -1,0 +1,33 @@
+---
+title: Just-in-Time Retrieval Over Pre-Loading
+one_liner: Don't fill context with everything that might be relevant — retrieve only what is needed, exactly when it is needed, and discard it after use.
+dimensions: context-engineering
+---
+
+## What it is
+
+Pre-loading is the impulse to front-load context with all potentially relevant documents, tools, history, and reference material before work begins. The cost compounds: a large pre-loaded context crowds out working memory, forces the model to attend across irrelevant content, and spends tokens that could hold later-stage results. Just-in-time retrieval inverts the pattern — keep the context minimal at the start, and pull in specific content only at the step that needs it. A code review agent does not need the full API documentation in its context from turn one; it needs the relevant section when it encounters the relevant function. A planning agent does not need every prior conversation; it needs the summary of the last decision. Just-in-time retrieval treats information like a dependency that should be loaded at the moment of use, not pre-declared at the top of the program.
+
+## When to reach for it
+
+- When designing agent tool-use: each tool call should retrieve exactly the content needed for the current step, not a superset of potentially useful content.
+- When building RAG pipelines: retrieve per-query at inference time rather than pre-filling context with all indexed chunks that scored above a threshold.
+- When an agent runs across many steps and the early steps' context becomes irrelevant to later steps — defer retrieval of later-step material until those steps are reached.
+- When latency or cost of retrieval is low relative to the cost of carrying unused tokens across many inference calls — almost always true for file reads, vector search, and database lookups.
+
+## When NOT to
+
+- Tasks where the full corpus must be visible simultaneously to reason correctly — a document comparison task where the model must hold both documents in mind while generating cannot defer retrieval without breaking the task structure.
+- When the retrieval system itself is slow or expensive and the same content will be needed at every step — a single pre-load may be cheaper than repeated retrievals of the same material.
+- Exploratory or creative tasks where the model benefits from broad context to generate associations that span the retrieved material — selective just-in-time retrieval can artificially narrow the space.
+
+## Exemplars
+
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: advocates for targeted tool invocation at the moment of need rather than pre-loading context with all available resources
+- Anthropic — https://www.anthropic.com/news/contextual-retrieval — Contextual Retrieval: demonstrates retrieval systems designed for per-query, per-step relevance rather than pre-indexed bulk injection
+
+## Related
+
+- `patterns/context-is-finite.md`
+- `patterns/context-over-prompt.md`
+- `patterns/write-select-compress-isolate.md`
