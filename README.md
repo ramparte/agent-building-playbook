@@ -1,5 +1,7 @@
 # Agent-Building Playbook
 
+> 📖 **Browse the patterns as a human-readable site: [ramparte.github.io/agent-building-playbook](https://ramparte.github.io/agent-building-playbook/)**
+
 A curated, growing collection of patterns for building better in the agentic age — *Programming Pearls, but actionable and for the cognitive-architecture era.*
 
 The subject is **how to build better**, not narrowly how to build agents. Patterns here cover cognitive architecture, agentic workflow design, prompt engineering, orchestration, tooling, and the everyday craft of working productively alongside AI systems.
