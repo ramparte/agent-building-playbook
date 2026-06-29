@@ -71,6 +71,41 @@ ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-to
 footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
   color:var(--muted); font-size:.85rem; }
 hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+"""
+
+FILTER_JS = """
+<script>
+(function () {
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('button[data-filter]'));
+  var items = Array.prototype.slice.call(document.querySelectorAll('#pattern-list > li'));
+  var count = document.getElementById('count');
+  function apply(filter) {
+    var shown = 0;
+    items.forEach(function (li) {
+      var dims = (li.getAttribute('data-dims') || '').split(' ');
+      var show = filter === 'all' || dims.indexOf(filter) !== -1;
+      li.classList.toggle('hide', !show);
+      if (show) { shown += 1; }
+    });
+    buttons.forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-filter') === filter));
+    });
+    if (count) {
+      count.textContent = 'Showing ' + shown + ' pattern' + (shown === 1 ? '' : 's') +
+        (filter === 'all' ? '' : ' tagged \u201c' + filter + '\u201d');
+    }
+  }
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () { apply(b.getAttribute('data-filter')); });
+  });
+})();
+</script>
 """
 
 
@@ -216,31 +251,48 @@ def main():
             tags.setdefault(tag, []).append(p)
 
     # ---- Landing page ----
+    # Dimensions are multi-value, so a pattern can belong to several tags. Rather
+    # than repeat a card under every tag (which reads as duplicates on a linear
+    # scroll), render ONE canonical card per pattern — sorted by title, carrying
+    # all its tags as chips — plus a dimension filter. The per-tag counts reflect
+    # how many patterns carry each tag; the list itself stays de-duplicated.
+    total = len(patterns)
+    filter_buttons = [
+        f'<button class="tag toc-tag" data-filter="all" aria-pressed="true">'
+        f"All ({total})</button>"
+    ]
+    for t in sorted(tags):
+        filter_buttons.append(
+            f'<button class="tag toc-tag" data-filter="{slugify(t)}">'
+            f"{html.escape(t)} ({len(tags[t])})</button>"
+        )
+
     inner = [
         '<header class="site">',
         "<h1>Agent-Building Playbook</h1>",
-        '<p class="lede">Patterns for building better in the agentic age — '
-        "browse by dimension. Generated from the curated <code>patterns/</code> source.</p>",
+        '<p class="lede">Patterns for building better in the agentic age. '
+        "Generated from the curated <code>patterns/</code> source &mdash; each "
+        "pattern is listed once; filter by dimension to narrow the list.</p>",
         "</header>",
-        "<h2>Dimensions</h2>",
-        '<p class="dims">'
-        + "".join(
-            f'<a class="tag toc-tag" href="#{slugify(t)}">{html.escape(t)} '
-            f"({len(tags[t])})</a>"
-            for t in sorted(tags)
-        )
-        + "</p>",
+        "<h2>Filter by dimension</h2>",
+        '<p class="dims">' + "".join(filter_buttons) + "</p>",
+        '<p class="count" id="count">Showing all ' + str(total) + " patterns</p>",
+        '<ul class="cards" id="pattern-list">',
     ]
-    for tag in sorted(tags):
-        inner.append(f'<h2 id="{slugify(tag)}">{html.escape(tag)}</h2>')
-        inner.append('<ul class="cards">')
-        for p in sorted(tags[tag], key=lambda x: x["title"].lower()):
-            href = f"patterns/{p['slug']}.html"
-            inner.append(
-                f'<li><a class="ttl" href="{href}">{html.escape(p["title"])}</a>'
-                f'<span class="ol">{html.escape(p["one_liner"])}</span></li>'
-            )
-        inner.append("</ul>")
+    for p in sorted(patterns, key=lambda x: x["title"].lower()):
+        href = f"patterns/{p['slug']}.html"
+        dim_slugs = " ".join(slugify(t) for t in p["dimensions"])
+        card_tags = "".join(
+            f'<span class="tag">{html.escape(t)}</span>' for t in p["dimensions"]
+        )
+        inner.append(
+            f'<li data-dims="{dim_slugs}">'
+            f'<a class="ttl" href="{href}">{html.escape(p["title"])}</a>'
+            f'<span class="ol">{html.escape(p["one_liner"])}</span>'
+            f'<span class="card-tags">{card_tags}</span></li>'
+        )
+    inner.append("</ul>")
+    inner.append(FILTER_JS)
     (wiki_dir / "index.html").write_text(page("Agent-Building Playbook", "\n".join(inner), 0), encoding="utf-8")
 
     # ---- One page per pattern ----
