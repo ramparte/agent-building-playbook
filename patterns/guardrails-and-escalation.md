@@ -21,6 +21,8 @@ An autonomous agent operating without guardrails is not a reliable system — it
 - When every action is explicitly pre-approved by a human before it executes — if a human is already in the loop for every action, additional automated guardrails may add latency without adding safety.
 - When the guardrail implementation is complex enough to introduce its own failure modes — a poorly implemented guardrail that triggers falsely or blocks valid actions is worse than no guardrail.
 
+Two refinements sharpen how these layers are deployed. First, human escalation is an edge, not a mode: route it by risk and necessity rather than firing it at every checkpoint, so each interruption is earned (see `earn-the-interruption.md`). Second, guardrails belong embedded in the workflow as infrastructure — in tools, prompts, validators, logs, and approval edges — rather than checked after the fact, where a violation is already an incident (see `governance-is-infrastructure.md`).
+
 ## Exemplars
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends that agents in production operate with minimal footprint (limited permissions, reversible actions, explicit scope) and escalate to humans when encountering ambiguous or high-stakes decision points
@@ -33,3 +35,5 @@ An autonomous agent operating without guardrails is not a reliable system — it
 - `patterns/reliability-before-features.md`
 - `patterns/fail-loud-over-fallbacks.md`
 - `patterns/mark-skipped-steps.md`
+- `patterns/earn-the-interruption.md`
+- `patterns/governance-is-infrastructure.md`

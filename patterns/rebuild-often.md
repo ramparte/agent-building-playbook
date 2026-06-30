@@ -6,7 +6,7 @@ dimensions: workflow-discipline
 
 ## What it is
 
-Systems built through incremental changes accumulate invisible assumptions. Each change is local and correct in isolation; the aggregate is a system that works under conditions that have not been tested together from a clean state. Rebuilding often — re-running the full build from scratch, re-provisioning environments from their definitions, re-generating outputs from source — forces hidden dependencies to surface as explicit failures rather than silent breakage. In AI workflows, this applies directly to prompt pipelines, context assemblies, and agent configurations: if the system has never been tested cold, you do not know what it actually depends on.
+Systems built through incremental changes accumulate invisible assumptions. Each change is local and correct in isolation; the aggregate is a system that works under conditions that have not been tested together from a clean state. Rebuilding often — re-running the full build from scratch, re-provisioning environments from their definitions, re-generating outputs from source — forces hidden dependencies to surface as explicit failures rather than silent breakage. In AI workflows, this applies directly to prompt pipelines, context assemblies, and agent configurations: if the system has never been tested cold, you do not know what it actually depends on. Rebuilding catches the drift that accumulates *into* a workflow; its complement is pruning the scaffolding the workflow is made of. As models improve faster than workflow habits do, steps added to compensate for yesterday's limitations linger past their usefulness, so periodically ablating the harness — deleting nodes, shortening prompts, merging steps, and confirming quality holds — is the same hygiene aimed at the system itself rather than its environment.
 
 ## When to reach for it
 
@@ -26,3 +26,7 @@ Systems built through incremental changes accumulate invisible assumptions. Each
 
 - Infrastructure-as-code practitioners treat "destroy and recreate" as a first-class hygiene operation — the environment definition is only real if it survives a rebuild from scratch.
 - The Amplifier pattern of running `amplifier reset` to clear cached state and verify the system works from a clean installation is rebuild discipline applied to the toolchain itself.
+
+## Related
+
+- `patterns/self-ablating-harness.md`

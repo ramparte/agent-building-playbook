@@ -8,6 +8,19 @@ dimensions: workflow-discipline
 
 Code is a complete, executable record of *what* the system does and *how* it does it. But code cannot express the reasoning behind its own existence: why this approach rather than an alternative, what constraint the implementation is satisfying, what invariant must hold even as the code changes. When documentation is limited to restating the code in prose, it adds no information. When documentation captures intent — the decision rationale, the constraint being satisfied, the design alternative rejected and why — it becomes the only place that information lives. Agents reading code without intent documentation must reverse-engineer the reasoning, which they do unreliably. Agents reading intent documentation can apply, extend, and correct the code without contaminating it with false assumptions.
 
+A mature intent layer does not stop at scattered comments; it emits a durable **intent artifact set** that downstream agents can read, apply, and validate against:
+
+- **Intent brief** — the goal, non-goals, users, and constraints in human-readable form.
+- **Domain glossary** — terms of art, their local meanings, forbidden interpretations, and examples.
+- **User stories** — concrete scenarios that represent the desired behavior.
+- **Good/bad labeled examples** — cases for judgment and validation, in the domain's own language.
+- **Acceptance criteria** — observable proof that the work is done.
+- **Open questions** — items requiring human clarification before or during execution.
+- **Decision log** — assumptions made, tradeoffs weighed, and why a given path was chosen.
+- **Risk register** — compliance, security, operational, and reputation risks.
+
+These artifacts should live where agents can actually reach them — in the repository, a knowledge base, a workflow state directory, or a structured project bundle — not buried in a chat transcript no agent will read.
+
 ## When to reach for it
 
 - Any time a decision was made among meaningful alternatives — document which alternatives were considered and why this one was chosen.
@@ -26,3 +39,8 @@ Code is a complete, executable record of *what* the system does and *how* it doe
 
 - Every major open-source project that survives decades of contribution does so because its architecture documents record the *why* behind design choices — without them, contributors optimize away the very constraints the design was built to preserve.
 - The Amplifier AGENTS.md convention stores intent at the agent level: not just what the agent does, but why it is scoped the way it is and what decisions shaped its behavior.
+
+## Related
+
+- `patterns/interview-to-a-spec.md`
+- `patterns/good-pile-bad-pile.md`
