@@ -28,4 +28,4 @@ The model that wrote the code is the worst reviewer of it, because it reviews fr
 - `patterns/auditor-agent.md`
 - `patterns/match-model-to-stage.md`
 - `patterns/deterministic-rails.md`
-- `patterns/design-for-recovery.md`
+- `patterns/shape-work-as-an-attractor.md`

@@ -1,6 +1,6 @@
 ---
 title: Match the Agent Metaphor to the Layer
-one_liner: Treating every agent as a person creates confusion; treating every agent as a stateless tool loses useful continuity — choose the framing per layer: disposable process, independent critic, manager-like orchestrator, long-lived assistant, or policy-bound organizational actor.
+one_liner: Treating every agent as a person creates confusion; treating every agent as a stateless tool loses useful continuity — choose the framing per layer — disposable process, independent critic, manager-like orchestrator, long-lived assistant, or policy-bound organizational actor.
 dimensions: human-factors, orchestration, meta-principles
 ---
 

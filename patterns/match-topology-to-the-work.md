@@ -6,7 +6,7 @@ dimensions: orchestration, workflow-discipline, meta-principles
 
 ## What it is
 
-Agentic workflows sit on a spectrum from lightweight to heavyweight, and each point on it is the right answer for some work and the wrong answer for the rest. A one-shot prompt is ideal for tiny tasks, prototypes, local edits, and ideation, and it fails when you overtrust plausible output that has no durable state behind it. A slash-goal or Ralph loop fits a clear goal with moderate ambiguity where you want a simple autonomous push, and it fails by running too long without enough checkpoints. A skill-driven workflow captures a repeatable human-shaped process — brainstorming, planning, review, implementation — and fails when the skill hides complexity or goes stale and overly broad. A graph workflow suits multi-stage work with separable planning, execution, validation, and feedback, and fails by demanding heavy setup that becomes a harness-maintenance project of its own. A hierarchical agent organization handles large programs needing many subagents, specialist roles, and long-running supervision, and fails through attention overload, unclear accountability, and excessive token burn. A studio or production system fits complex, creative, high-mix work where every project differs but reuses roles and tools, and fails without strong human direction and good artifact discipline. The selection criteria are the cost of failure, the clarity of the intent, the size of the work, and the degree of repeatability — and the discipline is to choose intentionally rather than by habit or fashion.
+Agentic workflows sit on a spectrum from lightweight to heavyweight, and each point on it is the right answer for some work and the wrong answer for the rest. A one-shot prompt is ideal for tiny tasks, prototypes, local edits, and ideation, and it fails when you overtrust plausible output that has no durable state behind it. A slash-goal or Ralph loop fits a clear goal with moderate ambiguity where you want a simple autonomous push, and it fails by running too long without enough checkpoints. A skill-driven workflow captures a repeatable human-shaped process — brainstorming, planning, review, implementation — and fails when the skill hides complexity or goes stale and overly broad. A graph workflow suits multi-stage work with separable planning, execution, validation, and feedback, and fails by demanding heavy setup that becomes a harness-maintenance project of its own. A hierarchical agent organization handles large programs needing many subagents, specialist roles, and long-running supervision, and fails through attention overload, unclear accountability, and excessive token burn. A studio or production system fits complex, creative, high-mix work where every project differs but reuses roles and tools, and fails without strong human direction and good artifact discipline. The selection criteria are the cost of failure, the clarity of the intent, the size of the work, and the degree of repeatability — and the discipline is to choose intentionally rather than by habit or fashion. Two failure directions make that discipline concrete: the obvious one is reaching for a heavy graph when a simple loop would do; the subtler inverse is that after a team discovers heavy tools it often regresses into feature-by-feature prompting, because the small rewards of one-off prompts are immediate while the payoff of structure is deferred. Both are failures of intentionality — the work, not the dopamine, picks the topology.
 
 ## When to reach for it
 
@@ -22,13 +22,9 @@ Agentic workflows sit on a spectrum from lightweight to heavyweight, and each po
 - When the team has no slack to maintain a heavy harness — a graph or studio you cannot maintain is worse than a loop you can.
 - As an excuse to over-architect: if a simple loop will do, building a graph is the failure mode, not the goal.
 
-## Two warnings
-
-The first warning is the obvious one: do not use a heavy graph when a simple loop will do. The second is the inverse and is easy to miss — after a team discovers heavy tools, it often regresses into feature-by-feature prompting, because the small rewards of one-off prompts are immediate while the payoff of structure is deferred. Both directions are failures of intentionality. The work, not the dopamine, picks the topology.
-
 ## Related
 
 - `patterns/recipe-not-conversation.md`
-- `patterns/design-for-recovery.md`
+- `patterns/shape-work-as-an-attractor.md`
 - `patterns/start-least-agentic.md`
 - `patterns/self-ablating-harness.md`

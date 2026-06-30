@@ -28,5 +28,5 @@ Agentic software lowers the barrier between understanding a problem and implemen
 - `patterns/coaches-and-players.md`
 - `patterns/the-new-literacy-is-operating.md`
 - `patterns/deterministic-rails.md`
-- `patterns/design-for-recovery.md`
+- `patterns/shape-work-as-an-attractor.md`
 - `patterns/agents-amplify-experience.md`

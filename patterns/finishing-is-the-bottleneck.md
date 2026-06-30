@@ -1,6 +1,6 @@
 ---
 title: Finishing Is the Bottleneck, Not Starting
-one_liner: Models make starting easy — a plausible 80% appears fast — but plausible work is not finished work, and the final 20% consumes most of the attention and risk; the real metric is convergence: work that reliably reaches an accepted, shipped, observed state.
+one_liner: Models make starting easy — a plausible 80% appears fast — but plausible work is not finished work, and the final 20% consumes most of the attention and risk; the real metric is convergence — work that reliably reaches an accepted, shipped, observed state.
 dimensions: workflow-discipline, reliability, meta-principles
 ---
 

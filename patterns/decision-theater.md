@@ -1,7 +1,7 @@
 ---
 title: Decision Theater
 one_liner: Build a small interactive artifact — a model, simulator, spreadsheet, or scenario explorer — that lets stakeholders change assumptions instead of debating abstractions; if they disagree with the conclusion, they must reveal which assumption they reject.
-dimensions: intent, taste, workflow-discipline
+dimensions: intent, workflow-discipline, human-factors
 ---
 
 ## What it is

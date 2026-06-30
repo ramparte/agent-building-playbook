@@ -1,6 +1,6 @@
 ---
 title: Gene Transfer — Port the Behavior, Not the Code
-one_liner: "The reusable unit between systems is rarely a whole tool — it's a trait: a review prompt, a validation loop, a context-file structure, a CLI affordance — so separate phenotype from organism and transfer what's valuable; at system scale this becomes semantic porting of behavior across stacks."
+one_liner: The reusable unit between systems is rarely a whole tool but a trait — a review prompt, a validation loop, a context-file structure, a CLI affordance — so separate phenotype from organism and transfer what's valuable; at system scale this becomes semantic porting of behavior across stacks.
 dimensions: knowledge, tool-design, meta-principles
 ---
 

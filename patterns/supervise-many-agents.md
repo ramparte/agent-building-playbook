@@ -1,6 +1,6 @@
 ---
 title: Supervise Many Agents Through One Interface
-one_liner: As agents multiply, the limiting factor is the human's ability to see them — build the supervision surface: a dashboard of what's running, stuck, done, costly, or waiting; status exhaust; an attention firewall; a review queue; a cost monitor; and the ability to resurrect and hold old sessions accountable.
+one_liner: As agents multiply, the limiting factor is the human's ability to see them — build the supervision surface — a dashboard of what's running, stuck, done, costly, or waiting; status exhaust; an attention firewall; a review queue; a cost monitor; and the ability to resurrect and hold old sessions accountable.
 dimensions: observability, human-factors, orchestration
 ---
 

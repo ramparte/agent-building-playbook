@@ -8,8 +8,6 @@ dimensions: cost-routing
 
 Every multi-stage AI pipeline contains a mix of task types: some stages require deep reasoning, nuanced judgment, or creative synthesis; others are mechanical — parsing, classification, formatting, extraction, routing decisions. Treating all stages as equivalent and running them through the most capable (and expensive) model is not a conservative choice — it is a wasteful one that often produces no better outcomes for the mechanical stages while inflating costs linearly with task count. The pattern is to map each stage's cognitive demand to the appropriate model tier. High-stakes reasoning stages — evaluating ambiguous requirements, synthesizing conflicting evidence, making architectural decisions — warrant the most capable model. Mechanical stages — extracting structured fields from well-formed input, reformatting output, classifying a request into a known taxonomy — can be delegated to a fast, cheap model without quality loss. The calibration question for each stage is not "which model do we have?" but "what is the minimum capability level that produces acceptable output here?" Running the minimum sufficient model at each stage is not a compromise; it is the correct engineering decision.
 
-## Model routing is workflow design, not merely cost optimization
-
 Routing models by stage is often framed as a way to save money, and it does — but the deeper reason to do it is that the model assigned to a role shapes how that role behaves, which makes routing a design decision about the workflow itself. The roles in a typical graph each call for a different kind of model:
 
 | Role | Model choice pattern |

@@ -6,7 +6,7 @@ dimensions: orchestration, reliability, verification, tool-design
 
 ## What it is
 
-A productive agentic workflow is rarely "all AI." The strongest systems alternate between nondeterministic model judgment and deterministic computation, pairing each model step with a check it cannot talk its way past. A model writes a plan; a script verifies that every file it references actually exists. A model implements a sprint; the test suite deterministically passes or fails. A model reviews a diff; a linter enforces style and types underneath it. A model judges whether a user story is satisfied; browser automation records the evidence. A human approves a compliance-sensitive step; a workflow runner logs the decision immutably. A model summarizes production logs; a time-series system supplies the raw telemetry it is summarizing. This hybrid structure is powerful precisely because it reduces the burden on any single layer: the model need not be perfect, because the surrounding graph catches its drift, and the deterministic systems need not understand intent, because the model nodes translate intent into checkable state for them. The interleaving is the design — model where ambiguity, synthesis, diagnosis, and language understanding are required; deterministic rails everywhere a fact can simply be checked.
+A productive agentic workflow is rarely "all AI." The strongest systems alternate between nondeterministic model judgment and deterministic computation, pairing each model step with a check it cannot talk its way past. A model writes a plan; a script verifies that every file it references actually exists. A model implements a sprint; the test suite deterministically passes or fails. A model reviews a diff; a linter enforces style and types underneath it. A model judges whether a user story is satisfied; browser automation records the evidence. A human approves a compliance-sensitive step; a workflow runner logs the decision immutably. A model summarizes production logs; a time-series system supplies the raw telemetry it is summarizing. This hybrid structure is powerful precisely because it reduces the burden on any single layer: the model need not be perfect, because the surrounding graph catches its drift, and the deterministic systems need not understand intent, because the model nodes translate intent into checkable state for them. The interleaving is the design — model where ambiguity, synthesis, diagnosis, and language understanding are required; deterministic rails everywhere a fact can simply be checked. Building the individual check the agent cannot argue with — the unyielding validator itself — is its own discipline; this pattern is about the interleaving, about which steps are model and which are rail (see Critic Applications).
 
 ## When to reach for it
 
@@ -25,7 +25,7 @@ A productive agentic workflow is rarely "all AI." The strongest systems alternat
 
 ## Related
 
-- `patterns/design-for-recovery.md`
+- `patterns/shape-work-as-an-attractor.md`
 - `patterns/auditor-agent.md`
 - `patterns/recipe-not-conversation.md`
 - `patterns/start-least-agentic.md`
