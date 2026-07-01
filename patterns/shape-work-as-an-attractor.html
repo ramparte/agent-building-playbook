@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shape the Workflow as an Attractor</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Shape the Workflow as an Attractor</h1><p class="lede">Design the workflow so the correct outcome is its stable equilibrium — the state it converges toward from a wide range of starting points and returns to after the model drifts — and judge success by that convergence, not by whether a step reported done.</p><div class="dims"><a class="tag" href="../index.html#orchestration">orchestration</a><a class="tag" href="../index.html#workflow-discipline">workflow-discipline</a><a class="tag" href="../index.html#meta-principles">meta-principles</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>An attractor is a state a system settles into from many different starting points and returns to after it is perturbed — a marble in a bowl rolls back to the bottom no matter where you nudge it. The most reliable agentic workflows are shaped this way on purpose: the correct, accepted outcome is the low point of the bowl, and the graph is carved so that wherever the model starts and however it wanders, the work tends back toward that outcome. This is a claim about the topology of the whole workflow, not a feature of any single step. It also redefines what &quot;done&quot; means. Conventional automation is finished when the script completes — it ran to the end without throwing. That definition cannot survive a nondeterministic actor, because a model can finish a step and still be wrong: it can misunderstand the intent, drift off the spec, overfit to one example, stall, or hand back a plausible artifact that does not do the job. An attractor-shaped workflow is judged by a different question — did the system converge to the desired state? — so a step that &quot;succeeds&quot; while producing a wrong-but-plausible result is a perturbation the workflow is built to absorb, not a finish line. The design goal is not to prevent every error, which is hopeless, but to make the desired state the one the system keeps falling back into, and to make sure no plausible failure can roll the marble out over the rim with nothing to catch it.</p>
+<p>You carve the bowl with feedback edges: wire the graph so a failed check routes work back to the phase that can fix it rather than forcing forward progress. Review sends work back to implementation; a failing test triggers diagnosis instead of a blind patch; a discovered contradiction triggers a spec revision; an uncertainty threshold escalates to a human instead of committing to a guess; repeated failure triggers a postmortem rather than an unbounded retry. Most of those edges are built from patterns the library already has — escalation, root-cause diagnosis, bounded stop conditions, independent review. What the attractor framing adds is the question you ask of the workflow as a whole: does every plausible way this can go wrong have an edge that bends it back toward the desired state, or are there failures that simply run off the rim? Making steps idempotent and resumable serves the same end — if re-running a step converges toward the outcome instead of compounding the mess, the basin is wider and the equilibrium is more stable.</p>
+<h3>When to reach for it</h3>
+<ul><li>Any multi-stage workflow where a step can &quot;succeed&quot; while producing a wrong-but-plausible artifact — the failure mode deterministic automation does not have.</li><li>When work runs with enough autonomy that no human watches every step — convergence has to be engineered in, because no one is there to nudge the marble back by hand.</li><li>When the cost of a silent wrong answer reaching the end is high — make sure each phase has an edge that can route work backward, not only forward.</li><li>When a workflow sometimes finishes &quot;done&quot; but wrong — look for the failure mode that has no feedback edge bending it back toward the desired state.</li><li>When designing how to judge a workflow — measure whether it converges to an accepted state, not whether its final step returned success.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>Genuinely deterministic, machine-checkable work where &quot;it completed&quot; really is success — there is no drift to converge away from, and the machinery is pure overhead.</li><li>Throwaway one-shot tasks where you are the recovery loop — you will eyeball the result and rerun by hand if it is wrong.</li><li>When a feedback edge would route around a root-cause bug that should be fixed instead — an attractor is meant to absorb model drift, not broken tools or specs.</li><li>When the convergence budget is unbounded — a basin with no edge is just an infinite loop with a nicer name; bound it with an explicit stop condition.</li></ul>
+<h3>Related</h3>
+<ul><li><a href="guardrails-and-escalation.html"><code>patterns/guardrails-and-escalation.md</code></a></li><li><a href="fix-the-root-cause.html"><code>patterns/fix-the-root-cause.md</code></a></li><li><a href="clear-stop-condition.html"><code>patterns/clear-stop-condition.md</code></a></li><li><a href="decompose-on-timeout.html"><code>patterns/decompose-on-timeout.md</code></a></li><li><a href="adversarial-parallel-review.html"><code>patterns/adversarial-parallel-review.md</code></a></li><li><a href="earn-the-interruption.html"><code>patterns/earn-the-interruption.md</code></a></li><li><a href="match-topology-to-the-work.html"><code>patterns/match-topology-to-the-work.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

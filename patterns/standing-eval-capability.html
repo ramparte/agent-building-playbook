@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evals Are a Standing Capability, Not a One-Time Gate</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Evals Are a Standing Capability, Not a One-Time Gate</h1><p class="lede">An eval suite that runs once at launch and is never run again is not an eval suite — it is a historical document that measured a system that no longer exists.</p><div class="dims"><a class="tag" href="../index.html#verification">verification</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Evals are most valuable not at initial launch but over time, when models change, prompts drift, data distributions shift, and the system evolves. A standing eval capability means the eval suite can be run at any time by any team member, produces the same measurement protocol each time, and produces results that are comparable across runs — so that changes in performance over time are detectable and attributable. This requires more than writing eval scripts: it requires that the eval suite is checked in to source control alongside the system it evaluates, that it runs in CI (or can be triggered on demand), that results are stored and compared rather than just printed, and that the team has a norm of running evals before shipping changes that might affect quality. An eval that cannot be run cheaply on demand will not be run when it would be most valuable — just before a change goes out. An eval whose results are not stored cannot be compared to prior runs. An eval that is not in version control becomes stale faster than the system it was meant to measure.</p>
+<p>A standing capability should also evaluate the harness separately from the model. As base models improve, it becomes easy to credit every gain to the model and to keep paying for orchestration — retrieval, scaffolding, tool wiring, multi-step workflows — that may no longer earn its keep, or worse, that may be holding the system back. The way to tell is to run the same tasks with and without the harness, or with and without the retrieved context, and compare: the difference is what the harness itself contributes, isolated from the model underneath it. Without this ablation, an apparent improvement is unattributable — you cannot say whether the new model got better, the orchestration got better, or the orchestration quietly stopped mattering. Treating the harness as a thing to be measured, not just assumed, is what lets a team prune scaffolding that has been obsoleted by a stronger model and double down on the parts that still move the numbers.</p>
+<h3>When to reach for it</h3>
+<ul><li>When writing evals for the first time: design for repeatability from the start — parameterize the model, temperature, and input distribution; write results to a file; commit the suite alongside the system.</li><li>Before any change to the prompt, model, or data pipeline: run the current eval suite to establish a baseline, make the change, run again, and compare — this is the minimum bar for &quot;I checked that this didn&#x27;t regress.&quot;</li><li>After any unplanned quality degradation in production: run the eval suite to characterize the regression, add eval cases that reproduce it, then track the fix via eval results rather than informal inspection.</li><li>When onboarding new team members: the eval suite is the fastest way to understand what the system is supposed to do and what &quot;good&quot; looks like — treat it as living documentation.</li><li>Before upgrading models: run the existing eval suite against the candidate model before promoting it. Model upgrades that appear to improve quality often regress on specific task types that were not informally sampled during evaluation.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>When the eval suite requires expensive external resources (human labelers, slow APIs, large GPU runs) that cannot be made lightweight for routine CI use — in those cases, maintain a fast lightweight version for routine checks and reserve the full suite for release gates.</li><li>When the system is changing so rapidly that eval cases become stale within days — in early exploratory phases, lightweight human inspection may have better return on investment than maintaining a formal suite; commit to the standing capability once the system stabilizes.</li><li>When eval results are not being used to make decisions — if the team runs evals but ignores the results, the problem is process, not tooling; fix the process before investing in more eval infrastructure.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: describes evals as a continuous practice, not a launch gate — the recommended approach is to build eval infrastructure early and run it repeatedly as the system evolves</li><li>Anthropic — https://www.anthropic.com/news/developing-computer-use — Claude&#x27;s Computer Use: reliability improvements were tracked across hundreds of eval runs over time, not measured once — the standing eval capability was what made iterative improvement legible</li></ul>
+<h3>Related</h3>
+<ul><li><a href="eval-driven-development.html"><code>patterns/eval-driven-development.md</code></a></li><li><a href="test-what-not-how.html"><code>patterns/test-what-not-how.md</code></a></li><li><a href="prove-on-small-sample.html"><code>patterns/prove-on-small-sample.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build an Awareness Layer That Watches Your Work</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Build an Awareness Layer That Watches Your Work</h1><p class="lede">A separate process or agent that monitors the primary agent&#x27;s actions in real time catches drift, failures, and unexpected behavior before they compound — the watcher that the working agent cannot be for itself.</p><div class="dims"><a class="tag" href="../index.html#observability">observability</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>An agent executing a task cannot simultaneously evaluate whether the task is going wrong. The working agent&#x27;s attention is committed to the task; it interprets each step in the context of its plan, making it structurally blind to patterns that span steps — a gradual drift from the goal, a repeated failure that each iteration rationalizes differently, a resource metric that has been climbing since step three. The awareness layer is a second observer that watches the primary agent from outside its execution context: it reads the event stream, monitors metrics, compares current state against the expected trajectory, and intervenes when the gap becomes significant. This is not a supervisor in the workflow sense — it does not direct the agent&#x27;s next action. It is a sentry: a process with a different vantage point and a different agenda whose sole job is to notice things the working agent is not positioned to notice. The awareness layer is what makes long-running autonomous work recoverable. Without it, agents run until they succeed or exhaust their resources, with no mechanism to catch the case where they are confidently heading in the wrong direction.</p>
+<h3>When to reach for it</h3>
+<ul><li>When an agent will run for more than a few steps on a task where errors compound: a watcher that checks intermediate state catches problems while they are still recoverable.</li><li>When the primary agent has a known bias or blind spot: a planner agent focused on generating steps benefits from a watcher that checks whether the generated steps are drifting from the original intent.</li><li>When resource consumption matters: an awareness layer monitoring token usage, API call counts, or wall-clock time can interrupt work that is running away before it causes damage.</li><li>When building systems that run unattended over long periods: human operators cannot watch continuously; an automated awareness layer is the substitute.</li><li>When the failure mode of the system is silent success — completing without error but producing wrong output: a watcher that validates output properties independently catches this class of failure.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>When the task is short and the entire execution is observable in a single context window — the awareness layer&#x27;s value comes from its external vantage point; for short tasks, that vantage point is not needed.</li><li>When adding a watcher would double the compute cost of a task whose budget is tight and whose failure modes are already cheap and visible — awareness layers are investments; not every task justifies the cost.</li><li>When the watcher itself introduces more complexity than it resolves — a poorly specified awareness layer that fires false alarms or interrupts correct work is worse than no watcher. Start with monitoring, not intervention.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Amplifier — https://github.com/microsoft/amplifier — the context-intelligence graph-analyst agent: watches session event streams, detects delegation trees, and surfaces patterns that the executing agents cannot observe about themselves; it is an awareness layer over the Amplifier runtime</li><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends human-in-the-loop checkpoints and monitoring for long-running agentic tasks as a form of awareness that the agent cannot provide for itself</li></ul>
+<h3>Related</h3>
+<ul><li><a href="emit-events.html"><code>patterns/emit-events.md</code></a></li><li><a href="session-archaeology.html"><code>patterns/session-archaeology.md</code></a></li><li><a href="real-environment-execution.html"><code>patterns/real-environment-execution.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

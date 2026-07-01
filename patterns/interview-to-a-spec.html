@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interview to a Spec Before Implementing</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Interview to a Spec Before Implementing</h1><p class="lede">Put a skeptical interviewer in front of intent — one that asks why before how, reflects back its understanding, refuses to implement until it can restate the goal cleanly, and emits a concise spec the human can reject — turning messy intent into an executable specification.</p><div class="dims"><a class="tag" href="../index.html#intent">intent</a><a class="tag" href="../index.html#workflow-discipline">workflow-discipline</a><a class="tag" href="../index.html#verification">verification</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Before any code is written, intent should pass through a dialogue whose job is to compile messy human wishes into an executable specification. The right interaction is closer to a coaching or therapeutic conversation than a command line: the system does not rush to a solution but helps the human discover their own intent, asking why before how, separating goals from the implementations stakeholders propose, reflecting back its current understanding so misreadings surface early, asking for examples of good and bad outcomes, and naming the unknowns and contradictions it finds. The interviewer is skeptical by design — it refuses to start building until it can restate the goal cleanly in its own words, acting as a compiler from ambiguous intent to a specification, and it probes with questions like *what problem are we solving, who experiences it, what happens if we do nothing, what would make the solution unacceptable, what examples define success, what should not be changed, and what proof should the implementation produce.* What the dialogue emits is not a verbose transcript but a working artifact — a concise spec with acceptance criteria, user stories, scenarios, constraints, and open questions — small enough that the human can read it and reject or approve it. This guards against the common failure of treating the first prompt as the spec: the first prompt is an impulse, an input to the intent process, not the final instruction, and an agent that runs with it skips the step where intent is actually determined.</p>
+<h3>When to reach for it</h3>
+<ul><li>A request arrives as a one-line prompt and you are tempted to start building — route it through the interviewer first to turn the impulse into a spec.</li><li>The work is high-stakes or expensive enough that building the wrong thing costs more than the dialogue.</li><li>The goal is ambiguous, contested, or stated as a solution rather than a need.</li><li>You want a durable, inspectable artifact (spec, acceptance criteria, open questions) that downstream agents and humans can both work from.</li><li>An agent keeps producing plausible-but-wrong output because nobody pinned the success criteria before execution.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>The task is small, well-understood, and cheap to redo — a full interview is heavier than the work itself.</li><li>The human genuinely wants exploration, not a spec — forcing premature precision kills the discovery the prototype is meant to provide.</li><li>The interviewer becomes an interrogation that never terminates — if it cannot converge, the bottleneck is missing information, not more questions.</li><li>Speed pressure makes a worse-but-shipped spec preferable to a perfect one that arrives too late.</li></ul>
+<h3>Related</h3>
+<ul><li><a href="document-intent.html"><code>patterns/document-intent.md</code></a></li><li><a href="requirements-are-disguised-solutions.html"><code>patterns/requirements-are-disguised-solutions.md</code></a></li><li><a href="people-edit-better-than-they-author.html"><code>patterns/people-edit-better-than-they-author.md</code></a></li><li><a href="keep-specs-in-sync.html"><code>patterns/keep-specs-in-sync.md</code></a></li><li><a href="good-pile-bad-pile.html"><code>patterns/good-pile-bad-pile.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

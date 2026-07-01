@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Just-in-Time Retrieval Over Pre-Loading</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Just-in-Time Retrieval Over Pre-Loading</h1><p class="lede">Don&#x27;t fill context with everything that might be relevant — retrieve only what is needed, exactly when it is needed, and discard it after use.</p><div class="dims"><a class="tag" href="../index.html#context-engineering">context-engineering</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Pre-loading is the impulse to front-load context with all potentially relevant documents, tools, history, and reference material before work begins. The cost compounds: a large pre-loaded context crowds out working memory, forces the model to attend across irrelevant content, and spends tokens that could hold later-stage results. Just-in-time retrieval inverts the pattern — keep the context minimal at the start, and pull in specific content only at the step that needs it. A code review agent does not need the full API documentation in its context from turn one; it needs the relevant section when it encounters the relevant function. A planning agent does not need every prior conversation; it needs the summary of the last decision. Just-in-time retrieval treats information like a dependency that should be loaded at the moment of use, not pre-declared at the top of the program.</p>
+<p>&quot;Memory&quot; is the wrong word for this until it is specified. The grand metaphor — give the agent a memory — invites pre-loading and obscures the actual design decision. The practical question is much narrower: what should this agent know at this moment to improve this outcome? That question reframes the problem as context governance rather than generic memory, and it is the question just-in-time retrieval answers per step. This is also why calling a RAG pipeline &quot;memory&quot; and stopping there is an anti-pattern: retrieval is genuinely useful, but it is only one component of memory. Real memory also requires selection (deciding what to pull), decay (letting stale material expire), correction (fixing what was wrong), and evaluation (checking that the retrieved context actually helped). A retriever with none of those is a lookup, not a memory — and treating it as the whole solution leaves the hard governance work undone.</p>
+<h3>When to reach for it</h3>
+<ul><li>When designing agent tool-use: each tool call should retrieve exactly the content needed for the current step, not a superset of potentially useful content.</li><li>When building RAG pipelines: retrieve per-query at inference time rather than pre-filling context with all indexed chunks that scored above a threshold.</li><li>When an agent runs across many steps and the early steps&#x27; context becomes irrelevant to later steps — defer retrieval of later-step material until those steps are reached.</li><li>When latency or cost of retrieval is low relative to the cost of carrying unused tokens across many inference calls — almost always true for file reads, vector search, and database lookups.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>Tasks where the full corpus must be visible simultaneously to reason correctly — a document comparison task where the model must hold both documents in mind while generating cannot defer retrieval without breaking the task structure.</li><li>When the retrieval system itself is slow or expensive and the same content will be needed at every step — a single pre-load may be cheaper than repeated retrievals of the same material.</li><li>Exploratory or creative tasks where the model benefits from broad context to generate associations that span the retrieved material — selective just-in-time retrieval can artificially narrow the space.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: advocates for targeted tool invocation at the moment of need rather than pre-loading context with all available resources</li><li>Anthropic — https://www.anthropic.com/news/contextual-retrieval — Contextual Retrieval: demonstrates retrieval systems designed for per-query, per-step relevance rather than pre-indexed bulk injection</li></ul>
+<h3>Related</h3>
+<ul><li><a href="context-is-finite.html"><code>patterns/context-is-finite.md</code></a></li><li><a href="context-over-prompt.html"><code>patterns/context-over-prompt.md</code></a></li><li><a href="write-select-compress-isolate.html"><code>patterns/write-select-compress-isolate.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

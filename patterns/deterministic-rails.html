@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Put Deterministic Rails Around Model Judgment</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Put Deterministic Rails Around Model Judgment</h1><p class="lede">The strongest agentic workflows interleave deterministic steps and model-mediated steps so neither layer must be perfect — the model translates intent into checkable state, and scripts, tests, and validators catch drift.</p><div class="dims"><a class="tag" href="../index.html#orchestration">orchestration</a><a class="tag" href="../index.html#reliability">reliability</a><a class="tag" href="../index.html#verification">verification</a><a class="tag" href="../index.html#tool-design">tool-design</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>A productive agentic workflow is rarely &quot;all AI.&quot; The strongest systems alternate between nondeterministic model judgment and deterministic computation, pairing each model step with a check it cannot talk its way past. A model writes a plan; a script verifies that every file it references actually exists. A model implements a sprint; the test suite deterministically passes or fails. A model reviews a diff; a linter enforces style and types underneath it. A model judges whether a user story is satisfied; browser automation records the evidence. A human approves a compliance-sensitive step; a workflow runner logs the decision immutably. A model summarizes production logs; a time-series system supplies the raw telemetry it is summarizing. This hybrid structure is powerful precisely because it reduces the burden on any single layer: the model need not be perfect, because the surrounding graph catches its drift, and the deterministic systems need not understand intent, because the model nodes translate intent into checkable state for them. The interleaving is the design — model where ambiguity, synthesis, diagnosis, and language understanding are required; deterministic rails everywhere a fact can simply be checked. Building the individual check the agent cannot argue with — the unyielding validator itself — is its own discipline; this pattern is about the interleaving, about which steps are model and which are rail (see Critic Applications).</p>
+<h3>When to reach for it</h3>
+<ul><li>Whenever a model step emits something verifiable — a file path, a passing test, a type, a status code — bolt a deterministic check directly onto it rather than trusting the prose.</li><li>When model output feeds an irreversible or expensive downstream action: put a deterministic gate (test, schema check, policy engine) on the edge.</li><li>When you need evidence, not assertion — have automation capture proof (screenshots, logs, recorded runs) that the model&#x27;s claim is true.</li><li>When a workflow must satisfy compliance or audit: pair human and model judgment with a deterministic runner that logs every decision.</li><li>When debugging why a workflow fails intermittently — the missing deterministic rail is usually where the drift slips through.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>Open-ended creative or exploratory work with no checkable success condition — there is no deterministic rail to build, and forcing one constrains the work falsely.</li><li>When a cheap deterministic check would simply duplicate a stronger one already on the edge — add rails where drift actually escapes, not everywhere.</li><li>When the check is harder to maintain than the failure it catches is costly — a brittle validator that breaks more often than the model does is negative leverage.</li><li>Before the work is stable enough to know what &quot;checkable state&quot; even means — rails encode an understood contract, not a guess.</li></ul>
+<h3>Related</h3>
+<ul><li><a href="shape-work-as-an-attractor.html"><code>patterns/shape-work-as-an-attractor.md</code></a></li><li><a href="auditor-agent.html"><code>patterns/auditor-agent.md</code></a></li><li><a href="recipe-not-conversation.html"><code>patterns/recipe-not-conversation.md</code></a></li><li><a href="start-least-agentic.html"><code>patterns/start-least-agentic.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

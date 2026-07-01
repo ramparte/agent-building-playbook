@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coaches and Players</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Coaches and Players</h1><p class="lede">Leverage no longer comes only from senior people doing senior work directly — it comes from injecting senior judgment into many agent-driven workflows; coaches frame problems and steer, players drive the agents day to day.</p><div class="dims"><a class="tag" href="../index.html#human-factors">human-factors</a><a class="tag" href="../index.html#orchestration">orchestration</a><a class="tag" href="../index.html#meta-principles">meta-principles</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>A useful organizational model for agentic work splits roles into coaches and players. Coaches are experienced people who understand architecture, system history, business context, risk, and taste; they may not write much code directly, but they help others frame problems, ask better questions, design validation, and steer agents toward outcomes that hold up. Players are the people driving agentic work day to day — engineers, PMs, interns, analysts, operators, domain experts — whose value is less about deep implementation skill and more about agency, curiosity, clarity, and a willingness to work through the machine. The model matters because leverage no longer comes only from senior people doing senior work with their own hands; it comes from senior judgment being injected into many agent-driven workflows at once. Because durable handoff artifacts — specs, plans, logs, decisions, open questions — make context portable, work can also be routed by temperament rather than trapped in one person&#x27;s head: a starter opens the problem space, a planner decomposes it, an implementer drives execution, a critic hunts for flaws, a finisher polishes, an operator deploys, and a coach intervenes precisely where judgment is the bottleneck. This routing is not automatic and the coaching is not optional; agents expand who can build, but people still need mentorship, review, and deliberate judgment transfer, and tools do not replace that.</p>
+<h3>When to reach for it</h3>
+<ul><li>When a few senior people are the constraint: turn their review style, risk instincts, and product taste into reusable steering for many players rather than a queue for their hands.</li><li>When staffing agentic work: pair experienced coaches who frame and validate with players who have the agency and curiosity to drive agents through the day-to-day.</li><li>When work is bottlenecked on one person&#x27;s context, invest in durable handoff artifacts so the work can be picked up by whoever has the right temperament next.</li><li>When a workflow spans distinct phases — opening, planning, building, critiquing, finishing, operating — route each phase to the person whose temperament fits, and reserve coach intervention for the judgment-heavy moments.</li><li>When onboarding less-experienced or nontechnical builders, give them a coach, not just a tool.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>Do not treat &quot;coach&quot; as a title for people who have disengaged; coaching only creates leverage when the senior judgment is actively shaping real decisions, not rubber-stamping.</li><li>Do not use this model to deskill players into mere prompt typists — their agency and clarity are the point, and flattening that loses the leverage.</li><li>Temperament routing depends on genuinely durable artifacts; do not promise fluid handoffs on top of context that still lives only in someone&#x27;s head.</li><li>This is not a replacement for mentorship and judgment transfer — if you use it to justify cutting coaching, you have inverted it.</li></ul>
+<h3>Related</h3>
+<ul><li><a href="leverage-over-efficiency.html"><code>patterns/leverage-over-efficiency.md</code></a></li><li><a href="develop-your-taste.html"><code>patterns/develop-your-taste.md</code></a></li><li><a href="nontechnical-owners-with-guardrails.html"><code>patterns/nontechnical-owners-with-guardrails.md</code></a></li><li><a href="the-new-literacy-is-operating.html"><code>patterns/the-new-literacy-is-operating.md</code></a></li><li><a href="personal-to-shared-topology.html"><code>patterns/personal-to-shared-topology.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

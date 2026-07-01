@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leverage Over Efficiency</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Leverage Over Efficiency</h1><p class="lede">Framing AI as efficiency asks how to do the same work with fewer people; framing it as leverage asks how the same people can build, explore, and operate at a larger scale — and leverage is the frame that matches what advanced practitioners actually do.</p><div class="dims"><a class="tag" href="../index.html#human-factors">human-factors</a><a class="tag" href="../index.html#meta-principles">meta-principles</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>There are two strategic frames for what agents are for, and the choice shapes everything downstream. The efficiency frame asks: how can we do the same work with fewer people? The leverage frame asks: how can the same people build more, explore more, modernize more, and operate at a larger scale? The leverage frame is the more useful one for any organization trying to grow, compete, or transform, and it better describes what advanced practitioners are already doing. They are not simply replacing tasks one-for-one; they are creating new operating surfaces that did not exist before — agents that manage other agents, tools built specifically for agents to use, workflows that run overnight, transcript-mining knowledge systems, semantic-porting pipelines, adversarial review squads, and production feedback loops. None of that is &quot;the same work, cheaper.&quot; It is new work that was previously impossible at human scale. The counterintuitive consequence is that the human role becomes more important, not less: as agents absorb execution, the blast radius of every human judgment grows, so the quality of the people steering the system matters more than it did when they were typing the implementation themselves.</p>
+<h3>When to reach for it</h3>
+<ul><li>When setting AI strategy: choose deliberately between &quot;do the same with fewer&quot; and &quot;do far more with the same people,&quot; and notice which frame your roadmap and metrics quietly assume.</li><li>When a practitioner has saturated their personal throughput and the next gain comes from building tools, agents, and workflows that operate while they sleep.</li><li>When deciding what to invest in: prefer building new operating surfaces (agents for agents, overnight pipelines, review squads) over shaving marginal cost from existing tasks.</li><li>When justifying headcount or judging &quot;AI maturity,&quot; reframe the question from cost saved to scale, scope, and ambition unlocked.</li><li>When senior people are the constraint: leverage their judgment across many workflows rather than asking them to do the same volume of work faster.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>Efficiency is not always the wrong frame — in a contracting, cost-constrained, or commodity-margin context, doing the same work with fewer resources can be exactly the right goal.</li><li>Do not use &quot;leverage&quot; as a euphemism that hides a real cost or quality problem; if the scaled-up output is worse, more scale is not leverage.</li><li>Leverage multiplies whatever judgment is steering it; do not scale a workflow whose underlying decisions or taste are not yet sound.</li><li>This is not a license to spin up unbounded agent activity; new operating surfaces still need attention budgets, guardrails, and evidence.</li></ul>
+<h3>Related</h3>
+<ul><li><a href="coaches-and-players.html"><code>patterns/coaches-and-players.md</code></a></li><li><a href="attention-is-the-scarce-resource.html"><code>patterns/attention-is-the-scarce-resource.md</code></a></li><li><a href="redesign-work-dont-fill-slots.html"><code>patterns/redesign-work-dont-fill-slots.md</code></a></li><li><a href="develop-your-taste.html"><code>patterns/develop-your-taste.md</code></a></li><li><a href="agents-amplify-experience.html"><code>patterns/agents-amplify-experience.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

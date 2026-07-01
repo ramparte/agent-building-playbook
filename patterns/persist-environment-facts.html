@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Persist Environment Facts</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Persist Environment Facts</h1><p class="lede">Facts about the environment — directory layout, versions, credentials, topology — belong in files the agent can re-read, not floating in context that disappears on reset.</p><div class="dims"><a class="tag" href="../index.html#context-engineering">context-engineering</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Every agent run begins with a context window that knows nothing. Facts that were discovered in a previous session — the repository structure, the installed tool versions, the API endpoint, the cluster topology, which ports are open, where the config lives — must be re-discovered or re-stated every time unless they have been written down. Persisting environment facts is the practice of capturing this discovery work in structured files that any session can read as its first act: a <code>WORKSPACE.md</code> describing directory layout and conventions, an <code>env.yaml</code> capturing tool versions and cluster state, a <code>.env</code> or secrets file with endpoint addresses. These files are the agent&#x27;s memory of the world it is operating in. Without them, every session re-discovers what the last session already knew, paying in tokens and latency for information that is stable across runs. With them, the agent begins from a grounded, accurate model of its environment rather than a blank slate.</p>
+<h3>When to reach for it</h3>
+<ul><li>When setting up a new project that an agent will work in across multiple sessions — write the environment facts file as part of project initialization, not after the fact.</li><li>When an agent discovers something non-obvious about the environment (an unusual directory layout, a pinned version, a quirk of the deployed service) — write it down immediately before context resets.</li><li>When debugging an agent that keeps making the same wrong assumptions about the environment — the fix is persistent documentation, not better prompting.</li><li>When handing a project to a new agent or a new operator — the environment facts file is the onboarding document.</li><li>When the environment changes (new machine, new config, new topology) — update the persisted facts as the first step after the change.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>Rapidly changing environments where the persisted facts would be stale by the time they are read — volatile state belongs in real-time tool reads, not stale files.</li><li>Short-lived, single-session tasks where the environment is fully defined in the prompt and will never be revisited — the overhead of writing a facts file is not justified.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends writing to files as a primary persistence mechanism for agentic systems that need to preserve state across context resets</li></ul>
+<h3>Related</h3>
+<ul><li><a href="checkpoint-handoff-file.html"><code>patterns/checkpoint-handoff-file.md</code></a></li><li><a href="write-select-compress-isolate.html"><code>patterns/write-select-compress-isolate.md</code></a></li><li><a href="long-horizon-memory.html"><code>patterns/long-horizon-memory.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

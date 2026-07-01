@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Match Model to Stage</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Match Model to Stage</h1><p class="lede">Different stages of a workflow warrant different model capability levels — route expensive models to complex reasoning stages and cheap models to mechanical stages, not the other way around.</p><div class="dims"><a class="tag" href="../index.html#cost-routing">cost-routing</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Every multi-stage AI pipeline contains a mix of task types: some stages require deep reasoning, nuanced judgment, or creative synthesis; others are mechanical — parsing, classification, formatting, extraction, routing decisions. Treating all stages as equivalent and running them through the most capable (and expensive) model is not a conservative choice — it is a wasteful one that often produces no better outcomes for the mechanical stages while inflating costs linearly with task count. The pattern is to map each stage&#x27;s cognitive demand to the appropriate model tier. High-stakes reasoning stages — evaluating ambiguous requirements, synthesizing conflicting evidence, making architectural decisions — warrant the most capable model. Mechanical stages — extracting structured fields from well-formed input, reformatting output, classifying a request into a known taxonomy — can be delegated to a fast, cheap model without quality loss. The calibration question for each stage is not &quot;which model do we have?&quot; but &quot;what is the minimum capability level that produces acceptable output here?&quot; Running the minimum sufficient model at each stage is not a compromise; it is the correct engineering decision.</p>
+<p>Routing models by stage is often framed as a way to save money, and it does — but the deeper reason to do it is that the model assigned to a role shapes how that role behaves, which makes routing a design decision about the workflow itself. The roles in a typical graph each call for a different kind of model:</p>
+<p>| Role | Model choice pattern | |---|---| | <strong>Planner</strong> | A stronger, more expensive model when global coherence across the whole task matters. | | <strong>Executor</strong> | A cheaper or faster model for well-scoped implementation where the structure is already decided. | | <strong>Reviewer</strong> | A *different* model family from the implementer, to reduce shared blind spots. | | <strong>Critic</strong> | Adversarial framing, fresh context, or several models — independence is the point. | | <strong>Summarizer</strong> | A cheaper model when the output is bounded and the result is validated downstream. | | <strong>Researcher</strong> | Models or tools with retrieval, browsing, or large context windows. |</p>
+<p>The Reviewer and Critic rows are the ones most often gotten wrong: routing them to the *same* model that did the work saves nothing meaningful and quietly destroys the independence that makes review worth running. Choosing a different family there is a workflow decision wearing a cost-routing disguise.</p>
+<h3>When to reach for it</h3>
+<ul><li>When designing a multi-step pipeline with distinct task types — identify at design time which stages are reasoning-heavy and which are mechanical, then assign model tiers accordingly.</li><li>When a pipeline&#x27;s inference cost is a concern — audit each stage&#x27;s model assignment before optimizing code; model-tier mismatches are the most common source of unnecessary cost.</li><li>When a high-cost pipeline is producing outputs no better than a lower-cost equivalent — this is often a sign that expensive models are being used for stages that don&#x27;t benefit from the extra capability.</li><li>When routing between a small set of model tiers (e.g., fast, standard, reasoning) based on a lightweight classifier — the classifier itself runs on a cheap model, and its routing decision determines the model tier for the subsequent stage.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>When stage boundaries are unclear or the task type varies unpredictably within a stage — model-switching overhead and routing complexity may outweigh cost savings.</li><li>When the workflow runs only occasionally and inference cost is irrelevant to the budget — the engineering complexity of tiered routing is not justified by savings that are small in absolute terms.</li><li>When model capability differences at the mechanical stages produce correctness differences that matter — some &quot;mechanical&quot; tasks are more capability-sensitive than they appear; verify this before downgrading.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: notes that model selection is a design decision at each step of a pipeline, not a global setting; using smaller models for sub-tasks that don&#x27;t require full capability is called out as a cost management pattern</li><li>Amplifier — https://github.com/microsoft/amplifier — the delegate() API accepts a model_role parameter that decouples the caller&#x27;s routing intent (&quot;I need reasoning capability here&quot;) from the specific model assigned; role definitions are configured externally, enabling stage-by-stage routing without hardcoding model names</li></ul>
+<h3>Related</h3>
+<ul><li><a href="role-based-routing.html"><code>patterns/role-based-routing.md</code></a></li><li><a href="delegation-token-economics.html"><code>patterns/delegation-token-economics.md</code></a></li><li><a href="start-least-agentic.html"><code>patterns/start-least-agentic.md</code></a></li><li><a href="invest-the-expensive-model-in-the-harness.html"><code>patterns/invest-the-expensive-model-in-the-harness.md</code></a></li><li><a href="adversarial-parallel-review.html"><code>patterns/adversarial-parallel-review.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

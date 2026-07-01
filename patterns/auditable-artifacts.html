@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Make Every Stage Produce an Auditable Artifact</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Make Every Stage Produce an Auditable Artifact</h1><p class="lede">A stage with no artifact is a stage that cannot be audited — and a stage that cannot be audited is a stage you must trust blindly.</p><div class="dims"><a class="tag" href="../index.html#reliability">reliability</a><a class="tag" href="../index.html#observability">observability</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Every stage in a multi-step pipeline should produce an output artifact that is independently inspectable: a file written to disk, a structured log entry, a database record, a message in a queue, or a test result captured to a report. The artifact is not a side effect — it is the mechanism by which the stage communicates its result to the rest of the system without routing through the agent&#x27;s self-report. Stages that produce only internal state, transient in-memory results, or nothing at all create auditing gaps: you cannot replay them, inspect their output, or verify that they ran correctly without re-running them. Artifacts are the substrate of observability in agentic pipelines.</p>
+<p>The same property makes durable artifacts the most reliable form of near-term memory — far more reliable than anything mystical. The practical memory of an agentic system is its specs, plans, sprint docs, acceptance criteria, test results, browser videos, screenshots, session summaries, decision logs, postmortems, journals, learned rules, workflow state files, domain glossaries, and transcript-derived summaries. These work as memory precisely because they are artifacts: they can be inspected, versioned, pruned, passed to another agent, reviewed by a human, and evaluated. That makes them less magical than implicit, model-internal memory, but far more governable — you can see what the system believes and correct it. A good artifact is not just any file, though. It is small enough to fit a later context window, explicit enough for a different agent or human to resume from cold, versioned enough to support rollback and comparison, structured enough for tools to inspect mechanically, and semantically rich enough to preserve intent rather than just outcome. An artifact that fails these criteria — a sprawling log no window can hold, an undated blob that cannot be diffed, prose too vague to resume from — is storage, not memory.</p>
+<h3>When to reach for it</h3>
+<ul><li>When designing any multi-step pipeline: assign a concrete artifact to each stage before writing any stage logic.</li><li>When a pipeline produces unexpected downstream results and you cannot trace where the corruption began — missing artifacts made the investigation impossible.</li><li>When you need to replay a pipeline from a specific stage — artifacts at each boundary make selective replay possible.</li><li>When multiple agents or systems contribute to a workflow — artifacts are the hand-off mechanism that decouples producer from consumer.</li><li>When adding a new agentic step: specify what artifact it will produce before implementing the step.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>Single-step, ephemeral transformations where the result is consumed immediately and the cost of writing an artifact exceeds the cost of rerunning the step (e.g., a quick string transformation inside a single-turn response).</li><li>Streaming outputs where intermediate state is inherently transient and the final artifact captures the complete result — don&#x27;t produce artifacts for every token if the final file is the meaningful unit.</li><li>Highly sensitive data where persisting intermediary artifacts creates storage or compliance risk — in those cases, substitute structured in-memory audit logs with appropriate retention controls.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: describes how agentic pipelines should maintain visibility of intermediate results, not just final outputs, to enable debugging and human oversight</li><li>Amplifier — https://github.com/microsoft/amplifier — the context-intelligence hook captures a structured artifact (JSONL event stream) at every session turn, making every agent action independently inspectable and replayable</li></ul>
+<h3>Related</h3>
+<ul><li><a href="long-horizon-memory.html"><code>patterns/long-horizon-memory.md</code></a></li><li><a href="scope-and-expire-memory.html"><code>patterns/scope-and-expire-memory.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

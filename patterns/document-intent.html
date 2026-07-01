@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Document Intent, Not Just Method</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Document Intent, Not Just Method</h1><p class="lede">Code describes how; comments and specs must describe why — the reasoning that code cannot encode.</p><div class="dims"><a class="tag" href="../index.html#workflow-discipline">workflow-discipline</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Code is a complete, executable record of *what* the system does and *how* it does it. But code cannot express the reasoning behind its own existence: why this approach rather than an alternative, what constraint the implementation is satisfying, what invariant must hold even as the code changes. When documentation is limited to restating the code in prose, it adds no information. When documentation captures intent — the decision rationale, the constraint being satisfied, the design alternative rejected and why — it becomes the only place that information lives. Agents reading code without intent documentation must reverse-engineer the reasoning, which they do unreliably. Agents reading intent documentation can apply, extend, and correct the code without contaminating it with false assumptions.</p>
+<p>A mature intent layer does not stop at scattered comments; it emits a durable <strong>intent artifact set</strong> that downstream agents can read, apply, and validate against:</p>
+<ul><li><strong>Intent brief</strong> — the goal, non-goals, users, and constraints in human-readable form.</li><li><strong>Domain glossary</strong> — terms of art, their local meanings, forbidden interpretations, and examples.</li><li><strong>User stories</strong> — concrete scenarios that represent the desired behavior.</li><li><strong>Good/bad labeled examples</strong> — cases for judgment and validation, in the domain&#x27;s own language.</li><li><strong>Acceptance criteria</strong> — observable proof that the work is done.</li><li><strong>Open questions</strong> — items requiring human clarification before or during execution.</li><li><strong>Decision log</strong> — assumptions made, tradeoffs weighed, and why a given path was chosen.</li><li><strong>Risk register</strong> — compliance, security, operational, and reputation risks.</li></ul>
+<p>These artifacts should live where agents can actually reach them — in the repository, a knowledge base, a workflow state directory, or a structured project bundle — not buried in a chat transcript no agent will read.</p>
+<h3>When to reach for it</h3>
+<ul><li>Any time a decision was made among meaningful alternatives — document which alternatives were considered and why this one was chosen.</li><li>When a constraint is subtle and its violation would look like a valid improvement — comment the constraint and name the failure mode that removes it.</li><li>When an API or interface is shaped by an external requirement, a protocol, a legacy assumption, or a third-party contract — make that dependency explicit in the spec, not just the code.</li><li>Before handing a module to an agent for extension or refactoring — write a brief intent note so the agent preserves the reasoning, not just the structure.</li><li>When a workaround exists — document what it works around, not just what it does.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>Trivial, self-evident code where intent and method are identical (&quot;add one to the counter&quot;) — documentation here adds noise that obscures the signal.</li><li>Exploratory spike code that will be deleted — writing intent docs for throwaway work delays learning without adding value.</li><li>When the intent documentation would simply duplicate an already-clear spec that will be kept in sync — avoid duplication that creates drift.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Every major open-source project that survives decades of contribution does so because its architecture documents record the *why* behind design choices — without them, contributors optimize away the very constraints the design was built to preserve.</li><li>The Amplifier AGENTS.md convention stores intent at the agent level: not just what the agent does, but why it is scoped the way it is and what decisions shaped its behavior.</li></ul>
+<h3>Related</h3>
+<ul><li><a href="interview-to-a-spec.html"><code>patterns/interview-to-a-spec.md</code></a></li><li><a href="good-pile-bad-pile.html"><code>patterns/good-pile-bad-pile.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

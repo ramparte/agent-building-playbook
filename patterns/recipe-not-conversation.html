@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Encode Multi-Step Work as a Recipe</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Encode Multi-Step Work as a Recipe</h1><p class="lede">A conversation is a trace of what happened once — a recipe is a specification that can be replayed, inspected, versioned, and recovered from.</p><div class="dims"><a class="tag" href="../index.html#reliability">reliability</a><a class="tag" href="../index.html#workflow-discipline">workflow-discipline</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Multi-step work expressed as ad-hoc conversation — &quot;now do X, now do Y, now do Z&quot; — is inherently fragile: it cannot be replayed from a checkpoint, it has no schema to validate, it accumulates context silently until something breaks, and its state is invisible to anyone who wasn&#x27;t present for the conversation. A recipe encodes the same work as a declarative specification: each step is named, its inputs and outputs are defined, its dependencies are explicit, and its execution can be resumed after interruption. Recipes are checkpointed, auditable, and version-controlled. They transform a one-time conversation into a reproducible workflow that a different agent, on a different day, can execute with the same result.</p>
+<p>A chat is a convenient way for a human to express intent, but it is a poor representation of long-running work — it is a trace of what happened once, not a structure you can replay, inspect, or recover from. The recipe in its mature form is a workflow graph, and the graph is the operating system the work runs on. Its nodes are discrete work units — plan, implement, review, test, deploy, ask-human, inspect-logs — each with its own context and success condition. Its edges are the conditions to advance, retry, branch, escalate, or stop. Around the nodes sit the durable artifacts that carry state between them, the models assigned to roles, the deterministic tools that check the model&#x27;s work, and the humans who own the consequential decisions. Seeing the work this way is what lets you reason about it as a system rather than re-deriving it from a transcript every time.</p>
+<p>The opposing anti-pattern is the giant prompt as operating system: cramming all of that structure into one enormous instruction block. A giant prompt can work temporarily, but it hides the phases, makes evaluation hard because there is no boundary to evaluate at, and turns context into a junk drawer where every concern competes for the model&#x27;s attention at once. The fix is to move repeated behavior out of the prompt and into named skills, scripts, files, or graph nodes — give each phase a name, a boundary, and an artifact, and the prompt stops being the whole machine and becomes one node in it.</p>
+<h3>When to reach for it</h3>
+<ul><li>Any multi-step workflow that will run more than once — encode it as a recipe the first time, not after the third failure.</li><li>When a workflow involves more than two sequential steps with handoffs between agents — conversation becomes a liability at this scale.</li><li>When you need recoverability: a recipe that checkpoints between steps can resume after interruption; a conversation cannot.</li><li>When a workflow must be auditable — a recipe YAML is a version-controlled artifact; a chat history is not.</li><li>When onboarding another agent or person to execute a workflow — a recipe is the specification; a conversation recap is a reconstruction from memory.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>Truly one-off, exploratory, and immediately disposable interactions where the overhead of authoring a recipe exceeds the value of the work — quick questions, single-turn queries, throwaway experiments.</li><li>Work that is inherently interactive and responsive, where the next step cannot be known until the previous result is seen and human judgment is required at every branch — in those cases, the recipe is the human-in-the-loop checkpoint design, not the full specification.</li><li>Steps so trivially atomic that a recipe adds no structural value over a single function call.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends structured workflow specifications over ad-hoc agent conversation for complex tasks, citing recoverability and auditability as primary benefits</li><li>Amplifier — https://github.com/microsoft/amplifier — the Amplifier recipe system (YAML-declared steps, staged execution, approval gates, and automatic checkpointing) is the canonical implementation of this pattern: conversation-time instructions become recipe-time specifications</li></ul>
+<h3>Related</h3>
+<ul><li><a href="match-topology-to-the-work.html"><code>patterns/match-topology-to-the-work.md</code></a></li><li><a href="shape-work-as-an-attractor.html"><code>patterns/shape-work-as-an-attractor.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

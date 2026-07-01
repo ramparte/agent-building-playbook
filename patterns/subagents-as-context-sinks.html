@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Use Sub-Agents as Context Sinks</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Use Sub-Agents as Context Sinks</h1><p class="lede">Delegate detail-heavy work to sub-agents so the orchestrator&#x27;s context stays clean — the sub-agent absorbs the complexity and returns only a summary.</p><div class="dims"><a class="tag" href="../index.html#context-engineering">context-engineering</a><a class="tag" href="../index.html#orchestration">orchestration</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Every task an orchestrator handles in its own context accumulates tokens: the tool calls, the intermediate reasoning, the verbose outputs, the failed branches. Over a long workflow this accumulation degrades the orchestrator&#x27;s ability to reason about the whole — early decisions get crowded out by recent noise, and the window fills with content relevant only to a sub-task that is now complete. Sub-agents as context sinks invert this dynamic: when a task is detail-heavy but its outcome is a clear artifact or summary, delegate it entirely to a fresh agent. That agent runs with an empty context window, absorbs all the detail of the sub-task, and returns only its result — a file path, a structured summary, a pass/fail verdict, a generated artifact. The orchestrator&#x27;s context accumulates a summary, not a transcript. The detail is permanently off the orchestrator&#x27;s books. This is not primarily a performance optimization; it is a cognitive architecture decision about what the orchestrator needs to hold in mind to make good decisions about the next step.</p>
+<h3>When to reach for it</h3>
+<ul><li>When a sub-task has a clear, expressible output but a complex execution path (file analysis, code review, research, synthesis) — delegate it and receive the output, not the process.</li><li>When the orchestrator is approaching context limits partway through a plan — identify the next heavy task and route it to a sub-agent before context fills further.</li><li>When the same type of sub-task recurs across multiple steps (reviewing N files, processing N records) — each instance is a separate context sink; parallelize if the tasks are independent.</li><li>When an error or failure in a sub-task should not pollute the orchestrator&#x27;s context with retry loops and diagnostic output — isolate the failure in the sub-agent, receive a structured failure report, and decide at the orchestrator level what to do.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>Tasks where the orchestrator must reason over the details of the sub-task&#x27;s execution, not just its outcome — some debugging or exploratory tasks require the orchestrator to see the intermediate steps, not just the result.</li><li>When the sub-task is trivially small — creating a sub-agent for a single file read or a one-line transformation adds latency and coordination cost with no context benefit.</li><li>When the sub-task&#x27;s result is so large that the summary returned to the orchestrator is nearly as expensive as running the task in the orchestrator&#x27;s own context — apply compress before choosing between in-context and delegated execution.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: describes sub-agent delegation as a primary pattern for managing context in orchestrator-worker architectures</li><li>Amplifier — https://github.com/microsoft/amplifier — the delegate() primitive is designed precisely for this pattern: spawn a sub-agent, absorb the work, return a summary to the calling session</li></ul>
+<h3>Related</h3>
+<ul><li><a href="context-is-finite.html"><code>patterns/context-is-finite.md</code></a></li><li><a href="write-select-compress-isolate.html"><code>patterns/write-select-compress-isolate.md</code></a></li><li><a href="thin-pointers.html"><code>patterns/thin-pointers.md</code></a></li><li><a href="start-least-agentic.html"><code>patterns/start-least-agentic.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Decision Theater</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Decision Theater</h1><p class="lede">Build a small interactive artifact — a model, simulator, spreadsheet, or scenario explorer — that lets stakeholders change assumptions instead of debating abstractions; if they disagree with the conclusion, they must reveal which assumption they reject.</p><div class="dims"><a class="tag" href="../index.html#intent">intent</a><a class="tag" href="../index.html#workflow-discipline">workflow-discipline</a><a class="tag" href="../index.html#human-factors">human-factors</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>A decision theater is a small interactive artifact — a spreadsheet, model, simulator, prototype, dashboard, game, mock interface, or scenario explorer — whose purpose is not to be the final product but to make latent beliefs visible by letting stakeholders interact with assumptions rather than debate abstractions. The mechanism is simple and powerful: when people argue in the abstract, disagreement stays vague and unresolvable, but when they are handed a model with adjustable inputs, disagreement is forced into structure. The worked example: instead of debating whether a product opportunity is worth pursuing, build a tool whose assumptions are sliders — market size, willingness to pay, acquisition rate, support cost, regulatory drag, implementation complexity, margin — and invite stakeholders to change the inputs; if they disagree with the conclusion, they cannot simply object, they must reveal which assumption they reject and what value they would put in its place. That move converts a stalled argument into named, inspectable inputs, surfaces the real source of disagreement, and often resolves it because the participants discover they were arguing about a number neither had stated. The same pattern works across product design, internal tooling, compliance, sales workflows, and policy — anywhere belief is doing the deciding and nobody has written the beliefs down. Cheap software is what makes this practical: the artifact is disposable, built to provoke reaction and then discarded.</p>
+<h3>When to reach for it</h3>
+<ul><li>A decision is stalled in abstract disagreement and nobody can point to the specific belief they are defending.</li><li>A go/no-go call depends on assumptions (market size, cost, risk) that are being asserted rather than examined.</li><li>You need stakeholders to commit to numbers or scenarios they can be held to, not just opinions.</li><li>The work spans product, compliance, sales, or policy and the disagreement is really about hidden inputs.</li><li>You want to expose which assumption is load-bearing before investing in the real build.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>The decision is already aligned and the theater would only add ceremony.</li><li>The artifact risks being mistaken for the real product or a commitment — its disposable, illustrative status must be unmistakable.</li><li>The assumptions are genuinely unknowable and the model would manufacture false precision that anchors people on invented numbers.</li><li>The disagreement is about values, not facts — a parameterized model can obscure a values conflict that needs to be named directly.</li></ul>
+<h3>Related</h3>
+<ul><li><a href="people-edit-better-than-they-author.html"><code>patterns/people-edit-better-than-they-author.md</code></a></li><li><a href="implement-to-learn.html"><code>patterns/implement-to-learn.md</code></a></li><li><a href="requirements-are-disguised-solutions.html"><code>patterns/requirements-are-disguised-solutions.md</code></a></li><li><a href="good-pile-bad-pile.html"><code>patterns/good-pile-bad-pile.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

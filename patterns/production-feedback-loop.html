@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Close the Loop From Production Back to Fix</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Close the Loop From Production Back to Fix</h1><p class="lede">Finishing doesn&#x27;t end at deployment — route support messages, incidents, metrics, and user reports into a triage loop that proposes a fix, validates it, ships it behind a flag, and watches whether the signal disappears; this is the agentic version of a Toyota production system.</p><div class="dims"><a class="tag" href="../index.html#orchestration">orchestration</a><a class="tag" href="../index.html#observability">observability</a><a class="tag" href="../index.html#workflow-discipline">workflow-discipline</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Deployment is not the end of finishing; it is where the most valuable feedback starts arriving, and an agentic system can be wired to consume it. The signals are already there — support messages, Slack threads, production incidents, user reports, metric anomalies — and ordinarily they sit in a queue waiting for a human to notice, triage, reproduce, fix, and ship. A production feedback loop closes that distance by routing the signal directly into an agentic workflow: a user report, support message, incident, or metric anomaly appears; an agent triages it against known issues and recent changes; the agent determines whether it is actionable; if it is low risk, the agent opens a branch and proposes a fix; a validation workflow runs against that fix; a human approves or rejects depending on the assessed risk; the fix ships behind a feature flag or staged rollout; the system watches whether the originating feedback actually disappears; and the learning is captured into the knowledge base so the same class of problem is recognized faster next time. What makes this powerful is that it compresses the loop between user pain and product change, and what makes it safe is that the loop never skips its controls — validation, risk-gated human approval, staged exposure, and a watch for whether the signal cleared. This is the agentic version of a Toyota-style production system: observe defects at the source, reduce batch size so fixes flow continuously rather than in large risky releases, close the feedback loop so problems train the system, and improve the process itself rather than just patching outputs.</p>
+<h3>When to reach for it</h3>
+<ul><li>When real user-facing signal (support, Slack, incidents, error rates, metric anomalies) is already accumulating faster than humans triage it — route it into an agent loop that proposes triaged, validated fixes.</li><li>When you want to shorten the distance between a reported defect and a shipped fix without removing the human approval gate for risky changes.</li><li>When the same classes of issue recur — wire the loop to capture each resolution into the knowledge base so recognition and triage improve over time.</li><li>When you can bind a fix to its originating signal and watch whether the signal disappears — closed-loop confirmation that the fix actually worked, not just merged.</li><li>When you want continuous small corrections rather than large batched releases — the loop favors small, reversible, observed changes.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>When fixes cannot ship safely behind a flag or staged rollout, or have no rollback — without exposure controls, an automated fix loop is an automated incident loop.</li><li>When the feedback signal is too noisy or ambiguous to triage reliably — a loop that acts on misread signals manufactures churn and erodes trust.</li><li>For high-risk changes where every fix needs deep human judgment regardless — the loop&#x27;s value is in compressing low-risk, well-understood fixes, not in bypassing judgment on dangerous ones.</li><li>When there is no telemetry to confirm whether the originating signal cleared — without the closing watch, you have an open loop that ships fixes blind.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Toyota Production System — https://en.wikipedia.org/wiki/Toyota_Production_System — the lean discipline this pattern adapts: observe defects at the source, reduce batch size, stop-the-line on signal, and improve the process rather than the symptom</li><li>DORA / Accelerate — https://dora.dev — research on fast, low-risk delivery: small batches, short feedback loops, and staged exposure as the basis of safe continuous change</li></ul>
+<h3>Related</h3>
+<ul><li><a href="separate-merge-from-exposure.html"><code>patterns/separate-merge-from-exposure.md</code></a></li><li><a href="mine-transcripts.html"><code>patterns/mine-transcripts.md</code></a></li><li><a href="fix-the-root-cause.html"><code>patterns/fix-the-root-cause.md</code></a></li><li><a href="finishing-is-the-bottleneck.html"><code>patterns/finishing-is-the-bottleneck.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

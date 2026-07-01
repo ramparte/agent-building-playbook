@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test What the Product Does, Not How</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Test What the Product Does, Not How</h1><p class="lede">Tests that describe externally observable behavior survive refactoring; tests that describe internal implementation become a maintenance tax that grows with every change.</p><div class="dims"><a class="tag" href="../index.html#verification">verification</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>A test that checks how the system achieves an outcome is coupled to the implementation — when the implementation changes, the test breaks even if the behavior is still correct. A test that checks what the system does from the outside is decoupled from the implementation — it only breaks when the behavior changes, which is when it should break. The distinction is not subtle: &quot;assert that this function was called with these arguments&quot; is a how-test; &quot;assert that after calling this API, the database contains this record&quot; is a what-test. What-tests describe the product&#x27;s observable contract. How-tests describe the product&#x27;s current internal wiring. Agentic systems fail this discipline most visibly because agents are opaque — their internal reasoning is not inspectable — which tempts developers to test the tools the agent called rather than the outcome the agent produced. Testing which tools an agent called is a how-test. Testing whether the artifact the agent was supposed to produce exists, is correct, and is usable is a what-test. The former breaks whenever tool implementations or selection logic changes; the latter breaks only when the agent stops doing its job.</p>
+<p>There is a sharper risk when the tests themselves are agent-generated. A test the agent writes against code the agent wrote can overfit to the implementation it happens to see, or encode the very same misunderstanding that produced the code — in which case the test passes, the code is wrong, and the test certifies the bug. More tests do not fix this; they can multiply the shared blind spot. Each test type carries its own version of the failure, and a finishing system should treat the choice as a tradeoff rather than a default: unit tests can overfit to implementation detail; integration tests are often brittle; end-to-end tests are slow and flaky; mutation tests are costly and noisy; property tests are only as good as the invariants they assert; adversarial tests are easy to under-specify; visual tests need good baselines and tolerances. The agentic opportunity is therefore not merely to write more tests. It is to make test generation, critique, execution, and revision into nodes of the workflow graph — so a separate critic challenges the tests, the suite is actually run against real behavior, and failures feed back into revising both the code and the tests, rather than a single agent grading its own homework.</p>
+<h3>When to reach for it</h3>
+<ul><li>When writing tests for any function, agent, or pipeline step: identify the externally observable outcome first, write the assertion against that, then verify the test fails before adding implementation.</li><li>When tests are frequently breaking due to refactoring even though behavior has not changed — this is the signature of how-tests; replace them with what-tests.</li><li>When testing agentic behavior: define the artifact the agent should produce (file written, database state, API call made with the right payload to an external system) rather than the sequence of internal tool calls.</li><li>When a codebase has tests but developers still fear refactoring — the tests are almost certainly how-tests. Rewriting them as what-tests restores the safety they were supposed to provide.</li><li>When debugging a system with high test pass rates but unreliable production behavior — how-tests pass easily because they test internal consistency, not external correctness.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>When the implementation detail IS the observable behavior — in performance-critical code where the number of database queries is the externally contracted guarantee, testing the query count is a what-test, not a how-test.</li><li>When you are specifically testing integration paths and need to verify that a particular external service was called (rather than that the effect of the call occurred) — in that case the call is the observable contract, not an implementation detail.</li><li>When testing security properties that are inherently about what the system does NOT do — absence of certain calls or state changes is a valid what-test.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends evaluating agents on task completion (did the agent finish the task correctly?) rather than on process (did the agent call the right tools in the right order?), because task completion is the product&#x27;s actual contract</li><li>Amplifier — https://github.com/microsoft/amplifier — the verification-before-completion skill requires running verification commands against the real output, not checking whether the agent reported that it ran the right commands</li></ul>
+<h3>Related</h3>
+<ul><li><a href="eval-driven-development.html"><code>patterns/eval-driven-development.md</code></a></li><li><a href="evidence-before-assertions.html"><code>patterns/evidence-before-assertions.md</code></a></li><li><a href="demand-independent-proof.html"><code>patterns/demand-independent-proof.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

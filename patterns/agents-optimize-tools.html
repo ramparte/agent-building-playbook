@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Let Agents Evaluate and Optimize Your Tools</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Let Agents Evaluate and Optimize Your Tools</h1><p class="lede">Use an agent to test your tool set — have it attempt real tasks, observe where it selects incorrectly or fails, and feed those observations back into tool descriptions and interfaces before deploying.</p><div class="dims"><a class="tag" href="../index.html#tool-design">tool-design</a><a class="tag" href="../index.html#verification">verification</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Tool design is typically done from the designer&#x27;s perspective: the author writes a description that seems clear, registers the tool, and considers it done. The model&#x27;s perspective is different — it has no background context about the designer&#x27;s intent, it reads the description literally in the middle of a task, and it makes selection decisions based only on what the description says. The gap between &quot;seems clear to the author&quot; and &quot;produces reliable selection by the model&quot; is where most tool design errors live. Letting agents evaluate tools closes this gap empirically rather than by inspection. The process: give an agent access to the full tool set and a set of realistic tasks. Observe which tools it selects, whether it selects correctly, where it hesitates or selects inconsistently, and what errors result from wrong selections. Treat each wrong selection as a bug report: the tool&#x27;s name or description was not specific enough to distinguish it from the tool the agent should have called instead. Revise the description to add the missing specificity, rerun the evaluation, and iterate. This approach treats tool descriptions as a specification that must be validated against the model&#x27;s behavior, not a documentation artifact that is correct by construction. The agent is the oracle: if it selects wrong, the description is wrong.</p>
+<h3>When to reach for it</h3>
+<ul><li>When building a new tool set before deploying it to production — run an evaluation pass with representative tasks and observe tool selection behavior before agents encounter real workloads.</li><li>When agents are failing tasks due to wrong tool selection or incorrect tool usage — use an evaluation run to identify which descriptions are ambiguous and revise them based on the observed failure pattern.</li><li>When adding a new tool to an existing set — the new tool may cause selection confusion with existing tools; test the full set after the addition, not just the new tool in isolation.</li><li>When migrating tools to a new model — selection behavior varies across models; re-evaluate the tool set against the target model rather than assuming descriptions that worked before will continue to work.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>When the tool set has only one or two tools with clearly distinct purposes — the evaluation overhead is not justified when selection errors are structurally impossible.</li><li>When the task distribution for evaluation is not representative of real workloads — an evaluation that only tests happy-path calls will not surface the edge-case ambiguities that matter in production.</li><li>When tool descriptions are generated dynamically at runtime and cannot be revised statically — in this case, focus evaluation on the generation logic rather than individual description text.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends empirical evaluation of agent behavior over upfront design, including evaluation of tool selection reliability as a first-class concern</li><li>Anthropic — https://www.anthropic.com/news/developing-computer-use — Claude&#x27;s Computer Use: evaluation-driven iteration on the tool interface was central to making the computer-use capability reliable</li></ul>
+<h3>Related</h3>
+<ul><li><a href="tools-for-agents.html"><code>patterns/tools-for-agents.md</code></a></li><li><a href="namespace-tools.html"><code>patterns/namespace-tools.md</code></a></li><li><a href="demand-independent-proof.html"><code>patterns/demand-independent-proof.md</code></a></li><li><a href="verify-independently.html"><code>patterns/verify-independently.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

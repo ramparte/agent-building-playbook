@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design for Emotional Ownership</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Design for Emotional Ownership</h1><p class="lede">A system that technically works can still fail to be adopted — fully headless automation can feel alienating, and people who feel no ownership of an output won&#x27;t trust it; design the human interface to autonomy with visible progress, proof artifacts, and moments of authorship.</p><div class="dims"><a class="tag" href="../index.html#human-factors">human-factors</a><a class="tag" href="../index.html#observability">observability</a><a class="tag" href="../index.html#taste">taste</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Adoption is not purely rational, and a system that technically works can still fail because people do not trust it, enjoy using it, or feel any ownership of what it produces. A surprising but recurring failure mode of automation is that it succeeds and is rejected anyway: a workflow runs all night, produces a good result with no visible process, and the human who was supposed to own that result feels disconnected from it — bored by it, alienated from it, unwilling to put their name on something they did not watch happen. Headless automation without a human interface is the anti-pattern; if humans cannot see, trust, or shape the work, adoption suffers no matter how correct the output is. The remedy is to treat emotional ownership as a design target, not an accident, and to build the human interface to autonomy deliberately. That means better status interfaces and visible progress narratives so the work is legible as it happens; proof artifacts so a finished result carries its own evidence rather than asking to be trusted on faith; agent personas pitched at the right layer so the system has a recognizable presence without pretending to be a colleague; social channels for agents, and celebratory or playful affordances, so the work feels like something people participate in; physical or ambient displays that keep autonomous work present in the room; human approval moments placed exactly where they matter, so people exercise real judgment rather than rubber-stamping; and clear handoffs that preserve authorship and accountability, so it stays unambiguous whose work this is. The goal is not to anthropomorphize everything — over-personifying every process creates its own confusion. The goal is to design the interface so that the humans on the other side of the autonomy feel like authors and owners, because owners are the only people who will trust, defend, and keep using the system.</p>
+<h3>When to reach for it</h3>
+<ul><li>When a technically correct automation is being quietly ignored or distrusted — the gap is usually ownership and visibility, not accuracy.</li><li>When a long-running or overnight workflow produces results with no visible process, and the humans receiving them feel disconnected from work they are meant to own.</li><li>When you need a person to stand behind an output — sign off on it, defend it, be accountable for it — and they will only do that if they feel like a real author of it.</li><li>When adoption matters as much as correctness — internal tools and team workflows live or die on whether people want to use them.</li><li>When handoffs between agents and humans are blurring authorship, leaving nobody who clearly owns the result.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>When the workflow is genuinely invisible plumbing nobody needs to feel ownership of — manufacturing emotional affordances for a cron job is wasted effort and noise.</li><li>When emotional design would slow down a throughput-critical path that humans have already accepted and trust — do not add ceremony where it is not wanted.</li><li>When personas or playful affordances would mislead users about what the system actually is or can do — ownership built on a false impression backfires.</li><li>When the real problem is that the output is wrong — affordances cannot manufacture trust the work has not earned.</li></ul>
+<h3>Related</h3>
+<ul><li><a href="supervise-many-agents.html"><code>patterns/supervise-many-agents.md</code></a></li><li><a href="match-agent-metaphor-to-layer.html"><code>patterns/match-agent-metaphor-to-layer.md</code></a></li><li><a href="attention-is-the-scarce-resource.html"><code>patterns/attention-is-the-scarce-resource.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

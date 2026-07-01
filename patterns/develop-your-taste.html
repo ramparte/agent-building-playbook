@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Develop Your Taste</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Develop Your Taste</h1><p class="lede">Taste — the ability to recognize quality and know when something is wrong — is a craft that must be deliberately built; it does not emerge from volume of output alone.</p><div class="dims"><a class="tag" href="../index.html#taste">taste</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Taste is the capacity to recognize the difference between good and good-enough, between an output that is correct and an output that is right. It is distinct from skill: skill is the ability to execute; taste is the ability to evaluate. In traditional software engineering, taste develops over years of encountering real systems in production — seeing what breaks, what ages poorly, what stays maintainable, and what doesn&#x27;t. In AI-assisted development, the cycle is faster but the feedback is noisier. Volume of output increases dramatically; the discipline of evaluating that output must increase proportionally or taste atrophies. Developing taste requires deliberate exposure to both good and bad examples, the practice of explaining why something is better, and a habit of dissatisfaction with outputs that are merely adequate. It also requires honesty with yourself: taste is not preference or habit, it is calibrated judgment. An agent that always tells you what it produced is good is not developing your taste — it is flattening it. A precise way to name what taste becomes in an agentic setting is consistent judgment under acceleration: when agents generate many options at once, the person who can choose well becomes more valuable, and that judgment spans many dimensions — product taste, architectural judgment, security paranoia, domain intuition, organizational sensitivity, the willingness to stop a bad path, the ability to see when something is almost right but not finished, and the ability to select the right level of process for the stakes. As generation becomes cheap, editing becomes the scarce function: the human&#x27;s role shifts toward curation and selection, exercising editorial judgment at the system level — deciding what gets into the product, rejecting plausible-but-wrong work, preserving coherence across many generated artifacts, and ensuring outputs serve strategy rather than local optimization. Seek out the exemplars, study the failures, and build the internal model that tells you when something is off before you can articulate exactly why.</p>
+<h3>When to reach for it</h3>
+<ul><li>When reviewing outputs from your own agent runs: do not just verify that they are correct — ask whether they are good, and develop a vocabulary for the difference.</li><li>When designing systems: ask not just whether a design will work but whether it is the right design, and practice explaining why.</li><li>When evaluating tools, patterns, and approaches: use each comparison as an opportunity to sharpen the internal model, not just to make a selection.</li><li>When something feels off but you cannot say why: that sense of wrongness is taste in its early form — slow down, name what is bothering you, and refine the judgment.</li><li>When reading others&#x27; code, writing, or designs: treat every encounter with excellent work as a calibration opportunity.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>Taste is not perfectionism: do not use the pursuit of quality as a reason to not ship. Taste should accelerate judgment, not induce paralysis.</li><li>When speed genuinely trumps quality: there are contexts where adequate is the correct target, and applying taste-level scrutiny is disproportionate to the stakes.</li><li>When taste masquerades as aesthetic preference: distinguish between developed judgment about what works and personal preference for what you are used to.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: the ability to distinguish agentic patterns that are genuinely reliable from those that look reliable in demos is a form of taste that develops through direct evaluation experience, not from reading descriptions of the patterns</li><li>Amplifier — https://github.com/microsoft/amplifier — The philosophy documents in the Amplifier ecosystem (LANGUAGE_PHILOSOPHY.md, MODULAR_DESIGN_PHILOSOPHY.md) represent distilled taste — not just rules, but calibrated judgment about what produces good outcomes over time</li></ul>
+<h3>Related</h3>
+<ul><li><a href="find-the-hard-stuff.html"><code>patterns/find-the-hard-stuff.md</code></a></li><li><a href="agents-amplify-experience.html"><code>patterns/agents-amplify-experience.md</code></a></li><li><a href="eval-driven-development.html"><code>patterns/eval-driven-development.md</code></a></li><li><a href="leverage-over-efficiency.html"><code>patterns/leverage-over-efficiency.md</code></a></li><li><a href="coaches-and-players.html"><code>patterns/coaches-and-players.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

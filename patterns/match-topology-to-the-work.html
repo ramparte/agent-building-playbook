@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Match the Topology to the Work</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Match the Topology to the Work</h1><p class="lede">Choose your agentic topology deliberately — from one-shot prompt to slash-goal loop to skill to graph to hierarchy to studio — by the cost of failure, clarity of intent, size of the work, and degree of repeatability.</p><div class="dims"><a class="tag" href="../index.html#orchestration">orchestration</a><a class="tag" href="../index.html#workflow-discipline">workflow-discipline</a><a class="tag" href="../index.html#meta-principles">meta-principles</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Agentic workflows sit on a spectrum from lightweight to heavyweight, and each point on it is the right answer for some work and the wrong answer for the rest. A one-shot prompt is ideal for tiny tasks, prototypes, local edits, and ideation, and it fails when you overtrust plausible output that has no durable state behind it. A slash-goal or Ralph loop fits a clear goal with moderate ambiguity where you want a simple autonomous push, and it fails by running too long without enough checkpoints. A skill-driven workflow captures a repeatable human-shaped process — brainstorming, planning, review, implementation — and fails when the skill hides complexity or goes stale and overly broad. A graph workflow suits multi-stage work with separable planning, execution, validation, and feedback, and fails by demanding heavy setup that becomes a harness-maintenance project of its own. A hierarchical agent organization handles large programs needing many subagents, specialist roles, and long-running supervision, and fails through attention overload, unclear accountability, and excessive token burn. A studio or production system fits complex, creative, high-mix work where every project differs but reuses roles and tools, and fails without strong human direction and good artifact discipline. The selection criteria are the cost of failure, the clarity of the intent, the size of the work, and the degree of repeatability — and the discipline is to choose intentionally rather than by habit or fashion. Two failure directions make that discipline concrete: the obvious one is reaching for a heavy graph when a simple loop would do; the subtler inverse is that after a team discovers heavy tools it often regresses into feature-by-feature prompting, because the small rewards of one-off prompts are immediate while the payoff of structure is deferred. Both are failures of intentionality — the work, not the dopamine, picks the topology.</p>
+<h3>When to reach for it</h3>
+<ul><li>At the start of any new workstream, before reaching for whatever topology you used last time — pick by the four criteria, not by muscle memory.</li><li>When a workflow keeps overrunning or burning tokens: you are probably one tier too heavy and should drop to a lighter topology.</li><li>When a lightweight loop keeps producing wrong-but-plausible output with no state to inspect: you are one tier too light and should add structure.</li><li>When work is repeatable enough to be worth encoding — promote it from ad-hoc prompting up to a skill or graph.</li><li>When standardizing a team&#x27;s approach: name the topology explicitly so people stop defaulting unconsciously.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>For a genuine one-off where any deliberation about topology costs more than just running the one-shot prompt.</li><li>When the team has no slack to maintain a heavy harness — a graph or studio you cannot maintain is worse than a loop you can.</li><li>As an excuse to over-architect: if a simple loop will do, building a graph is the failure mode, not the goal.</li></ul>
+<h3>Related</h3>
+<ul><li><a href="recipe-not-conversation.html"><code>patterns/recipe-not-conversation.md</code></a></li><li><a href="shape-work-as-an-attractor.html"><code>patterns/shape-work-as-an-attractor.md</code></a></li><li><a href="start-least-agentic.html"><code>patterns/start-least-agentic.md</code></a></li><li><a href="self-ablating-harness.html"><code>patterns/self-ablating-harness.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

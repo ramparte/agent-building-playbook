@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build a Pattern Registry</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Build a Pattern Registry</h1><p class="lede">Teams independently rediscover the same loops, validators, and review tricks — a pattern registry captures the reusable operating moves with usage guidance and contraindications, so practice transfers without forcing everyone onto the same stack; it is the package manager of agentic practice.</p><div class="dims"><a class="tag" href="../index.html#knowledge">knowledge</a><a class="tag" href="../index.html#meta-principles">meta-principles</a><a class="tag" href="../index.html#workflow-discipline">workflow-discipline</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Across an organization, teams keep reinventing the same wheels: the same agent loops, the same validators, the same review tricks, the same context layouts, the same agent-shaped tools — each discovered independently, at cost, and never shared. A pattern registry is the institutional response. It captures the reusable operating moves — the &quot;genes&quot; of agentic practice — without requiring every team to adopt the same organism, the same framework, or the same stack. The point is transfer of practice, not enforcement of uniformity. A useful registry entry is far more than a name and a description: it records the pattern name, the problem it solves, when to use it, when NOT to use it, the artifacts it requires, example prompts or workflow nodes, known failure modes, the method for evaluating whether it worked, implementation references, provenance, and the maintainers or endorsers who stand behind it. The contraindications are not optional politeness — they are what make the registry trustworthy. Heavy workflow graphs are wrong for many tasks; universal memory may poison context; human approval gates may destroy autonomy; a playful agent persona may delight one culture and alienate another. A registry that lists only when to use each pattern, and never when to avoid it, becomes a cargo-cult catalog. Done well, a pattern registry becomes the package manager of agentic practice: a shared, versioned, attributed index of operating moves that teams can pull from, adapt, and contribute back to.</p>
+<h3>When to reach for it</h3>
+<ul><li>When multiple teams in an organization are independently solving the same agent-building problems and the solutions never propagate.</li><li>When a practice that works well in one team should spread, but you do not want to force every team onto the originating team&#x27;s framework or stack.</li><li>When you keep rediscovering pattern candidates from transcript mining and need somewhere structured to put them.</li><li>When onboarding new teams or agents who would benefit from the accumulated operating moves of the organization rather than starting from scratch.</li><li>When a pattern&#x27;s misuse is costly enough that its contraindications need to travel alongside it — the registry entry is where the &quot;when NOT to&quot; lives.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>When there is no one to maintain it — an unowned registry rots into a graveyard of stale entries that misleads more than it helps.</li><li>When the organization is too small or too early for cross-team reuse — premature registry-building is process for its own sake.</li><li>When entries would lack contraindications and evaluation methods — a registry of unqualified recommendations is worse than no registry.</li><li>When the registry is used to mandate uniformity rather than enable transfer — the moment it becomes a compliance checklist, it stops capturing the genes and starts cloning the organism.</li></ul>
+<h3>Related</h3>
+<ul><li><a href="gene-transfer.html"><code>patterns/gene-transfer.md</code></a></li><li><a href="personal-to-shared-topology.html"><code>patterns/personal-to-shared-topology.md</code></a></li><li><a href="composable-patterns.html"><code>patterns/composable-patterns.md</code></a></li><li><a href="mine-transcripts.html"><code>patterns/mine-transcripts.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>
