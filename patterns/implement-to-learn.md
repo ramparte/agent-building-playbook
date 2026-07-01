@@ -8,6 +8,8 @@ dimensions: workflow-discipline
 
 Understanding a problem well enough to specify it correctly almost always requires building something first. When a task is new or poorly understood, writing a full specification before touching code inverts the learning order — you are trying to reason abstractly about something you have not yet made concrete. Implementing a small, intentionally throwaway version forces the real questions to surface: which inputs are ambiguous, which outputs are hard to define, which assumptions were wrong. The throwaway implementation is not the deliverable; it is a research instrument that produces a better specification for the real deliverable.
 
+Cheap software extends this beyond the builder's own understanding: a prototype is also a **probe for eliciting intent** from stakeholders who cannot author a clean requirement but can react sharply to something concrete. The move is to build *several* prototypes, not one, put them in front of users or domain experts, and capture their reactions, objections, and the workarounds they reach for — then convert that signal into user stories and acceptance criteria. This is especially powerful in domains where stakeholders answer every question with "it depends": the rule may be unstateable, but the dependency structure can be learned from how experts respond to concrete examples. Generating one prototype risks anchoring everyone on it; generating a spread of alternatives invites the comparative judgments that reveal what people actually want.
+
 ## When to reach for it
 
 - Before writing a detailed specification for a task you have never done before — implement a rough version first, then write the spec from what you learned.

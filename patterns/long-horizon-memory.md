@@ -8,6 +8,19 @@ dimensions: context-engineering
 
 A single context window cannot hold the full history of a week-long project. Long-horizon memory is not a single technique; it is three complementary strategies applied in combination. Compaction: as conversation history ages and the details of early steps become less relevant than their outcomes, summarize the history aggressively — what was decided, not how the decision was reached; what was built, not every failed attempt along the way. The compact summary replaces the verbose transcript. Notes files: maintain a persistent running document outside the context window that accumulates decisions, open questions, discovered facts, and next actions; every session begins by reading this file and ends by updating it. Isolation: any sub-task with a well-defined output is a candidate for a fresh sub-agent session — that session inherits only the context it needs for the sub-task, completes the work, and returns a summary, leaving no residue in the main session's context. Together, compaction handles the past, notes handle the present state, and isolation handles the future work — and all three prevent the accumulation of stale, dense, low-signal history that degrades performance on long-running tasks.
 
+Underneath these strategies sits a structural distinction: memory is not one undifferentiated store but a stack of layers, each with its own scope, lifetime, and contents. Naming the layers is what makes scoped retrieval possible.
+
+| Layer | Scope | Examples |
+|---|---|---|
+| **Working context** | The current task or session | Prompt, immediate files, recent tool output |
+| **Project state** | The current repo or initiative | Spec, plan, sprint docs, tests, decision log |
+| **Session history** | Prior attempts and handoffs | Journals, summaries, failed paths, open questions |
+| **Persona continuity** | A long-lived agent's style and role | Preferences, duties, norms, tone, recurring habits |
+| **Organizational knowledge** | Team or company practice | Policies, domain glossary, architecture rules, support patterns |
+| **External pattern library** | Shared ecosystem knowledge | Reusable patterns, skills, validators, workflow recipes |
+
+The decisive rule is that the system should NOT inject all layers by default. It should retrieve the smallest useful set for the moment at hand — a code edit rarely needs the org glossary, and a persona-continuity preference rarely belongs in a one-off sub-task. Injecting every layer everywhere recreates exactly the stale, dense context that compaction and isolation exist to prevent.
+
 ## When to reach for it
 
 - When a task will span more than a few sessions and cannot be completed in a single context window.
@@ -32,3 +45,4 @@ A single context window cannot hold the full history of a week-long project. Lon
 - `patterns/persist-environment-facts.md`
 - `patterns/write-select-compress-isolate.md`
 - `patterns/subagents-as-context-sinks.md`
+- `patterns/scope-and-expire-memory.md`

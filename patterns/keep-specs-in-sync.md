@@ -8,6 +8,18 @@ dimensions: workflow-discipline
 
 Specifications and implementations drift the moment they are separated. A spec written before implementation is an aspiration; after implementation begins, it is a liability if not updated. When an agent (or a human) reads a stale spec and builds on it, the resulting work diverges from reality in ways that compound — each layer of work built on the wrong foundation multiplies the rework cost. Keeping specs in sync means treating specification updates as part of the implementation task, not as documentation cleanup to be deferred. The spec is the source of truth for what the system is *supposed* to do; the code is the evidence of what it *actually* does. Both must be current.
 
+Drift has a second, subtler source: intent itself is not static. As stakeholders react to concrete artifacts, their understanding of what they want changes, so a spec written cleanly at the start can be wrong by the middle of the project — not because anyone made an error, but because the goal moved. A workflow that keeps the spec faithful to the *original* intent while the *actual* intent has shifted is optimizing against a dead artifact. The remedy is deliberate **intent refresh points** — moments where the spec is re-checked against what the organization now wants:
+
+- after a prototype review;
+- after user testing;
+- after discovering a technical constraint that changes what is feasible;
+- after a regulatory or compliance interpretation;
+- after production feedback;
+- after a significant bug report reveals a wrong assumption;
+- after a model generates something surprising but better than what was asked for.
+
+The goal is not endless churn — most of these checkpoints will confirm the spec is still right. The goal is to make sure that when intent has genuinely moved, the spec moves with it, rather than letting the team build faithfully toward a target no one wants anymore.
+
 ## When to reach for it
 
 - Every time implementation reveals that a specified behavior is wrong, ambiguous, or impossible — update the spec before writing the fix, not after.

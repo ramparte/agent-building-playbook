@@ -6,7 +6,7 @@ dimensions: taste
 
 ## What it is
 
-An agent is a force multiplier, not a substitute for judgment. When an experienced practitioner directs agents, their pattern recognition, their sense of what matters, and their ability to evaluate output get amplified across many more tasks than they could execute manually. When someone without that experience directs the same agents, they get more of what they can already produce — more volume, more speed, but the same quality of judgment, applied at higher velocity. This is the inversion that makes experience matter more in an AI-first world, not less: the agent removes the execution bottleneck and exposes the judgment bottleneck. A developer with deep knowledge of a domain can use agents to accomplish in a day what previously took a month — but that month's worth of work reflects the developer's judgment. A developer without domain knowledge using the same agents produces a month's worth of plausible-looking output, quickly, with the same limitations in understanding that would have produced poor work manually. Experience and taste are not made less important by agents — they are the limiting factor when agents remove everything else.
+An agent is a force multiplier, not a substitute for judgment. When an experienced practitioner directs agents, their pattern recognition, their sense of what matters, and their ability to evaluate output get amplified across many more tasks than they could execute manually. When someone without that experience directs the same agents, they get more of what they can already produce — more volume, more speed, but the same quality of judgment, applied at higher velocity. This is the inversion that makes experience matter more in an AI-first world, not less: the agent removes the execution bottleneck and exposes the judgment bottleneck. A developer with deep knowledge of a domain can use agents to accomplish in a day what previously took a month — but that month's worth of work reflects the developer's judgment. A developer without domain knowledge using the same agents produces a month's worth of plausible-looking output, quickly, with the same limitations in understanding that would have produced poor work manually. Experience and taste are not made less important by agents — they are the limiting factor when agents remove everything else. As agents absorb more of the execution, the blast radius of each human judgment grows: a single decision now propagates across far more work than one person could ever have done by hand, which makes good judgment more valuable, not less.
 
 ## When to reach for it
 
@@ -32,3 +32,5 @@ An agent is a force multiplier, not a substitute for judgment. When an experienc
 - `patterns/develop-your-taste.md`
 - `patterns/find-the-hard-stuff.md`
 - `patterns/demand-independent-proof.md`
+- `patterns/leverage-over-efficiency.md`
+- `patterns/coaches-and-players.md`

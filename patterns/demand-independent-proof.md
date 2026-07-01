@@ -8,6 +8,20 @@ dimensions: reliability
 
 When an agent or pipeline step reports success, that report is self-issued testimony from the entity most motivated to appear successful. Independent proof means the evidence of success comes from a source the agent did not produce: a file written to disk and readable by a separate process, a test suite that passes under a fresh invocation, a downstream system that consumed the output and confirmed it, or a human who ran the verification command themselves. The distinction matters because agents hallucinate completion, misread their own output, and conflate "I attempted the action" with "the action succeeded." Demanding independent proof breaks that conflation structurally — the verification path does not route through the claimant.
 
+The deeper reframing is evidence, not confidence. A model saying "this is done" is not evidence — it is confidence, which is cheap and uncorrelated with truth. A reviewer saying "looks good" may also be insufficient, because a glance is not an inspection. What agentic systems need instead are proof artifacts: durable, inspectable objects that establish a specific claim about the work and outlive the moment of acceptance. Useful proof artifacts, and what each one establishes:
+
+- **Test results** — unit, integration, mutation, property, regression, and end-to-end behavior is correct under a fresh run.
+- **Visual diffs** — the UI changed as intended and did not visibly regress elsewhere.
+- **Before/after video** — a real user scenario can actually be completed in the real interface.
+- **Browser traces** — the agent exercised the application through user-visible paths, not just the code.
+- **Log analysis** — runtime behavior matches expectations under real execution.
+- **Performance reports** — latency, cost, throughput, or resource usage improved or stayed within bounds.
+- **Security scan output** — known policy, vulnerability, or dependency issues were checked.
+- **Human acceptance note** — an accountable stakeholder approved a high-risk or ambiguous decision.
+- **Rollout status** — a feature flag, canary, or staged deployment proceeded safely under real exposure.
+
+The artifact must be durable and inspectable, not a transient pass that scrolls out of a log. If a future agent or human cannot look at the record and understand why the work was accepted, the system has lost part of its institutional memory — and the next decision has to re-derive trust from scratch.
+
 ## When to reach for it
 
 - After any agent step whose output is used as input to a subsequent step — verify the output independently before the next step consumes it.
@@ -26,3 +40,8 @@ When an agent or pipeline step reports success, that report is self-issued testi
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends external verification of agent outputs and human-in-the-loop checkpoints as the primary mechanism for catching false success reports
 - Amplifier — https://github.com/microsoft/amplifier — the verification-before-completion skill: explicitly prohibits success claims without running and reading the output of a verification command in the current session
+
+## Related
+
+- `patterns/video-driven-development.md`
+- `patterns/critic-applications.md`
