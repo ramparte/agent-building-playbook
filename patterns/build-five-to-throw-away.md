@@ -25,6 +25,7 @@ What happens to the variants afterward is flexible: sometimes all five die and o
 - When the requirements are actually understood — just build it; parallel variants are pure waste when there's nothing left to discover.
 - When a single spike answers the question. If the unknown is the problem itself rather than your preferences, one throwaway build is enough — that's `implement-to-learn`.
 - When the variants would create durable side effects (production writes, provisioned infrastructure, sent messages) — the throwaway assumption breaks when the builds leave residue.
+- When compute budget is the constraint rather than wall-clock time — five builds cost roughly five times the tokens even though they finish together.
 
 ## Exemplars
 
