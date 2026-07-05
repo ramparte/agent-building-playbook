@@ -34,3 +34,4 @@ Taste is the capacity to recognize the difference between good and good-enough, 
 - `patterns/eval-driven-development.md`
 - `patterns/leverage-over-efficiency.md`
 - `patterns/coaches-and-players.md`
+- `patterns/build-five-to-throw-away.md`

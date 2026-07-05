@@ -27,3 +27,8 @@ Cheap software extends this beyond the builder's own understanding: a prototype 
 
 - The term "spike" in Extreme Programming names this pattern explicitly: a time-boxed experiment to gain knowledge, with the explicit expectation that the spike code is discarded when the knowledge is gained.
 - Amplifier session workflows — implementation attempts that fail and are then retried with a better task definition are a form of implement-to-learn at the orchestration level.
+
+## Related
+
+- `patterns/build-five-to-throw-away.md`
+- `patterns/hang-up-call-back.md`
