@@ -26,6 +26,8 @@ An agent is a force multiplier, not a substitute for judgment. When an experienc
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: notes that agent evaluation and the ability to recognize when agent output is wrong is as important as the agent's capability — the human's judgment is the system's quality gate
 - Amplifier — https://github.com/microsoft/amplifier — The Amplifier philosophy emphasizes that agents should be used to execute specified tasks, not to make design decisions; keeping judgment in human hands while delegating execution is the design that makes experience amplification work correctly
+- Drew Breunig, "10 Lessons for Agentic Coding" — https://www.dbreunig.com/2026/05/04/10-lessons-for-agentic-coding.html — Lesson 9 directly names this pattern; the essay this pattern distills
+- Becker et al., "Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity" (arXiv:2507.09089) — https://arxiv.org/abs/2507.09089 — RCT finding that AI increased experienced developers' task-completion time by 19%, underscoring that amplification requires deliberate skill in directing agents, not passive tool adoption
 
 ## Related
 

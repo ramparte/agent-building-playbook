@@ -26,6 +26,7 @@ Every problem has a surface difficulty and a real difficulty. The surface diffic
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: emphasizes that agent failure modes are almost always in the hard interactions at system boundaries (tool use, context management, ambiguous instructions), not in the model's core reasoning — the hard stuff is at the edges, not the center
 - Amplifier — https://github.com/microsoft/amplifier — The multi-agent patterns in Amplifier emerge from repeated contact with the genuinely difficult parts of agent orchestration: context limits, delegation economics, state handoff — not from upfront architectural speculation
+- Drew Breunig, "10 Lessons for Agentic Coding" — https://www.dbreunig.com/2026/05/04/10-lessons-for-agentic-coding.html — Lesson 6 "The hard work is where the value is": the essay this pattern most directly distills; agents pull attention toward tractable output, making deliberate navigation toward hard constraints essential
 
 ## Related
 

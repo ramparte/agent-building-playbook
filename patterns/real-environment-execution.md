@@ -27,6 +27,8 @@ An agent that tests a deployment by running it against a mock, a stub, or a redu
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: emphasizes that agent tool calls should interact with real systems to generate real evidence rather than simulated responses that tell agents only what they expect to hear
 - Amplifier — https://github.com/microsoft/amplifier — the digital twin universe pattern: provides real container environments structurally identical to production for exactly this reason — so agents can run real workloads and observe real outcomes before changes reach production
+- Adam Wiggins, "The Twelve-Factor App: X. Dev/Prod Parity" — https://12factor.net/dev-prod-parity — the canonical 2011 articulation: "Keep development, staging, and production as similar as possible"; the foundational SE principle this pattern applies to agent workload environments
+- Cindy Sridharan, "Testing in Production: the hard parts" — https://copyconstruct.medium.com/testing-in-production-the-hard-parts-3f06cefaf592 — extends dev/prod parity to distributed systems; argues that simulation produces confidence rather than knowledge, and that blast radius management — not avoidance — is the right response to running real workloads in real places
 
 ## Related
 

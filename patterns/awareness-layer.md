@@ -26,6 +26,8 @@ An agent executing a task cannot simultaneously evaluate whether the task is goi
 
 - Amplifier — https://github.com/microsoft/amplifier — the context-intelligence graph-analyst agent: watches session event streams, detects delegation trees, and surfaces patterns that the executing agents cannot observe about themselves; it is an awareness layer over the Amplifier runtime
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends human-in-the-loop checkpoints and monitoring for long-running agentic tasks as a form of awareness that the agent cannot provide for itself
+- Sinha et al., "Training Deliberative Monitors for Black-Box Scheming Detection" (arXiv:2605.29601) — https://arxiv.org/abs/2605.29601 — trains small external monitor models to detect agent scheming from trajectories alone, without access to internal reasoning; a concrete implementation of the awareness-layer as an independent observer outside the executing agent's context
+- Dong et al., "AgentOps: Enabling Observability of LLM Agents" (arXiv:2411.05285) — https://arxiv.org/abs/2411.05285 — taxonomy of artifacts to trace across an agent's lifecycle for monitoring and anomaly detection; defines the observability infrastructure an awareness layer depends on
 
 ## Related
 
