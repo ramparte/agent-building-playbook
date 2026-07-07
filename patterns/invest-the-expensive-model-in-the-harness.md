@@ -22,6 +22,10 @@ Model routing is usually discussed as a first-order cost trade: put the expensiv
 - When the harness is already good enough and the bottleneck is the task's intrinsic difficulty — then the expensive model belongs on the task, not the scaffolding.
 - When you cannot measure whether the harness change helped — blind harness tinkering with the expensive model burns budget without the second-order payoff.
 
+## Exemplars
+
+- Lee et al., "Meta-Harness: End-to-End Optimization of Model Harnesses" (arXiv:2603.28052) — https://arxiv.org/abs/2603.28052 — empirical support: automated harness optimization yields better results than model upgrades; a single optimized harness improved accuracy across five held-out models, demonstrating that orchestration is the transferable, reusable investment
+
 ## Related
 
 - `patterns/match-model-to-stage.md`
