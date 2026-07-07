@@ -24,6 +24,9 @@ Prompt engineering focuses on the wording of the instruction: how you phrase the
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: frames context construction and retrieval strategy as core agent design decisions, distinct from prompt crafting
 - Anthropic — https://www.anthropic.com/news/contextual-retrieval — Contextual Retrieval: demonstrates that what you inject into context (and how you pre-process it) dominates retrieval quality, not just the query text
+- Drew Breunig — https://www.dbreunig.com/2025/07/24/why-the-term-context-engineering-matters.html — "Why Context Engineering Matters" (July 2025): the canonical essay defending context engineering as a discipline distinct from prompt engineering; also surveys how the term took hold after Karpathy's endorsement
+- LangChain (Lance Martin) — https://www.langchain.com/blog/context-engineering-for-agents — "Context Engineering for Agents" (July 2025): introduces the write/select/compress/isolate framework; parallel formalization of this pattern from an agent-systems perspective
+- Anthropic — https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents — Effective Context Engineering for AI Agents (Sept 2025): operationalizes context engineering with strategies for curating tokens across multi-turn agent sessions; the most complete engineering treatment of the concept
 
 ## Related
 

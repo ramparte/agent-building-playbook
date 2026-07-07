@@ -37,6 +37,10 @@ The decisive rule is that the system should NOT inject all layers by default. It
 ## Exemplars
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: explicitly recommends compaction and external memory files for long-running agent tasks as a first-class context management strategy
+- Packer et al., "MemGPT: Towards LLMs as Operating Systems" (arXiv:2310.08560) — https://arxiv.org/abs/2310.08560 — canonical formalization of virtual context management with tiered memory and OS-style paging between fast and slow storage; the theoretical model most directly underlying this pattern's compaction+notes+isolation stack
+- Park et al., "Generative Agents: Interactive Simulacra of Human Behavior" (arXiv:2304.03442) — https://arxiv.org/abs/2304.03442 — empirical demonstration of a memory+reflection+retrieval architecture sustaining coherent behavior across a 25-agent simulation; an early practical grounding for long-horizon memory strategies
+- Sumers et al., "Cognitive Architectures for Language Agents" (arXiv:2309.02427) — https://arxiv.org/abs/2309.02427 — CoALA framework: formalizes modular memory layers for language agents; the layered memory taxonomy in this pattern's table directly parallels CoALA's decomposition into working, episodic, semantic, and procedural memory
+- Anthropic — https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents — Effective Context Engineering for AI Agents (Sept 2025): describes compaction (summarize-and-reinitiate) and external note files as first-class strategies; the most directly applicable engineering reference for implementing this pattern
 
 ## Related
 

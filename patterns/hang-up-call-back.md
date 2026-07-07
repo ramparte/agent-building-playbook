@@ -26,6 +26,7 @@ The fix is what you do when a customer service call goes off the rails: hang up 
 ## Exemplars
 
 - Claude Code `/rewind` (double-escape) — first-class support for rewinding the conversation to an earlier point and editing the prompt, rather than appending a correction.
+- Drew Breunig — https://www.dbreunig.com/2025/06/22/how-contexts-fail-and-how-to-fix-them.html — "How Long Contexts Fail" (June 2025): names context poisoning — when a hallucination or error embeds in context and compounds across steps — as the failure mode this pattern addresses; parallel identification of the same root problem from practitioner observation
 
 ## Related
 
