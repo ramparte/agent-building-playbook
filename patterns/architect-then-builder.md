@@ -25,6 +25,8 @@ Design and implementation are cognitively distinct activities. A model that is s
 
 - Amplifier — https://github.com/microsoft/amplifier — the superpowers bundle explicitly separates the zen-architect agent (design and specification) from the modular-builder agent (implementation); the modular-builder contract requires a complete spec before it accepts a task
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends decomposing complex tasks into planning and execution phases with explicit checkpoints between them; the architect-builder split is the orchestration-level application of this principle
+- Harper Reed — https://harper.blog/2025/02/16/my-llm-codegen-workflow-atm/ — "My LLM codegen workflow atm": practitioner account of a three-phase spec→plan→execute workflow for LLM codegen (produces spec.md, then prompt_plan.md + todo.md, then executes); popularized the discipline of completing design before touching implementation
+- Wang et al., "Plan-and-Solve Prompting: Improving Zero-Shot Chain-of-Thought Reasoning by Large Language Models" (arXiv:2305.04091) — https://arxiv.org/abs/2305.04091 — classic antecedent: formalizes plan-then-execute as a prompting strategy, showing that separating "devise a plan" from "carry out the plan" reduces errors; cognitive basis for the architect-then-builder split at the prompt level
 
 ## Related
 

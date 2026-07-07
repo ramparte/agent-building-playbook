@@ -23,6 +23,10 @@ A productive agentic workflow is rarely "all AI." The strongest systems alternat
 - When the check is harder to maintain than the failure it catches is costly — a brittle validator that breaks more often than the model does is negative leverage.
 - Before the work is stable enough to know what "checkable state" even means — rails encode an understood contract, not a guess.
 
+## Exemplars
+
+- Dex Horthy, "12-Factor Agents" — https://github.com/humanlayer/12-factor-agents — origin: Factor 8 ("Own Your Control Flow") formalizes the interleaving philosophy; the guide argues that successful agents are "mostly deterministic software with LLM steps sprinkled in at just the right points" and that owning control flow enables the transparency between tool selection and invocation needed for human oversight
+
 ## Related
 
 - `patterns/shape-work-as-an-attractor.md`

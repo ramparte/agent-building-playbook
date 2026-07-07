@@ -24,7 +24,8 @@ Orchestration logic has a tendency to grow into unmaintainable procedural code: 
 ## Exemplars
 
 - Amplifier — https://github.com/microsoft/amplifier — the recipe YAML format exposes composable primitives (step, stage, foreach, while, approval gate) that allow complex workflows to be expressed declaratively as compositions
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: identifies the building blocks of agentic behavior (prompting, tool use, multi-agent coordination) and argues for composing systems from these building blocks rather than designing monolithic pipelines
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: names five workflow primitives (prompt chaining, routing, parallelization, orchestrator-workers, evaluator-optimizer) as the composable building blocks from which production agentic systems are assembled
+- Huang & Zhou, "A Two-Dimensional Framework for AI Agent Design Patterns: Cognitive Function and Execution Topology" (arXiv:2605.13850) — https://arxiv.org/abs/2605.13850 — formalizes: defines six execution topology archetypes (Chain, Route, Parallel, Orchestrate, Loop, Hierarchy) that map directly to the composable orchestration primitives described in this pattern; proposes a 7×6 matrix of 28 named patterns arising from combining topology with cognitive function
 
 ## Related
 
