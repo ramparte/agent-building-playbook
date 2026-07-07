@@ -37,3 +37,5 @@ The goal is not endless churn — most of these checkpoints will confirm the spe
 
 - The most common source of multi-agent divergence is one sub-agent working from a spec version the orchestrator already invalidated. Sync discipline prevents this class of failure entirely.
 - Amplifier TASKS.md conventions treat the task file as a living document updated by agents as tasks progress — the same sync principle applied to project management.
+- Gojko Adzic, *Specification by Example* (2011) — https://gojko.net/books/specification-by-example/ — formalizes: living documentation as specifications kept synchronized with implementation through automated tests that serve as the single authoritative reference; 2012 Jolt Award winner
+- Cyrille Martraire, *Living Documentation* (2019) — https://www.pearson.com/en-ca/subject-catalog/p/living-documentation-continuous-knowledge-sharing-by-design/P200000009531/9780134689364 — formalizes: extends living documentation from executable tests to all knowledge artifacts; shows how automated reconciliation mechanisms prevent spec drift across the full codebase

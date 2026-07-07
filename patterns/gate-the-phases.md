@@ -26,3 +26,4 @@ Development work passes through recognizable phases: understanding the problem, 
 
 - The Amplifier superpowers workflow structures phases explicitly: brainstorm → human approval → plan → human approval → implement → verify. Each arrow is a gate.
 - Staged deployment pipelines gate between build, test, staging, and production — the discipline is identical, applied to infrastructure rather than development workflow.
+- Robert G. Cooper, "Stage-Gate Systems: A New Tool for Managing New Products" (*Business Horizons*, 1990) — https://ideas.repec.org/a/eee/bushor/v33y1990i3p44-54.html — classic antecedent: introduced the stage-gate system of formal checkpoints requiring explicit go/kill decisions before work advances to the next phase

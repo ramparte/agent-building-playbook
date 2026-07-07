@@ -26,6 +26,7 @@ Cheap software extends this beyond the builder's own understanding: a prototype 
 ## Exemplars
 
 - The term "spike" in Extreme Programming names this pattern explicitly: a time-boxed experiment to gain knowledge, with the explicit expectation that the spike code is discarded when the knowledge is gained.
+- Ward Cunningham and Kent Beck, Spike Solution — https://c2.com/ppr/wiki/ExtremeProgrammingRoadmap/SpikeSolution.html — origin: the earliest XP definition of the spike — Kent Beck's name for a small time-boxed throwaway implementation whose sole purpose is to resolve a knowledge gap
 - Amplifier session workflows — implementation attempts that fail and are then retried with a better task definition are a form of implement-to-learn at the orchestration level.
 
 ## Related
