@@ -23,6 +23,11 @@ Many domains — government, insurance, healthcare-like workflows, planning, ent
 - Observation would violate privacy, confidentiality, or consent constraints that cannot be satisfied.
 - The behavior you would observe is itself a broken workaround you are about to faithfully encode — pair this with checking whether the workflow should exist at all.
 
+## Exemplars
+
+- Beyer & Holtzblatt, Contextual Inquiry — https://www.nngroup.com/articles/contextual-inquiry/ — the foundational HCI field-research method: observe users performing their actual work and ask questions in the moment to surface tacit knowledge they cannot articulate when removed from context; the original systematic form of the shadowing step this pattern describes.
+- Michael Polanyi, *The Tacit Dimension* (1966) — https://en.wikipedia.org/wiki/Tacit_knowledge — philosophical grounding for why shadowing is necessary: domain practitioners hold knowledge they do not experience as knowledge ("we can know more than we can tell"), making observation an irreplaceable elicitation method.
+
 ## Related
 
 - `patterns/mine-transcripts.md`
