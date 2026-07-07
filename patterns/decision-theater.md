@@ -23,6 +23,10 @@ A decision theater is a small interactive artifact — a spreadsheet, model, sim
 - The assumptions are genuinely unknowable and the model would manufacture false precision that anchors people on invented numbers.
 - The disagreement is about values, not facts — a parameterized model can obscure a values conflict that needs to be named directly.
 
+## Exemplars
+
+- ASU Decision Theater — https://dt.asu.edu/ — institutional exemplar: an Arizona State University facility that answers "what if" questions by transforming data into interactive visualizations and computational models, enabling stakeholders to experiment with scenarios and examine the consequences of different assumptions before committing to decisions.
+
 ## Related
 
 - `patterns/people-edit-better-than-they-author.md`
