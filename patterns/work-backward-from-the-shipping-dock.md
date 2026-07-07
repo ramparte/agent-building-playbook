@@ -25,6 +25,7 @@ Most teams design an agentic workflow forward — from the idea toward the model
 ## Exemplars
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends defining success criteria and verification before building the agent loop, the design-from-acceptance-backward stance applied to agents
+- Colin Bryar and Bill Carr, *Working Backwards* (2021) — https://workingbackwards.com/concepts/working-backwards-pr-faq-process/ — classic antecedent: Amazon's PR/FAQ method requires writing a customer-facing press release before any development begins, forcing teams to define the acceptance boundary first; the management precursor to designing agentic workflows backward from their shipping dock.
 
 ## Related
 

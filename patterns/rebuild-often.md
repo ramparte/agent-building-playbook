@@ -26,6 +26,8 @@ Systems built through incremental changes accumulate invisible assumptions. Each
 
 - Infrastructure-as-code practitioners treat "destroy and recreate" as a first-class hygiene operation — the environment definition is only real if it survives a rebuild from scratch.
 - The Amplifier pattern of running `amplifier reset` to clear cached state and verify the system works from a clean installation is rebuild discipline applied to the toolchain itself.
+- Chad Fowler, "Trash Your Servers and Burn Your Code" (2013) — https://chadfowler.com/articles/trash-your-servers-and-burn-your-code.html — origin: coined immutable infrastructure — treat servers as disposable artifacts rebuilt from automation rather than long-lived systems patched in place; if a system is absolutely known to have been created via automation and never changed since creation, most infrastructure problems disappear.
+- Martin Fowler, "Phoenix Server" (2012) — https://martinfowler.com/bliki/PhoenixServer.html — formalizes: the Phoenix Server pattern contrasts snowflake servers (which accumulate undocumented change) with phoenix servers that are periodically destroyed and rebuilt from their definitions, surfacing configuration drift regardless of source.
 
 ## Related
 

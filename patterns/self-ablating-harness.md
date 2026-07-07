@@ -23,6 +23,11 @@ Every scaffolding step in a workflow was added to compensate for something a mod
 - In the middle of high-stakes delivery — ablate against a baseline in a safe context, not on the run you cannot afford to get wrong.
 - When you cannot roll back — only ablate what you can restore if quality drops.
 
+## Exemplars
+
+- Huang and Sun, "Does the Harness Matter? Lessons from ALE-Claw on Agents' Last Exam" (2025) — https://agents-last-exam.org/blogs/harness-matters — empirical support: stripping a product-layer harness to its minimal form maintained accuracy while cutting 44% of input tokens and 41% of cost; the authors observe that "much of today's scaffolding exists to compensate for current model limitations," directly motivating scheduled ablation passes.
+- Lin et al., "Agentic Harness Engineering: Observability-Driven Automatic Evolution of Coding-Agent Harnesses" (arXiv:2604.25850) — https://arxiv.org/abs/2604.25850 — empirical support: closed-loop system that evolves harness components over iterations via component, experience, and decision observability, demonstrating that harnesses are living artifacts to be pruned rather than fixed structures to preserve.
+
 ## Related
 
 - `patterns/invest-the-expensive-model-in-the-harness.md`
