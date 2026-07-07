@@ -46,7 +46,7 @@ fi
 
 # Build rows: tag TAB title TAB path TAB one_liner
 for file in "${files[@]}"; do
-    path="$(basename "$file")"
+    path="$file"
     title="$(extract_field title "$file")"
     one_liner="$(extract_field one_liner "$file")"
     dimensions="$(extract_field dimensions "$file")"
