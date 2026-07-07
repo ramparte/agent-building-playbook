@@ -25,4 +25,4 @@ An agentic system is not a prompt — it is a loop. The loop determines what the
 ## Exemplars
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: describes the agentic loop explicitly as the core primitive and recommends designing augmented LLM, prompt chaining, routing, parallelization, orchestrator, and evaluator components before implementation
-- Anthropic — https://www.anthropic.com/news/claude-computer-use — Claude's Computer Use: the perceive-act-verify loop (screenshot → decide → act → screenshot again) is what makes computer use reliable — each screenshot is the verification that the previous action had the intended effect
+- Anthropic — https://www.anthropic.com/news/developing-computer-use — Developing a computer use model: describes the perceive-decide-act loop concretely — Claude looks at a screenshot, computes the cursor movement, acts, and views the next screenshot, a "flipbook" view of the screen assembled one frame per action
