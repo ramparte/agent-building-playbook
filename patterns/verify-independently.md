@@ -24,3 +24,4 @@ When an agent reports that a step is complete, that report is a claim about an e
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends human-in-the-loop checkpoints and explicit verification of agent outputs, not trust in self-reports
 - Amplifier — https://github.com/microsoft/amplifier — verification-before-completion skill: requires running verification commands and reading output before any success claim is made
+- Huang et al., "Large Language Models Cannot Self-Correct Reasoning Yet" (arXiv:2310.01798) — https://arxiv.org/abs/2310.01798 — empirical support: LLMs fail to reliably identify and fix their own reasoning errors without external feedback; self-reports of correctness should not be trusted as verification
