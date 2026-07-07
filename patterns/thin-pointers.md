@@ -25,6 +25,8 @@ When agents hand off work to one another, the temptation is to inline the conten
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends file-based artifacts and tool-call references as the primary mechanism for inter-agent state transfer, avoiding in-context content accumulation
 - Amplifier — https://github.com/microsoft/amplifier — the delegate() pattern returns summaries by default, with the full result written to artifacts the orchestrator can read by reference if needed
+- Curme and Daugherty (LangChain) — https://www.langchain.com/blog/context-management-for-deepagents — formalizes: Deep Agents replaces tool responses exceeding 20k tokens with a filesystem path and 10-line preview, then truncates older writes at 85% context utilization—a direct implementation of thin pointers for inter-step context management
+- Breunig, "How to Fix Your Context" — https://www.dbreunig.com/2025/06/26/how-to-fix-your-context.html — formalizes: names "Context Offloading" (storing data outside the LLM context via external tools) as a first-class technique — the thin-pointer move applied to agent-to-storage transfer
 
 ## Related
 
