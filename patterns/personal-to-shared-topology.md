@@ -25,7 +25,7 @@ Individual practitioners become remarkably effective with agents, evolving perso
 
 ## Exemplars
 
-- Mel Conway, "How Do Committees Invent?" (Datamation, 1968) — http://www.melconway.com/Home/Committees_Paper.html — classic antecedent: demonstrates that systems mirror their organization's communication structure; the inverse Conway maneuver — deliberately restructuring team topology to achieve a desired system shape — grounds this pattern's prescription to build shared artifacts and review norms on top of personal effectiveness
+- Mel Conway, "How Do Committees Invent?" (Datamation, 1968) — http://www.melconway.com/Home/Committees_Paper.html — classic antecedent: demonstrates that systems mirror their organization's communication structure; the "inverse Conway maneuver" — deliberately restructuring team topology to achieve a desired system shape — is a later practitioner extension of Conway's Law (not from the 1968 paper) and grounds this pattern's prescription to build shared artifacts and review norms on top of personal effectiveness
 
 ## Related
 

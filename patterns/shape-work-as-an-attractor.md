@@ -28,7 +28,7 @@ You carve the bowl with feedback edges: wire the graph so a failed check routes 
 ## Exemplars
 
 - Nicolas Tacheny, "Geometric Dynamics of Agentic Loops in Large Language Models" (arXiv:2512.10350) — https://arxiv.org/abs/2512.10350 — formalizes iterative LLM systems as discrete dynamical systems, classifying loops as contractive (converging to attractors), oscillatory, or exploratory; shows prompt design directly controls which regime emerges — theoretical grounding for the claim that workflow structure determines convergence
-- Adam Bricknell, "Mapping LLM attractor states" (LessWrong, Feb 2026) — https://www.lesswrong.com/posts/rvbjZMp6aEDn2jiyp/mapping-llm-attractor-states — empirical evidence that LLM outputs cluster into distinct stable attractor regions across diverse conversations; supports the premise that convergent states exist and can be designed toward
+- Adam Bricknell, "Mapping LLM attractor states" (LessWrong, Feb 2026) — https://www.lesswrong.com/posts/rvbjZMp6aEDn2jiyp/mapping-llm-attractor-states — empirical evidence that LLM outputs cluster into distinct stable attractor regions across diverse conversations; supports the premise that convergent states exist and can be empirically identified
 
 ## Related
 

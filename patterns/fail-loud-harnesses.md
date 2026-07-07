@@ -22,5 +22,5 @@ A test harness that handles agent failures "helpfully" — by falling back to a 
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: discusses tool design including the principle that tools should surface errors clearly rather than masking them
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: discusses tool design quality, including poka-yoke conventions that make tool misuse structurally harder and the use of tool call results as ground truth — the design mindset this pattern extends to error handling
 - Jim Shore, "Fail Fast" (2004) — https://www.jamesshore.com/v2/blog/2004/fail-fast — classic antecedent: the foundational statement of the principle that software should fail immediately and visibly on errors rather than silently working around them, producing more robust systems with fewer compounding failures

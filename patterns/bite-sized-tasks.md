@@ -24,7 +24,7 @@ A task that is too large to review is too large to trust. When a unit of work sp
 
 ## Exemplars
 
-- The Amplifier superpowers workflow requires tasks to be small enough for TDD: write one failing test, implement minimally, commit. That cycle enforces bite-sized task discipline at the implementation level.
+- Amplifier — https://github.com/microsoft/amplifier-bundle-superpowers — the superpowers bundle structures development as TDD-driven workflows (brainstorm, plan, execute, verify, finish); test-driven execution — one failing test, minimal implementation — enforces bite-sized task discipline at the implementation level
 - Conventional commit messages that need more than one line in the subject to describe the change are a reliable signal that the commit contains more than one task.
 - Harper Reed, "My LLM Codegen Workflow Atm" — https://harper.blog/2025/02/16/my-llm-codegen-workflow-atm/ — formalizes: the planning step produces chunks "small enough to be implemented safely with strong testing, but big enough to move the project forward"; the model iterates until steps are right-sized
-- Bill Wake, "INVEST in Good Stories, and SMART Tasks" — https://xp123.com/articles/invest-in-good-stories-and-smart-tasks/ — classic antecedent: the "Small" criterion in INVEST holds that a story too large to estimate is too risky to start; tasks earn the right to be worked by being independently completable
+- Bill Wake, "INVEST in Good Stories, and SMART Tasks" — https://xp123.com/articles/invest-in-good-stories-and-smart-tasks/ — classic antecedent: the "Small" criterion in INVEST holds that a story too large to scope reliably should be split further before work begins

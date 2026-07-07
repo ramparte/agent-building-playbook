@@ -25,8 +25,8 @@ Many domains — government, insurance, healthcare-like workflows, planning, ent
 
 ## Exemplars
 
-- Beyer & Holtzblatt, Contextual Inquiry — https://www.nngroup.com/articles/contextual-inquiry/ — the foundational HCI field-research method: observe users performing their actual work and ask questions in the moment to surface tacit knowledge they cannot articulate when removed from context; the original systematic form of the shadowing step this pattern describes.
-- Michael Polanyi, *The Tacit Dimension* (1966) — https://en.wikipedia.org/wiki/Tacit_knowledge — philosophical grounding for why shadowing is necessary: domain practitioners hold knowledge they do not experience as knowledge ("we can know more than we can tell"), making observation an irreplaceable elicitation method.
+- Beyer & Holtzblatt, Contextual Inquiry (via Nielsen Norman Group, Kim Flaherty, 2020) — https://www.nngroup.com/articles/contextual-inquiry/ — the foundational HCI field-research method: observe users performing their actual work and ask questions in the moment to surface knowledge practitioners cannot articulate when removed from task context; the original systematic form of the shadowing step this pattern describes.
+- Michael Polanyi, *The Tacit Dimension* (1966) — https://en.wikipedia.org/wiki/Tacit_knowledge — philosophical grounding (via the Wikipedia article on tacit knowledge) for why shadowing is necessary: domain practitioners hold knowledge they do not experience as knowledge ("we can know more than we can tell"), making observation an irreplaceable elicitation method.
 
 ## Related
 

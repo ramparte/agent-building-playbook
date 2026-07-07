@@ -24,7 +24,7 @@ Taste is the capacity to recognize the difference between good and good-enough, 
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: the ability to distinguish agentic patterns that are genuinely reliable from those that look reliable in demos is a form of taste that develops through direct evaluation experience, not from reading descriptions of the patterns
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: catalogs the canonical agentic workflow patterns (prompt chaining, routing, parallelization, orchestrator-workers, evaluator-optimizer) as composable building blocks — a shared vocabulary for recognizing which design suits which class of problem
 - Amplifier — https://github.com/microsoft/amplifier — The philosophy documents in the Amplifier ecosystem (LANGUAGE_PHILOSOPHY.md, MODULAR_DESIGN_PHILOSOPHY.md) represent distilled taste — not just rules, but calibrated judgment about what produces good outcomes over time
 - Drew Breunig, "10 Lessons for Agentic Coding" — https://www.dbreunig.com/2026/05/04/10-lessons-for-agentic-coding.html — Lesson 8: as agent output volume outpaces external feedback, taste becomes the primary quality gate; the essay this pattern distills most directly
 

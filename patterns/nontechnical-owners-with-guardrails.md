@@ -26,7 +26,7 @@ Agentic software lowers the barrier between understanding a problem and implemen
 ## Exemplars
 
 - Gartner IT Glossary, "Citizen Developer" — https://www.gartner.com/en/information-technology/glossary/citizen-developer — classic antecedent: names the practitioner persona and the governance contract (development in IT-sanctioned environments, with rules and guardrails) that distinguishes citizen development from shadow IT.
-- Microsoft Inside Track, "Empowerment with good governance: How our citizen developers get the most out of the Microsoft Power Platform" — https://www.microsoft.com/insidetrack/blog/empowerment-with-good-governance-how-our-citizen-developers-get-the-most-out-of-the-microsoft-power-platform/ — empirical support: documents Microsoft's own "protect, measure, enforce" governance model for 170,000+ citizen-built assets, with tiered permission reviews and training requirements before production access.
+- Microsoft Inside Track, "Empowerment with good governance: How our citizen developers get the most out of the Microsoft Power Platform" — https://www.microsoft.com/insidetrack/blog/empowerment-with-good-governance-how-our-citizen-developers-get-the-most-out-of-the-microsoft-power-platform/ — empirical support: documents Microsoft's own "protect, measure, enforce" governance model across 1 million+ Power Platform assets (including 170,000 Power Apps), with tiered permission reviews based on risk rating before production access.
 
 ## Related
 

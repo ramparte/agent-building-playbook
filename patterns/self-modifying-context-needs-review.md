@@ -25,7 +25,7 @@ An agent that can edit its own persona file or instruction set is one of the mos
 
 ## Exemplars
 
-- Packer et al., "MemGPT: Towards LLMs as Operating Systems" (arXiv:2310.08560) — https://arxiv.org/abs/2310.08560 — formalizes: self-directed memory read/write via tool calling (core_memory_append and archival_memory_search) demonstrates both the power of agent-controlled persistence and the architectural risk of unchecked memory modification that this pattern's review gate addresses.
+- Packer et al., "MemGPT: Towards LLMs as Operating Systems" (arXiv:2310.08560) — https://arxiv.org/abs/2310.08560 — formalizes: self-directed memory read/write via tool calling demonstrates both the power of agent-controlled persistence and the architectural risk of unchecked memory modification that this pattern's review gate addresses.
 - Simon Willison, "Prompt injection attacks against GPT-3" — https://simonwillison.net/2022/Sep/12/prompt-injection/ — origin: first named and defined prompt injection (2022), the foundational attack vector showing how untrusted input can override agent instructions — the same risk that makes self-modifying context dangerous without a review gate, since injected content can trigger memory writes.
 
 ## Related

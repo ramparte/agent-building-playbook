@@ -25,7 +25,7 @@ In legacy and bureaucratic domains, the process you are asked to automate is fre
 
 ## Exemplars
 
-- Michael Hammer, "Reengineering Work: Don't Automate, Obliterate" (Harvard Business Review, July–August 1990) — https://hbr.org/1990/07/reengineering-work-dont-automate-obliterate — canonical origin: the seminal article arguing that organizations should obliterate dysfunctional processes rather than embed them in software, coining the phrase "stop paving the cow paths."
+- Michael Hammer, "Reengineering Work: Don't Automate, Obliterate" (Harvard Business Review, July–August 1990) — https://hbr.org/1990/07/reengineering-work-dont-automate-obliterate — origin: the seminal article arguing that organizations should obliterate dysfunctional processes rather than embed them in software; the "paving the cow paths" phrase circulates from this reengineering tradition (HBR full text is paywalled; title and thesis verified).
 
 ## Related
 

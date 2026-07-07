@@ -26,7 +26,7 @@ A simulated review squad is a panel of distinct perspectives — expert user, no
 ## Exemplars
 
 - Li et al., "CAMEL: Communicative Agents for 'Mind' Exploration of Large Language Model Society" (arXiv:2303.17760) — https://arxiv.org/abs/2303.17760 — NeurIPS 2023; early work on sustaining distinct LLM personas through extended cooperative tasks via role-playing and inception prompting; a direct technical antecedent of multi-persona review.
-- Qian et al., "ChatDev: Communicative Agents for Software Development" (arXiv:2307.07924) — https://arxiv.org/abs/2307.07924 — assigns specialized social roles (requirements analyst, programmer, test engineer) to LLM agents collaborating across a software lifecycle; demonstrates role-grounded multi-agent review in a production workflow context.
+- Qian et al., "ChatDev: Communicative Agents for Software Development" (arXiv:2307.07924) — https://arxiv.org/abs/2307.07924 — assigns specialized agent roles across the design, coding, and testing phases of a software lifecycle; demonstrates role-grounded multi-agent review in a production workflow context.
 - Hong et al., "MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework" (arXiv:2308.00352) — https://arxiv.org/abs/2308.00352 — encodes Standardized Operating Procedures into a panel of agents (product manager, architect, engineer, QA), each generating role-appropriate artifacts; shows how grounding simulated reviewers in domain process knowledge increases output quality.
 
 ## Related

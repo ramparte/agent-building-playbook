@@ -28,7 +28,7 @@ The opposing anti-pattern is the giant prompt as operating system: cramming all 
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends structured workflow specifications over ad-hoc agent conversation for complex tasks, citing recoverability and auditability as primary benefits
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends structured workflow specifications over ad-hoc agent conversation for complex multi-step tasks
 - Amplifier — https://github.com/microsoft/amplifier — the Amplifier recipe system (YAML-declared steps, staged execution, approval gates, and automatic checkpointing) is the canonical implementation of this pattern: conversation-time instructions become recipe-time specifications
 - Cornelia Davis / Temporal.io — https://temporal.io/blog/durable-execution-meets-ai-why-temporal-is-the-perfect-foundation-for-ai — durable execution platform that implements recipe semantics natively: workflow state is recorded as an event history, and execution resumes from the last completed step after interruption without re-invoking prior activities
 - Dex Horthy, "12-Factor Agents" (humanlayer, 2025) — https://github.com/humanlayer/12-factor-agents — Factor 8 ("Own your control flow") argues against purely conversational agent loops in favor of structured execution graphs with defined interruption points that developers, not chat history, control

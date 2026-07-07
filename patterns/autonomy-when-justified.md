@@ -23,7 +23,7 @@ Autonomy in agentic systems is not free. Every capability you give an agent to a
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends that agents minimize their footprint (request only necessary permissions, prefer reversible actions, confirm with users when scope is unclear) as a default posture; autonomy beyond this requires explicit justification
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends finding the simplest solution possible and adding agentic autonomy only when simpler solutions fall short; autonomous agents carry the potential for compounding errors, warranting sandboxed testing and human oversight checkpoints
 - Amplifier — https://github.com/microsoft/amplifier — the recipe system's approval gate primitive (staging) provides the mechanism for adding human checkpoints before autonomous execution proceeds; autonomy is opt-in at each stage boundary
 - Feng, McDonald & Zhang, "Levels of Autonomy for AI Agents" (arXiv:2506.12469) — https://arxiv.org/abs/2506.12469 — formalizes: proposes five escalating autonomy levels characterized by the user's role (operator → collaborator → consultant → approver → observer); treats autonomy as a deliberate design decision separate from capability, providing a structured vocabulary for "how much autonomy is justified here"
 

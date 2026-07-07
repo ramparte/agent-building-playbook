@@ -24,9 +24,9 @@ Stakeholders rarely state needs; they state implementations. They ask for a fiel
 
 ## Exemplars
 
-- Gause & Weinberg, *Exploring Requirements: Quality Before Design* (1989) — https://geraldmweinberg.com/Site/Exploring_Requirements.html — classic requirements-engineering text focused on probing past stated solutions to find underlying needs; reviewers describe it as "full of tricks for eliciting from users what they cannot clearly communicate."
-- The XY Problem — https://xyproblem.info — computing community shorthand for this pattern: a questioner asks about their attempted solution (X) rather than the actual goal (Y); originates in Eric Raymond's "How To Ask Questions The Smart Way."
-- Clayton Christensen, "Milkshake Marketing" (Harvard Business School Working Knowledge, 2011) — https://www.library.hbs.edu/working-knowledge/clay-christensens-milkshake-marketing — Jobs-to-be-Done illustration: the job a product is "hired" to do often differs from the feature or demographic the stakeholder names; recovering the underlying job requires asking what decision or outcome the stated solution is meant to serve.
+- Gause & Weinberg, *Exploring Requirements: Quality Before Design* (1989) — https://geraldmweinberg.com/Site/Exploring_Requirements.html — classic requirements-engineering text focused on probing past stated solutions to find underlying needs; reviewers describe it as "full of tricks for eliciting from users what they cannot express without your help."
+- The XY Problem — https://xyproblem.info — computing community shorthand for this pattern: a questioner asks about their attempted solution (X) rather than the actual goal (Y); the page links Eric Raymond's "How To Ask Questions The Smart Way" as related reading.
+- Carmen Nobel, "Clay Christensen's Milkshake Marketing" (Harvard Business School Working Knowledge, 2011) — https://www.library.hbs.edu/working-knowledge/clay-christensens-milkshake-marketing — reports Christensen's Jobs-to-be-Done research: the job a product is "hired" to do often differs from the feature or demographic the stakeholder names; recovering the underlying job requires asking what decision or outcome the stated solution is meant to serve.
 
 ## Related
 
