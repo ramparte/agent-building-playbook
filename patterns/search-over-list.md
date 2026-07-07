@@ -25,6 +25,8 @@ A common tool design mistake is providing a "list all" operation and expecting t
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends tools that return targeted results rather than requiring agents to filter large payloads in context
 - Anthropic — https://www.anthropic.com/news/contextual-retrieval — Contextual Retrieval: the retrieval design principle of returning high-signal-per-token results applies equally to tool outputs as to RAG retrieval
+- Anthropic, "Writing Effective Tools for AI Agents" — https://www.anthropic.com/engineering/writing-tools-for-agents — formalizes: explicitly recommends search-focused tools over list-everything, with filtering via pagination and range selection to conserve context
+- Qin et al., "ToolLLM: Facilitating Large Language Models to Master 16000+ Real-world APIs" (arXiv:2307.16789) — https://arxiv.org/abs/2307.16789 — empirical support: at 16,000+ APIs, retrieval over the tool corpus is necessary — introduces a neural API retriever as a solution to the selection problem at scale
 
 ## Related
 
