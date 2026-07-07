@@ -27,7 +27,7 @@ There is a sharper risk when the tests themselves are agent-generated. A test th
 ## Exemplars
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends evaluating agents on task completion (did the agent finish the task correctly?) rather than on process (did the agent call the right tools in the right order?), because task completion is the product's actual contract
-- Amplifier — https://github.com/microsoft/amplifier — the verification-before-completion skill requires running verification commands against the real output, not checking whether the agent reported that it ran the right commands
+- Amplifier — https://github.com/microsoft/amplifier-bundle-superpowers — the superpowers verify mode checks real command output, not whether the agent reported that it ran the right commands — "Run the command. Read the output. THEN claim."
 - Kent C. Dodds — https://kentcdodds.com/blog/testing-implementation-details — origin: names and argues the harm of testing implementation details; "the more your tests resemble the way your software is used, the more confidence they can give you" (2020)
 - Freeman & Pryce, *Growing Object-Oriented Software, Guided by Tests* (2009) — https://www.informit.com/store/growing-object-oriented-software-guided-by-tests-9780321503626 — classic antecedent: "unit-test behavior, not methods" — outside-in acceptance tests as the primary design driver, not internal state
 

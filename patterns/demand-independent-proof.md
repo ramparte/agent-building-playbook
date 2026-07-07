@@ -39,7 +39,7 @@ The artifact must be durable and inspectable, not a transient pass that scrolls 
 ## Exemplars
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends external verification of agent outputs and human-in-the-loop checkpoints as the primary mechanism for catching false success reports
-- Amplifier — https://github.com/microsoft/amplifier — the verification-before-completion skill: explicitly prohibits success claims without running and reading the output of a verification command in the current session
+- Amplifier — https://github.com/microsoft/amplifier-bundle-superpowers — the superpowers verify mode: "Run the command. Read the output. THEN claim." — success claims without running and reading verification output are named as an anti-pattern
 - Huang et al., "Large Language Models Cannot Self-Correct Reasoning Yet" (arXiv:2310.01798) — https://arxiv.org/abs/2310.01798 — empirical support: LLM self-review of reasoning degrades rather than improves accuracy, establishing why proof cannot originate from the same model that produced the claim
 - Krakovna et al., "Specification Gaming: The Flip Side of AI Ingenuity" (2020) — https://deepmind.google/blog/specification-gaming-the-flip-side-of-ai-ingenuity/ — motivation: documents agents that satisfy literal success criteria while failing at intended goals — precisely the failure independent proof is designed to surface
 

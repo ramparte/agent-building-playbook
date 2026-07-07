@@ -25,7 +25,7 @@ When building or running a pipeline that will process a batch of inputs — file
 ## Exemplars
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: advocates starting with simple prompts and adding multi-step complexity only when simpler solutions fall short, rather than building the full system at once
-- Amplifier — https://github.com/microsoft/amplifier — the prove-on-small-sample pattern is the same discipline at the pipeline design level; the 3-file rule is its operational application at the batch execution level
+- Amplifier — https://github.com/microsoft/amplifier — the prove-on-small-sample pattern is the same discipline at the pipeline design level; the 3-file rule is its operational application at the batch execution level (per the Amplifier team's white papers; not visible in the current public repos)
 
 ## Related
 

@@ -24,7 +24,7 @@ A system that does important work but emits no record of it is a black box. Post
 
 ## Exemplars
 
-- Amplifier — https://github.com/microsoft/amplifier — the context-intelligence hook system: every significant agent action emits structured events to a property graph; the resulting event stream enables session replay, delegation tree tracing, tool call analysis, and pattern detection across runs
+- Amplifier — https://github.com/microsoft/amplifier — event-first observability: "if it's important, emit an event" — significant agent actions emit structured events to a single JSONL log serving as source of truth, with tracing IDs enabling correlation and hooks observing without blocking
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends instrumenting agentic pipelines with monitoring and logging at each step to enable debugging of complex multi-step behaviors that are otherwise uninterpretable
 - Martin Fowler, "Event Sourcing" — https://martinfowler.com/eaaDev/EventSourcing.html — the canonical 2005 software-engineering formulation: "Capture all changes to application state as a sequence of events"; the classic SE pattern this directly echoes, including reconstruction, temporal queries, and audit capabilities
 - AlSayyad et al., "AgentTrace: A Structured Logging Framework for Agent System Observability" (arXiv:2602.10133) — https://arxiv.org/abs/2602.10133 — formalizes structured event capture across operational, cognitive, and contextual surfaces for LLM agents; directly implements this pattern as foundational layer for security, accountability, and real-time monitoring

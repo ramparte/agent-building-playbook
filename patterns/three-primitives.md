@@ -23,7 +23,7 @@ Agentic systems — no matter how sophisticated they appear — reduce to three 
 ## Exemplars
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: identifies the fundamental building blocks (augmented LLM, tool use, multi-agent networks) and argues that composing simple, well-understood building blocks outperforms building monolithic complex systems
-- Amplifier — https://github.com/microsoft/amplifier — the kernel exposes three core mechanisms: model calls, tool dispatch, and recipe loops; all higher-level behaviors in the framework compose these three primitives
+- Amplifier — https://github.com/microsoft/amplifier — the kernel exposes three core mechanisms: model calls, tool dispatch, and recipe loops; all higher-level behaviors in the framework compose these three primitives (per the Amplifier team's white papers; the current public kernel documents itself differently — session lifecycle, module loading, events, and coordination)
 - OpenAI, "A practical guide to building agents" — https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/ — decomposes every agent into three structural components: model, tools, and instructions; an analogous primitive-decomposition framing from a different axis (configuration vs. execution)
 
 ## Related

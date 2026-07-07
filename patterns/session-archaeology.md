@@ -24,7 +24,7 @@ When a system behaves unexpectedly, the immediate instinct is to look at the cur
 
 ## Exemplars
 
-- Amplifier — https://github.com/microsoft/amplifier — the session-analyst agent and context-intelligence graph server: session history is the primary source of truth for diagnosing agent failures, tracing delegation chains, and understanding tool call behavior across runs; the entire observability architecture is built around making session history queryable
+- Amplifier — https://github.com/microsoft/amplifier-foundation — the session-analyst agent treats session history as the primary source of truth: it searches sessions by project, date, or topic, analyzes events.jsonl event streams, and performs transcript surgery to diagnose and repair failed sessions — the observability architecture is built around making session history queryable
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends logging and reviewing agent transcripts as the primary mechanism for debugging unexpected behaviors in multi-step agentic pipelines
 - Wang et al., "From Agent Traces to Trust: A Survey of Evidence Tracing and Execution Provenance in LLM Agents" (arXiv:2606.04990) — https://arxiv.org/abs/2606.04990 — surveys the discipline of using agent execution traces as primary evidence; formalizes provenance, trace sources, and representation forms that underpin treating session history as ground truth
 - Nian et al., "Auditable Agents" (arXiv:2604.05485) — https://arxiv.org/abs/2604.05485 — defines five dimensions of agent auditability including evidence integrity and lifecycle coverage; treats the session record as the required substrate for accountability, responsibility attribution, and recovery
