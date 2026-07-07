@@ -26,3 +26,4 @@ When a pipeline step fails, there are two instincts: fail loud (surface the fail
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends that tools and agents surface errors explicitly rather than masking them, enabling the orchestrator and human reviewer to observe failures rather than receiving silent substitutions
 - Amplifier — https://github.com/microsoft/amplifier — the honest-stopping principle in agent base instructions: when a required item cannot be satisfied with real evidence, the agent must stop and report rather than fabricate a plausible-looking result
+- Shore, "Fail Fast" (IEEE Software, 2004) — https://www.jamesshore.com/v2/blog/2004/fail-fast — classic antecedent: the canonical software engineering articulation of why detecting and surfacing errors immediately produces more robust systems than attempting graceful continuation

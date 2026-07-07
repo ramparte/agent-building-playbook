@@ -25,6 +25,7 @@ Left to their own momentum, agents fix bugs in isolation: they find the visible 
 ## Exemplars
 
 - Toyota / Taiichi Ohno — https://en.wikipedia.org/wiki/Five_whys — the "five whys" practice of repeatedly asking why until the chain reaches the root cause rather than stopping at the first visible symptom
+- Lunney & Lueder, "Postmortem Culture: Learning from Failure" — https://sre.google/sre-book/postmortem-culture/ — applies the pattern at organizational scale: Google SRE's blameless postmortem practice requires a written root-cause diagnosis before closing any incident, structurally preventing symptom patches from being accepted as complete fixes
 
 ## Related
 
