@@ -26,6 +26,9 @@ Eval-driven development (EDD) applies the test-driven development discipline to 
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: describes the evaluator as a core agentic primitive and recommends building eval harnesses as the foundation of reliable agent development, not as an afterthought
 - Anthropic — https://www.anthropic.com/news/developing-computer-use — Claude's Computer Use: the reliability of computer use was built through eval-driven iteration — defining success criteria for each task type and measuring against them systematically
+- Xia et al., "Evaluation-Driven Development and Operations of LLM Agents" (arXiv:2411.13768) — https://arxiv.org/abs/2411.13768 — formalizes: proposes EDDOps embedding evaluation as a continuous governing function rather than a terminal checkpoint, unifying offline and online evaluation in a feedback loop that drives both runtime adaptation and governed redevelopment
+- Hamel Husain, "Your AI Product Needs Evals" — https://hamel.dev/blog/posts/evals/ — formalizes: argues that unsuccessful AI products share a common root cause of failing to create robust evaluation systems, and that eval infrastructure is the primary productivity multiplier enabling rapid iteration
+- Grace et al., "Demystifying evals for AI agents" (Anthropic Engineering) — https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents — empirical support: presents a comprehensive framework combining code-based, model-based, and human graders across agent categories, treating evaluation as a core development practice equivalent to unit testing
 
 ## Related
 

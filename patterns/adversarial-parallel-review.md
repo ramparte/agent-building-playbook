@@ -23,6 +23,11 @@ The model that wrote the code is the worst reviewer of it, because it reviews fr
 - When the reviewers are not actually independent — same model, same context, same prompt produces correlated critiques and a false sense of coverage.
 - When a deterministic verifier already settles the question — run the test or the linter instead of convening a review squad to judge a checkable fact.
 
+## Exemplars
+
+- Irving, Christiano & Amodei, "AI safety via debate" (arXiv:1805.00899) — https://arxiv.org/abs/1805.00899 — classic antecedent: establishes adversarial debate between two AI agents before a human judge as a mechanism for surfacing errors a single reviewer shares with the author, founding the adversarial critique structure this pattern inherits
+- OpenAI, "Finding GPT-4's Mistakes with GPT-4" — https://openai.com/index/finding-gpt4s-mistakes-with-gpt-4/ — empirical support: demonstrates that a GPT-4-based critic outperforms unaided human reviewers at catching errors in GPT-4 outputs, validating independent adversarial critique as a reliability technique
+
 ## Related
 
 - `patterns/auditor-agent.md`
