@@ -22,6 +22,5 @@ The context window is a budget, not a dump. Every token you place in context com
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: discusses context management and selective retrieval as first-class concerns in agent design
 - Liu et al., "Lost in the Middle: How Language Models Use Long Contexts" (arXiv:2307.03172) — https://arxiv.org/abs/2307.03172 — empirical support: demonstrates a U-shaped performance curve where models perform worst on information in the middle of long contexts, showing that context position and volume actively degrade retrieval quality
-- Anthropic — https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents — Effective Context Engineering for AI Agents: frames context as an attention budget, introduces "context rot" (performance degrades as context grows), and treats curation as the core discipline for maintaining signal quality
+- Anthropic — https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents — Effective Context Engineering for AI Agents: frames context as an attention budget, references "context rot" — the finding from needle-in-a-haystack benchmarking that performance degrades as context grows — and treats curation as the core discipline for maintaining signal quality

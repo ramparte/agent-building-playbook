@@ -25,7 +25,7 @@ A decision theater is a small interactive artifact — a spreadsheet, model, sim
 
 ## Exemplars
 
-- ASU Decision Theater — https://dt.asu.edu/ — institutional exemplar: an Arizona State University facility that answers "what if" questions by transforming data into interactive visualizations and computational models, enabling stakeholders to experiment with scenarios and examine the consequences of different assumptions before committing to decisions.
+- ASU Decision Theater — https://dt.asu.edu/ — an Arizona State University facility that answers "what if" questions by transforming data into interactive visualizations and computational models, enabling stakeholders to experiment with scenarios and examine the consequences of different assumptions before committing to decisions.
 
 ## Related
 

@@ -24,7 +24,6 @@ When an orchestrator spawns a subagent, the default assumption is often that mor
 ## Exemplars
 
 - Amplifier — https://github.com/microsoft/amplifier — the delegate() API defaults to context_depth="none" (clean slate); passing history requires an explicit opt-in via context_depth="recent" or context_depth="all", making clean-slate delegation the path of least resistance
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: warns that context accumulation across long agent loops degrades performance; clean-slate subagent delegation is the structural solution to context window pressure
 - Anthropic — https://www.anthropic.com/engineering/multi-agent-research-system — "How we built our multi-agent research system" (2025): describes the production multi-agent architecture for Claude's Research feature; includes the practice of spawning fresh subagents with clean contexts when approaching token limits, with continuity preserved through deliberate handoff briefings rather than inherited history
 
 ## Related

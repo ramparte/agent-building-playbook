@@ -25,4 +25,4 @@ A timeout is a signal that a task is too large for the time budget the system ha
 ## Exemplars
 
 - Database query optimization almost always involves decomposition: a slow full-table scan becomes a sequence of indexed lookups; a monolithic query becomes a staged pipeline. The timeout is the signal; decomposition is the fix.
-- Anthropic's building-effective-agents guidance recommends breaking long-horizon tasks into explicit steps with checkpointing — decompose-on-timeout is that principle applied reactively when a step proves too large.
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: the prompt-chaining workflow decomposes a task into a sequence of steps with programmatic gates between them — decompose-on-timeout is that principle applied reactively when a step proves too large

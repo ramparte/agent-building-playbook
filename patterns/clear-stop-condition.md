@@ -26,4 +26,4 @@ When a task is handed to an agent, a human, or a downstream system without a def
 
 - Amplifier delegate() calls include an instruction that specifies what the agent should return and when it should stop — agents without that instruction will continue until context is exhausted.
 - Loop termination in formal specification languages (TLA+, Alloy) is defined before the loop body — the discipline of specifying stop conditions before behavior is the same principle applied to formal verification.
-- Anthropic, "Building Effective Agents" — https://www.anthropic.com/research/building-effective-agents — formalizes: recommends including explicit stopping conditions (such as a maximum number of iterations) in every agent loop so orchestrators maintain control rather than relying on the agent's own sense of done
+- Anthropic, "Building Effective Agents" — https://www.anthropic.com/research/building-effective-agents — formalizes: recommends including explicit stopping conditions (such as a maximum number of iterations) in agent loops so orchestrators maintain control rather than relying on the agent's own sense of done

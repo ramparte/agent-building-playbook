@@ -26,9 +26,9 @@ A critic application is an external tool — a binary, parser, validator, or CLI
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends giving agents well-specified, deterministic tools and verifying outputs against them rather than trusting the model's self-report
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends giving agents well-specified tools with carefully engineered definitions and verifying outputs against them
 - Amplifier — https://github.com/microsoft/amplifier — the verification-before-completion skill requires the agent to run real verification commands and satisfy their output, treating the command as the authority rather than the agent's claim
-- Chen et al., "Teaching Large Language Models to Self-Debug" (arXiv:2304.05128) — https://arxiv.org/abs/2304.05128 — classic antecedent: uses execution output as a deterministic, non-negotiable feedback signal — the runtime acts as a critic the model must satisfy
+- Chen et al., "Teaching Large Language Models to Self-Debug" (arXiv:2304.05128) — https://arxiv.org/abs/2304.05128 — classic antecedent: demonstrates that feeding execution results into the model's self-reflection loop ("rubber duck debugging") substantially improves code generation across benchmarks
 - Shinn et al., "Reflexion: Language Agents with Verbal Reinforcement Learning" (arXiv:2303.11366) — https://arxiv.org/abs/2303.11366 — classic antecedent: external evaluation signals (test results) serve as the critic the agent iterates against, separate from the model's self-assessment
 
 ## Related

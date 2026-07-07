@@ -24,7 +24,7 @@ Model routing is usually discussed as a first-order cost trade: put the expensiv
 
 ## Exemplars
 
-- Lee et al., "Meta-Harness: End-to-End Optimization of Model Harnesses" (arXiv:2603.28052) — https://arxiv.org/abs/2603.28052 — empirical support: automated harness optimization yields better results than model upgrades; a single optimized harness improved accuracy across five held-out models, demonstrating that orchestration is the transferable, reusable investment
+- Lee et al., "Meta-Harness: End-to-End Optimization of Model Harnesses" (arXiv:2603.28052) — https://arxiv.org/abs/2603.28052 — empirical support: a single automatically-discovered harness improved accuracy by 4.7 points on average across five held-out models, demonstrating that harness engineering is a transferable, reusable investment
 
 ## Related
 

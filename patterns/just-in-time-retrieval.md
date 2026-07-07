@@ -25,11 +25,10 @@ Pre-loading is the impulse to front-load context with all potentially relevant d
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: advocates for targeted tool invocation at the moment of need rather than pre-loading context with all available resources
-- Anthropic — https://www.anthropic.com/news/contextual-retrieval — Contextual Retrieval: demonstrates retrieval systems designed for per-query, per-step relevance rather than pre-indexed bulk injection
-- Lewis et al., "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks" (arXiv:2005.11401) — https://arxiv.org/abs/2005.11401 — the original RAG paper (NeurIPS 2020): established retrieve-at-inference-time as the foundational model for injecting external knowledge only when needed, rather than baking it into weights
-- Liu et al., "Lost in the Middle: How Language Models Use Long Contexts" (arXiv:2307.03172) — https://arxiv.org/abs/2307.03172 — empirical evidence that performance degrades when relevant information is buried in a pre-loaded long context; supports the case for selective, per-step retrieval over front-loading
-- Anthropic — https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents — Effective Context Engineering for AI Agents (Sept 2025): describes maintaining lightweight identifiers (file paths, URLs, stored queries) and loading content at runtime as the canonical JIT implementation
+- Anthropic — https://www.anthropic.com/news/contextual-retrieval — Contextual Retrieval: empirical support: demonstrates retrieval systems designed for per-query, per-step relevance rather than pre-indexed bulk injection
+- Lewis et al., "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks" (arXiv:2005.11401) — https://arxiv.org/abs/2005.11401 — classic antecedent: the original RAG paper (NeurIPS 2020) established retrieve-at-inference-time as the foundational model for injecting external knowledge only when needed, rather than baking it into weights
+- Liu et al., "Lost in the Middle: How Language Models Use Long Contexts" (arXiv:2307.03172) — https://arxiv.org/abs/2307.03172 — empirical support: performance degrades when relevant information is buried in a pre-loaded long context; supports the case for selective, per-step retrieval over front-loading
+- Anthropic — https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents — Effective Context Engineering for AI Agents (Sept 2025): formalizes: describes maintaining lightweight identifiers (file paths, URLs, stored queries) and loading content at runtime as the canonical JIT implementation
 
 ## Related
 

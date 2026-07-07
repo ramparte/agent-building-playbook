@@ -25,7 +25,7 @@ Two refinements sharpen how these layers are deployed. First, human escalation i
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends that agents in production operate with minimal footprint (limited permissions, reversible actions, explicit scope) and escalate to humans when encountering ambiguous or high-stakes decision points
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends sandboxed testing, guardrails, and human oversight checkpoints — including pausing for human feedback when agents encounter blockers or ambiguous situations
 - Amplifier — https://github.com/microsoft/amplifier — the recipe system's staged execution model provides structured guardrail points: each stage can require explicit human approval before the next stage proceeds, creating a natural escalation architecture for high-stakes workflows
 - OpenAI — https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/ — A Practical Guide to Building Agents: devotes a chapter to layered guardrails (input moderation, relevance checks, jailbreak filters, output validation) and recommends explicit human escalation for high-stakes, irreversible, or ambiguous decisions
 - Rebedea et al., "NeMo Guardrails: A Toolkit for Controllable and Safe LLM Applications with Programmable Rails" (arXiv:2310.10501) — https://arxiv.org/abs/2310.10501 — formalizes programmable, runtime-configurable guardrail layers that are independent of the underlying LLM and composable across input, dialogue, and output control points

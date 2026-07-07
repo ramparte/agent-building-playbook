@@ -23,9 +23,8 @@ Tools built for human use are optimized for legibility: they paginate, they trun
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: identifies tool design as a primary lever for agent reliability and calls out structured, unambiguous outputs as a key requirement
-- Anthropic — https://github.com/anthropics/anthropic-cookbook — Anthropic Cookbook: tool use examples demonstrate returning structured JSON with explicit success/error fields rather than prose messages
-- Anthropic, "Writing Effective Tools for AI Agents" — https://www.anthropic.com/engineering/writing-tools-for-agents — origin: comprehensive guide on designing tool contracts for machine parsing — structured outputs, unambiguous descriptions, meaningful context in place of human-readable affordances
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: emphasizes that tool definitions deserve as much prompt-engineering attention as overall prompts, with specifications clear enough to leave no ambiguity in how to use the tool
+- Anthropic, "Writing Effective Tools for AI Agents" — https://www.anthropic.com/engineering/writing-tools-for-agents — formalizes: practical guide to designing tool contracts for agents — recommends human-readable, semantically meaningful field names over cryptic identifiers, unambiguous descriptions, and response formats that give the agent exactly the context it needs
 - Schick et al., "Toolformer: Language Models Can Teach Themselves to Use Tools" (arXiv:2302.04761) — https://arxiv.org/abs/2302.04761 — classic antecedent: established the paradigm of models using external tools via simple APIs, motivating the need for well-designed agent-facing tool interfaces
 
 ## Related

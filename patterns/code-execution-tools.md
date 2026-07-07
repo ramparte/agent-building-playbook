@@ -24,8 +24,6 @@ Every tool registered in an agent's tool list occupies space in the context wind
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: discusses code execution as a high-leverage tool primitive that enables agent generality without proportional tool set growth
-- Anthropic — https://github.com/anthropics/anthropic-cookbook — Anthropic Cookbook: computer use and tool use examples show how code execution reduces the need for a large fixed tool catalog
 - Anthropic, "Code Execution with MCP" — https://www.anthropic.com/engineering/code-execution-with-mcp — formalizes: agents writing code against MCP servers as APIs reduces token usage by 98.7% vs. loading all tool definitions directly into context
 - Cloudflare, "Code Mode" — https://blog.cloudflare.com/code-mode/ — formalizes: LLMs are better at writing code to invoke APIs than at direct tool calls, because training data contains far more real code than synthetic tool-call examples
 
