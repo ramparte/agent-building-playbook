@@ -26,6 +26,7 @@ Independent tasks — tasks with no ordering dependency and no shared mutable st
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: identifies parallelization as a core orchestration pattern, specifically when tasks can be broken into independent subtasks; notes the speedup is linear in the number of parallel workers for truly independent tasks
 - Amplifier — https://github.com/microsoft/amplifier — the delegate() API supports concurrent subagent dispatch; the recipe foreach primitive runs iterations concurrently when tasks in the iteration set are independent
+- Hadfield et al. / Anthropic — https://www.anthropic.com/engineering/multi-agent-research-system — How we built our multi-agent research system: empirical case study where parallel subagents each explore independent research streams, yielding a 90.2% performance gain over single-agent; authors explicitly note this advantage weakens for coding tasks with fewer truly parallelizable units
 
 ## Related
 
