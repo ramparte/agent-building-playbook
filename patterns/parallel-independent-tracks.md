@@ -32,3 +32,4 @@ Independent tasks — tasks with no ordering dependency and no shared mutable st
 - `patterns/single-threaded-default.md`
 - `patterns/composable-patterns.md`
 - `patterns/architect-then-builder.md`
+- `patterns/build-five-to-throw-away.md`

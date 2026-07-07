@@ -33,3 +33,4 @@ The same file is what a journal entry should be. A good journal entry is a hando
 - `patterns/write-select-compress-isolate.md`
 - `patterns/persist-environment-facts.md`
 - `patterns/long-horizon-memory.md`
+- `patterns/hang-up-call-back.md`

@@ -32,3 +32,4 @@ When an orchestrator spawns a subagent, the default assumption is often that mor
 - `patterns/checkpoint-handoff-file.md`
 - `patterns/context-over-prompt.md`
 - `patterns/write-select-compress-isolate.md`
+- `patterns/hang-up-call-back.md`
