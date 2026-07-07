@@ -39,6 +39,8 @@ These artifacts should live where agents can actually reach them — in the repo
 
 - Every major open-source project that survives decades of contribution does so because its architecture documents record the *why* behind design choices — without them, contributors optimize away the very constraints the design was built to preserve.
 - The Amplifier AGENTS.md convention stores intent at the agent level: not just what the agent does, but why it is scoped the way it is and what decisions shaped its behavior.
+- Peter Naur, "Programming as Theory Building" (1985) — https://pages.cs.wisc.edu/~remzi/Naur.pdf — classic antecedent: a program's real content is the theory of the problem that the programmers hold in their heads; documentation that fails to transfer that theory condemns successors to reverse-engineer or corrupt the design
+- Michael Nygard, "Documenting Architecture Decisions" — https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions — origin: introduced Architecture Decision Records as a lightweight per-decision format that captures context and reasoning, not just the decision, so future maintainers know what must remain true and why
 
 ## Related
 
