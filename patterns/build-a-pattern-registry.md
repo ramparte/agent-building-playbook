@@ -23,6 +23,12 @@ Across an organization, teams keep reinventing the same wheels: the same agent l
 - When entries would lack contraindications and evaluation methods — a registry of unqualified recommendations is worse than no registry.
 - When the registry is used to mandate uniformity rather than enable transfer — the moment it becomes a compliance checklist, it stops capturing the genes and starts cloning the organism.
 
+## Exemplars
+
+- Alexander et al., *A Pattern Language* (1977) — https://en.wikipedia.org/wiki/A_Pattern_Language — classic antecedent: the original registry of 253 named patterns, each with a problem statement, solution, and cross-references; established the template for named, contraindicated, cross-referenced entries that makes a registry trustworthy rather than a mere catalog.
+- Gamma, Helm, Johnson, Vlissides, *Design Patterns: Elements of Reusable Object-Oriented Software* (1994) — https://en.wikipedia.org/wiki/Design_Patterns — classic antecedent: formalized the software pattern catalog with 23 named, categorized patterns, demonstrating that documented practices travel between practitioners without mandating a shared implementation.
+- Wang et al., "Voyager: An Open-Ended Embodied Agent with Large Language Models" (arXiv:2305.16291) — https://arxiv.org/abs/2305.16291 — formalizes: Voyager's ever-growing skill library is a queryable pattern registry for an LLM agent, accumulating discrete, tested behaviors that compound capability across sessions without requiring the agent to rediscover them.
+
 ## Related
 
 - `patterns/gene-transfer.md`
