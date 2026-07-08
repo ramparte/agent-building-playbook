@@ -25,7 +25,7 @@ A productive agentic workflow is rarely "all AI." The strongest systems alternat
 
 ## Exemplars
 
-- Dex Horthy, "12-Factor Agents" — https://github.com/humanlayer/12-factor-agents — formalizes: Factor 8 ("Own Your Control Flow") articulates the interleaving philosophy; the guide argues that successful agents are "mostly deterministic software with LLM steps sprinkled in at just the right points" and that owning control flow enables the transparency between tool selection and invocation needed for human oversight
+- Dex Horthy, "12-Factor Agents" — https://github.com/humanlayer/12-factor-agents — formalizes: the guide describes successful agents as "mostly deterministic code, with LLM steps sprinkled in at just the right points", and Factor 8 ("Own Your Control Flow") supplies the oversight payoff — owning control flow lets a workflow pause between the moment of tool selection and the moment of tool invocation
 
 ## Related
 

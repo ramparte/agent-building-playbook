@@ -25,7 +25,7 @@ The instinct when designing multi-step workflows is to run as much as possible i
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends beginning with the simplest architecture that could work and adding orchestration complexity only when evidence demands it
 - Amplifier — https://github.com/microsoft/amplifier — the framework's recipe system defaults to sequential step execution; fan-out and parallel tracks are explicit opt-ins, not the baseline
-- Walden Yan, "Don't Build Multi-Agents" (Cognition, June 2025) — https://cognition.com/blog/dont-build-multi-agents — explicitly advocates single-threaded linear agents as the default architecture, arguing this is the only approach that satisfies both the context-sharing and implicit-decisions principles simultaneously
+- Walden Yan, "Don't Build Multi-Agents" (Cognition, June 2025) — https://cognition.com/blog/dont-build-multi-agents — explicitly advocates single-threaded linear agents as the default architecture: the simplest way to follow the context-sharing and implicit-decisions principles, and one that 'will get you very far'
 
 ## Related
 

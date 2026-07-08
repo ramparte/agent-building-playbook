@@ -24,7 +24,7 @@ An agent is a force multiplier, not a substitute for judgment. When an experienc
 
 ## Exemplars
 
-- Amplifier — https://github.com/microsoft/amplifier — The Amplifier philosophy emphasizes that agents should be used to execute specified tasks, not to make design decisions; keeping judgment in human hands while delegating execution is the design that makes experience amplification work correctly
+- Amplifier — https://github.com/microsoft/amplifier-bundle-recipes — recipes hold a workflow's design in human-authored YAML while agents execute the declared steps, with requires_approval gates reserving judgment calls for humans — execution amplified, design authority kept where the experience lives
 - Drew Breunig, "10 Lessons for Agentic Coding" — https://www.dbreunig.com/2026/05/04/10-lessons-for-agentic-coding.html — Lesson 9 directly names this pattern; the essay this pattern distills
 - Becker et al., "Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity" (arXiv:2507.09089) — https://arxiv.org/abs/2507.09089 — RCT finding that AI increased experienced developers' task-completion time by 19%, underscoring that amplification requires deliberate skill in directing agents, not passive tool adoption
 

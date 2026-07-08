@@ -25,7 +25,7 @@ Tests are not annotations on working code — they are executable specifications
 ## Exemplars
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends building evals and iterating implementations against them; updating the eval to encode intended behavior before touching the system is that stance applied to API changes
-- Amplifier — https://github.com/microsoft/amplifier — the superpowers TDD discipline: "write the failing test first" applied in the modify case is "update the test to reflect the new contract first, then update the code to pass the test"
+- Amplifier — https://github.com/microsoft/amplifier-bundle-superpowers — the superpowers implementer agent works under strict TDD, with a test-driven-development skill built on the red-green-refactor cycle; applied to the modify case, that discipline becomes: update the test to the new contract first, then update the code to pass it
 - Kent Beck, *Test-Driven Development: By Example* (2002) — https://www.informit.com/store/test-driven-development-by-example-9780321146533 — classic antecedent: established the red-green-refactor cycle where the failing test is written first as the spec; updating tests before implementation is this discipline applied to the modify case
 
 ## Related

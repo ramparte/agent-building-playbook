@@ -25,5 +25,5 @@ In agentic systems, the agent that proposes an action — "here is the plan," "h
 ## Exemplars
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: advocates for human-in-the-loop controls at decision points, explicitly separating the generation of proposed actions from their authorization and execution
-- Amplifier — https://github.com/microsoft/amplifier — the superpowers staged-recipe pattern implements proposer-authority separation: the brainstormer proposes, the user is the authority that approves before the implementer agent executes
+- Amplifier — https://github.com/microsoft/amplifier-bundle-recipes — recipe steps can declare requires_approval: true, pausing the workflow for explicit approval before execution proceeds — the proposing step and the approving authority separated in the orchestration format itself
 - Saltzer & Schroeder, "The Protection of Information in Computer Systems" (1975) — https://www.cs.virginia.edu/~evans/cs551/saltzer/ — classic antecedent: the "separation of privilege" design principle holds that a protection mechanism requiring two independent parties to unlock an action is more robust than one requiring only a single key; no single accident, deception, or breach of trust can then compromise the protected resource

@@ -26,7 +26,7 @@ Once a person is running more than a handful of agents — coding sessions, clou
 ## Exemplars
 
 - Zhou, "OrchVis: Hierarchical Multi-Agent Orchestration for Human Oversight" (arXiv:2510.24937) — https://arxiv.org/abs/2510.24937 — builds a hierarchical supervision surface over multiple LLM agents: organizes goals hierarchically, monitors task completion, resolves inter-agent conflicts, and visualizes dependency graphs; directly implements the supervision interface this pattern describes
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends human-in-the-loop checkpoints and interrupt policies as the supervisory interface over agent fleets; the orchestrator-workers pattern maps closely to one-interface supervision of many parallel agents
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends checkpoints where agents pause for human feedback; its orchestrator-workers workflow — a central model delegating to parallel workers — is the shape this pattern puts a single supervision surface over
 
 ## Related
 

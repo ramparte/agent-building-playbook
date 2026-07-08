@@ -25,8 +25,8 @@ Automation is a multiplier on understanding. When you automate something you und
 ## Exemplars
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: warns that autonomous agents can compound errors and cause hard-to-reverse mistakes, recommending extensive testing in sandboxed environments before deployment
-- Amplifier — https://github.com/microsoft/amplifier — The Amplifier recipe system produces auditable artifacts and explicit handoff files precisely to avoid mystery-house automation: every step's output is inspectable, so the system can be reasoned about even when it runs autonomously
-- Drew Breunig, "The Cathedral, the Bazaar, and the Winchester Mystery House" — https://www.dbreunig.com/2026/03/26/winchester-mystery-house.html — coins the metaphor this pattern is built around: AI-cheapened code production generates sprawling, idiosyncratic systems that nobody fully understands — the original source for the "mystery house" framing in AI-era software
+- Amplifier — https://github.com/microsoft/amplifier-bundle-recipes — recipes declare workflows as YAML steps executed in stages with automatic checkpointing and requires_approval gates — the workflow's structure and each stage's status stay inspectable rather than sealed inside an opaque autonomous run
+- Drew Breunig, "The Cathedral, the Bazaar, and the Winchester Mystery House" — https://www.dbreunig.com/2026/03/26/winchester-mystery-house.html — coins the metaphor this pattern is built around: AI-cheapened code production generates sprawling, idiosyncratic systems that are inscrutable to outsiders and usually lack documentation — the original source for the "mystery house" framing in AI-era software
 
 ## Related
 

@@ -25,7 +25,7 @@ The same file is what a journal entry should be. A good journal entry is a hando
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents — Effective Context Engineering for AI Agents (Sept 2025): specifically names CLAUDE.md/NOTES.md handoff files and compaction as concrete implementations of this pattern
+- Anthropic — https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents — Effective Context Engineering for AI Agents (Sept 2025): describes compaction and structured note-taking as core long-horizon techniques — its example agent persists a NOTES.md outside the context window and restores it after reset, the checkpoint-then-restart move this pattern generalizes
 - Yichao "Peak" Ji, Manus AI — https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus — Context Engineering for AI Agents: Lessons from Building Manus (July 2025): production account of using the file system as persistent external memory and reciting a todo.md into recent context to hold objectives in focus — the same pattern derived empirically from practice
 - Packer et al., "MemGPT: Towards LLMs as Operating Systems" (arXiv:2310.08560) — https://arxiv.org/abs/2310.08560 — formalizes virtual context management with tiered memory and OS-style paging; the theoretical model that underlies checkpoint-and-restart as a memory architecture
 

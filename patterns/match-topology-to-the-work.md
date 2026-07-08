@@ -25,7 +25,7 @@ Agentic workflows sit on a spectrum from lightweight to heavyweight, and each po
 ## Exemplars
 
 - Hadfield et al. / Anthropic — https://www.anthropic.com/engineering/multi-agent-research-system — How we built our multi-agent research system: distinguishes tasks that benefit from multi-agent parallelism (breadth-first research) from those that require shared sequential context (most coding work), making the topology-to-work match concrete and empirically grounded
-- Walden Yan / Cognition — https://cognition.com/blog/dont-build-multi-agents — Don't Build Multi-Agents: argues that write-heavy, interdependent tasks fail in parallel multi-agent topologies because agents cannot see each other's implicit decisions; advocates single sequential agent with full context for those workloads
+- Walden Yan / Cognition — https://cognition.com/blog/dont-build-multi-agents — Don't Build Multi-Agents: argues that parallel subagents fail on interdependent work because actions carry implicit decisions, and conflicting decisions carry bad results; advocates a single sequential agent with full context for those workloads
 - Cemri et al., "Why Do Multi-Agent LLM Systems Fail?" (arXiv:2503.13657) — https://arxiv.org/abs/2503.13657 — empirical taxonomy of 14 failure modes across 7 MAS frameworks; many failures trace to topology-task mismatch (system-design issues and inter-agent misalignment categories)
 
 ## Related

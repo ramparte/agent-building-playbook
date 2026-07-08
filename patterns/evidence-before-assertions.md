@@ -24,7 +24,7 @@ An assertion about a system's state that is not backed by independently gathered
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends human-in-the-loop checkpoints and independent verification of agent outputs; "trust but verify" is replaced with "verify before asserting"
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: notes it is crucial for agents to gain 'ground truth' from the environment at each step — tool call results, code execution output — to assess progress, with checkpoints where agents pause for human feedback — the assertion follows the gathered evidence, not the other way around
 - Amplifier — https://github.com/microsoft/amplifier — the honest-stopping principle: when a required item cannot be satisfied with real evidence, the agent must stop and report rather than fabricate a plausible-looking result; a fabricated attestation is worse than an honest gap (per the Amplifier team's white papers; not visible in the current public repos)
 
 ## Related

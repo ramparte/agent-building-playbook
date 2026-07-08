@@ -26,7 +26,7 @@ Agents operating in real environments frequently take actions that are irreversi
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: emphasizes planning and verification steps before agents take actions with real-world consequences, particularly in agentic contexts where mistakes are difficult to reverse
 - Amplifier — https://github.com/microsoft/amplifier-foundation — the foundation:explorer agent is a dedicated reconnaissance role: breadth-first exploration of code and docs producing citation-ready summaries, gathering ground truth for the orchestrator before modifying agents are dispatched
 - Anthropic — https://code.claude.com/docs/en/best-practices — Claude Code best practices: defines an explicit four-phase Explore → Plan → Implement → Commit workflow where the first phase is strictly read-only; the guide calls this out as the primary defense against solving the wrong problem
-- Xia et al., "Agentless: Demystifying LLM-based Software Engineering Agents" (arXiv:2407.01489) — https://arxiv.org/abs/2407.01489 — formalizes recon-before-action as a three-phase pipeline: hierarchical fault localization (read-only reconnaissance across files, classes, and edit locations) precedes patch generation and validation
+- Xia et al., "Agentless: Demystifying LLM-based Software Engineering Agents" (arXiv:2407.01489) — https://arxiv.org/abs/2407.01489 — empirical support: achieves top results among open-source approaches on SWE-bench Lite with "a simplistic three-phase process of localization, repair, and patch validation, without letting the LLM decide future actions" — localization precedes any patch generation, recon structurally ahead of action
 
 ## Related
 

@@ -25,7 +25,7 @@ Pre-loading is the impulse to front-load context with all potentially relevant d
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/news/contextual-retrieval — Contextual Retrieval: empirical support: demonstrates retrieval systems designed for per-query, per-step relevance rather than pre-indexed bulk injection
+- Anthropic — https://www.anthropic.com/news/contextual-retrieval — Contextual Retrieval: empirical support: an indexing-time technique — prepending chunk-specific explanatory context before embedding and BM25 indexing — that improves the accuracy of per-query retrieval, the retrieval quality just-in-time loading depends on
 - Lewis et al., "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks" (arXiv:2005.11401) — https://arxiv.org/abs/2005.11401 — classic antecedent: the original RAG paper (NeurIPS 2020) established retrieve-at-inference-time as the foundational model for injecting external knowledge only when needed, rather than baking it into weights
 - Liu et al., "Lost in the Middle: How Language Models Use Long Contexts" (arXiv:2307.03172) — https://arxiv.org/abs/2307.03172 — empirical support: performance degrades when relevant information is buried in a pre-loaded long context; supports the case for selective, per-step retrieval over front-loading
 - Anthropic — https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents — Effective Context Engineering for AI Agents (Sept 2025): formalizes: describes maintaining lightweight identifiers (file paths, URLs, stored queries) and loading content at runtime as the canonical JIT implementation

@@ -26,8 +26,8 @@ A standing capability should also evaluate the harness separately from the model
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: describes evals as a continuous practice, not a launch gate — the recommended approach is to build eval infrastructure early and run it repeatedly as the system evolves
-- Anthropic Engineering — https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents — formalizes: evals should "run on every commit," be maintained "as routinely as unit tests," and are "a living artifact" with compounding value well beyond the initial launch gate; published Jan 2026
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends "Start with simple prompts, optimize them with comprehensive evaluation, and add multi-step agentic systems only when simpler solutions fall short" — evaluation as the standing arbiter of every escalation in complexity, not a launch-time gate
+- Anthropic Engineering — https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents — formalizes: recommends running automated evals in CI/CD on each agent change and model upgrade, maintaining them as routinely as unit tests, and treating the suite as 'a living artifact' — value that extends well past the initial launch gate; published Jan 2026
 - Saxena et al., "Continuous Benchmark Generation for Evaluating Enterprise-scale LLM Agents" (arXiv:2511.10049) — https://arxiv.org/abs/2511.10049 — empirical support: proposes benchmark infrastructure that evolves as agent requirements change, treating evaluation as durable CI-like tooling for production agents rather than static one-time measurement
 
 ## Related

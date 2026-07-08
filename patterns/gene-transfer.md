@@ -25,7 +25,7 @@ When a practice works well in one system, the instinct is to copy the whole tool
 
 ## Exemplars
 
-- Wang et al., "Voyager: An Open-Ended Embodied Agent with Large Language Models" (arXiv:2305.16291) — https://arxiv.org/abs/2305.16291 — formalizes: Voyager's skill library operationalizes gene transfer at agent scale — discrete, executable behaviors extracted from one task context and reused in novel situations without copying the full agent, with retrieval by natural-language description rather than exact path.
+- Wang et al., "Voyager: An Open-Ended Embodied Agent with Large Language Models" (arXiv:2305.16291) — https://arxiv.org/abs/2305.16291 — formalizes: Voyager's ever-growing skill library stores complex behaviors as executable code that is "temporally extended, interpretable, and compositional" — behaviors extracted from one task context and reused to solve novel tasks even in a new world, without copying the full agent.
 
 ## Related
 

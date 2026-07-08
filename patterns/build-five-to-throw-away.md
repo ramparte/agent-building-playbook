@@ -31,7 +31,7 @@ What happens to the variants afterward is flexible: sometimes all five die and o
 
 - Fred Brooks — *The Mythical Man-Month* — "plan to throw one away; you will, anyhow." This pattern is the same insight at agent economics: when builds are cheap and parallel, plan to throw five away.
 - Fred Brooks, *The Mythical Man-Month*, Anniversary Edition (1995) — https://en.wikipedia.org/wiki/The_Mythical_Man-Month — the 20th-anniversary edition revisits the 1975 advice under the heading "Don't Build One to Throw Away—The Waterfall Model Is Wrong!" — Brooks's own partial retraction toward iterative development (heading appears in the anniversary edition itself; the linked Wikipedia overview covers the edition but not its contents list); this pattern is a third step in that same evolution, made possible by agent economics
-- Drew Breunig, "10 Lessons for Agentic Coding" — https://www.dbreunig.com/2026/05/04/10-lessons-for-agentic-coding.html — Lesson 2 "Rebuild often": the agentic-era restatement of Brooks's insight — when implementation is cheap, frequent rebuilding from a cleaner understanding beats careful upfront design
+- Drew Breunig, "10 Lessons for Agentic Coding" — https://www.dbreunig.com/2026/05/04/10-lessons-for-agentic-coding.html — Lesson 2 "Rebuild often": cheap code means you can fork and recode thought experiments, reconnoitering and reinventing in ways you never could — the same economics this pattern pushes from one throwaway to five
 
 ## Related
 
