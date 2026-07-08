@@ -38,6 +38,7 @@ What happens to the variants afterward is flexible: sometimes all five die and o
 ## Related
 
 - `patterns/implement-to-learn.md`
+- `patterns/parallel-attempts-at-one-task.md`
 - `patterns/parallel-independent-tracks.md`
 - `patterns/develop-your-taste.md`
 - `patterns/hang-up-call-back.md`
