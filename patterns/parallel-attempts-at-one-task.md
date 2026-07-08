@@ -24,7 +24,7 @@ A model's output is a roll of the dice; if you need a three and rarely get it on
 
 ## Exemplars
 
-- Lada Kesseler (lexler) — https://github.com/lexler/augmented-coding-patterns/blob/main/documents/patterns/parallel-implementations.md — "Parallel Implementations," the source this pattern is adapted from, with worked examples in game and UI development (video walkthrough: https://www.youtube.com/watch?v=_LSK2bVf0Lc&t=2671s)
+- Lada Kesseler (lexler) — https://github.com/lexler/augmented-coding-patterns/blob/main/documents/patterns/parallel-implementations.md — "Parallel Implementations," the source this pattern is adapted from; its Ricochet Robot example ran three attempts — one total failure, one mediocre, one whose movement logic worked — and shipped a combination of "the working movement with the better buttons" (video walkthrough: https://www.youtube.com/watch?v=_LSK2bVf0Lc&t=2671s)
 
 ## Related
 
