@@ -28,6 +28,7 @@ Across an organization, teams keep reinventing the same wheels: the same agent l
 - Alexander et al., *A Pattern Language* (1977) — https://en.wikipedia.org/wiki/A_Pattern_Language — classic antecedent: the original registry of 253 named patterns, each with a problem statement, solution, and cross-references; established the template for named, contraindicated, cross-referenced entries that makes a registry trustworthy rather than a mere catalog.
 - Gamma, Helm, Johnson, Vlissides, *Design Patterns: Elements of Reusable Object-Oriented Software* (1994) — https://en.wikipedia.org/wiki/Design_Patterns — classic antecedent: formalized the software pattern catalog with 23 named, categorized patterns, demonstrating that documented practices travel between practitioners without mandating a shared implementation.
 - Wang et al., "Voyager: An Open-Ended Embodied Agent with Large Language Models" (arXiv:2305.16291) — https://arxiv.org/abs/2305.16291 — formalizes: Voyager's ever-growing skill library is a queryable pattern registry for an LLM agent, accumulating discrete, tested behaviors that compound capability across sessions without requiring the agent to rediscover them.
+- 2389 Research, skills.2389.ai — https://skills.2389.ai — first-party: this playbook's sibling registry run as an actual package manager — a browsable marketplace of Claude Code plugins and MCP servers ("These are the tools we use every day"), each installable into any agent with one command.
 
 ## Related
 

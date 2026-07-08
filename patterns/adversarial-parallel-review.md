@@ -27,6 +27,7 @@ The model that wrote the code is the worst reviewer of it, because it reviews fr
 
 - Irving, Christiano & Amodei, "AI safety via debate" (arXiv:1805.00899) — https://arxiv.org/abs/1805.00899 — classic antecedent: establishes adversarial debate between two AI agents before a human judge as a mechanism for surfacing errors a single reviewer shares with the author, founding the adversarial critique structure this pattern inherits
 - McAleese et al. (OpenAI), "LLM Critics Help Catch LLM Bugs" (arXiv:2407.00215) — https://arxiv.org/abs/2407.00215 — empirical support: on code with naturally occurring LLM errors, critiques written by a trained LLM critic were preferred over human critiques in 63% of cases, and the critics caught more bugs than paid human code reviewers — independent machine critique of machine output as a validated reliability layer
+- 2389 Research, simmer — https://github.com/2389-research/simmer — first-party: multi-round artifact refinement where a panel of judges reads the artifact, scores it per criterion, and distills the round's findings into the single highest-leverage fix for the generator to apply — the critique, fix, re-review loop packaged as a plugin
 
 ## Related
 
