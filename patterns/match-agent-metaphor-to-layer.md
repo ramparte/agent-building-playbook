@@ -23,6 +23,12 @@ Whether an agent should be treated like a person, a tool, or a disposable proces
 - When the metaphor would grant memory, authority, or accountability the implementation cannot back up — the framing must not over-promise what the agent can do.
 - When choosing the metaphor becomes a substitute for getting the agent's scope, context, and guardrails right — the metaphor describes the layer, it does not implement it.
 
+## Exemplars
+
+- Daniel Dennett, *The Intentional Stance* (1987) — https://en.wikipedia.org/wiki/Intentional_stance — classic antecedent: treating a system as a rational agent with beliefs and desires is a predictive strategy you adopt when it pays, not a fact about the system — the philosophical ground for choosing person, tool, or process framing per layer rather than arguing about what an agent "really" is
+- Reeves & Nass, *The Media Equation* (1996) — https://en.wikipedia.org/wiki/The_Media_Equation — empirical support: people respond to computers as they do to people — automatically, unavoidably, and while denying they are doing it — which is why person-framing accretes on any agent by default and must be deliberately withheld from layers whose implementation cannot back it up
+- Anthropic Engineering, "How we built our multi-agent research system" — https://www.anthropic.com/engineering/multi-agent-research-system — empirical support: the production system is framed in layers exactly this way — an orchestrator-worker pattern where the lead agent plans, "defining each subagent's role", and "spins up 3-5 subagents in parallel" that work in "their own context windows" and condense findings back before they end
+
 ## Related
 
 - `patterns/clean-slate-delegation.md`
