@@ -2,6 +2,10 @@
 # scripts/build-index.sh — generate INDEX.md from patterns/*.md frontmatter
 set -euo pipefail
 
+# Pin collation so sort order is identical on every machine (macOS UTF-8
+# locales fold case differently than CI's C locale, causing INDEX churn).
+export LC_ALL=C
+
 PATTERNS_DIR="${1:-patterns}"
 OUTPUT_FILE="${2:-INDEX.md}"
 

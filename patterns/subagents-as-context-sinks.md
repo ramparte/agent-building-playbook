@@ -23,8 +23,11 @@ Every task an orchestrator handles in its own context accumulates tokens: the to
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: describes sub-agent delegation as a primary pattern for managing context in orchestrator-worker architectures
-- Amplifier — https://github.com/microsoft/amplifier — the delegate() primitive is designed precisely for this pattern: spawn a sub-agent, absorb the work, return a summary to the calling session
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: describes the orchestrator-workers pattern, where a central LLM dynamically breaks down tasks, delegates them to worker LLMs, and synthesizes results — delegation that implicitly bounds each worker's context
+- Amplifier — https://github.com/microsoft/amplifier — the task tool is designed precisely for this pattern: it spawns a child session that runs its own orchestrator loop, absorbs the work in a separate context, and returns its result to the calling session
+- Anthropic — https://www.anthropic.com/engineering/multi-agent-research-system — origin: describes subagents explicitly as context compression mechanisms—"subagents facilitate compression by operating in parallel with their own context windows... before condensing the most important tokens for the lead research agent"
+- LangChain Team — https://www.langchain.com/blog/context-engineering-for-agents — formalizes: names "isolate" as one of the four canonical context-engineering moves; splitting context across agents or environments is the mechanism that prevents orchestrator accumulation
+- Yan, "Don't Build Multi-Agents" — https://cognition.com/blog/dont-build-multi-agents — counterpoint: argues dispersed decision-making across sub-agents fragments context in ways that cause inconsistency; read alongside the "When NOT to" criteria for tasks requiring shared intermediate state
 
 ## Related
 

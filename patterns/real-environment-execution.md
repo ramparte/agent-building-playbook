@@ -25,8 +25,12 @@ An agent that tests a deployment by running it against a mock, a stub, or a redu
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: emphasizes that agent tool calls should interact with real systems to generate real evidence rather than simulated responses that tell agents only what they expect to hear
-- Amplifier — https://github.com/microsoft/amplifier — the digital twin universe pattern: provides real container environments structurally identical to production for exactly this reason — so agents can run real workloads and observe real outcomes before changes reach production
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: emphasizes that agents should gain ground truth from the environment at each step — tool call results and code execution output — to assess actual progress
+- Amplifier — https://github.com/microsoft/amplifier-bundle-digital-twin-universe — the Digital Twin Universe bundle stands up complete, isolated container environments on demand that 'simulate the world the code will live in' — the code itself runs for real, with external services mocked as sidecar containers — so an agent can clone, install, run, and experience a change like a real user before production; a deliberate approximation of the proper environment, not the environment itself
+- Adam Wiggins, "The Twelve-Factor App: X. Dev/Prod Parity" — https://12factor.net/dev-prod-parity — the canonical 2011 articulation: "Keep development, staging, and production as similar as possible"; the foundational SE principle this pattern applies to agent workload environments
+- Cindy Sridharan, "Testing in Production: the hard parts" — https://copyconstruct.medium.com/testing-in-production-the-hard-parts-3f06cefaf592 — extends dev/prod parity to distributed systems; argues that many failure modes are invisible outside real distributed systems, and that blast radius management — not avoidance — is the right response to running real workloads in real places
+- 2389 Research, scenario-testing — https://github.com/2389-research/scenario-testing — first-party: a plugin that enforces "NO FEATURE IS VALIDATED UNTIL A SCENARIO PASSES WITH REAL DEPENDENCIES" — end-to-end scenarios against real systems sit at the top of its truth hierarchy, and mocks are named as false confidence
+- 2389 Research, ish — https://github.com/2389-research/ish — first-party: a "digital twin of third party APIs" (Google, GitHub, Twilio, Discord, and more) with persistent state, request logging, and webhook simulation — the deliberate mock built for the exception this pattern carves out, when the real service is quota-burning or destructive to test against
 
 ## Related
 

@@ -23,7 +23,8 @@ Workflows and agents occupy different points on a control spectrum, and choosing
 ## Exemplars
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: draws the workflow-agent distinction explicitly and provides examples of each, arguing that many "agent" systems are better implemented as pipelines
-- Amplifier — https://github.com/microsoft/amplifier — the recipe system provides workflow primitives (step, stage, foreach, while) separate from agent delegation, making the distinction explicit in the authoring model
+- Amplifier — https://github.com/microsoft/amplifier-bundle-recipes — the recipe system provides workflow primitives (sequenced steps, foreach loops, requires_approval gates) separate from agent delegation, making the distinction explicit in the authoring model
+- LangChain, "Workflows and agents" (LangGraph docs) — https://docs.langchain.com/oss/python/langgraph/workflows-agents — defines the same distinction in framework terms: workflows have "predetermined code paths," agents "dynamically define their own processes and tool usage"; represents the distinction codified in a widely-used production framework
 
 ## Related
 

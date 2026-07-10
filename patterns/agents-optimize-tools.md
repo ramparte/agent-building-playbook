@@ -24,7 +24,7 @@ Tool design is typically done from the designer's perspective: the author writes
 ## Exemplars
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends empirical evaluation of agent behavior over upfront design, including evaluation of tool selection reliability as a first-class concern
-- Anthropic — https://www.anthropic.com/news/developing-computer-use — Claude's Computer Use: evaluation-driven iteration on the tool interface was central to making the computer-use capability reliable
+- Anthropic, "Writing effective tools for agents — with agents" — https://www.anthropic.com/engineering/writing-tools-for-agents — formalizes: empirical iteration on tool sets — run many realistic evaluation tasks, review the transcripts to observe where agents get stumped or confused, then iterate, including letting agents analyze evaluation results to suggest tool improvements
 
 ## Related
 

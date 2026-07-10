@@ -23,6 +23,10 @@ A useful organizational model for agentic work splits roles into coaches and pla
 - Temperament routing depends on genuinely durable artifacts; do not promise fluid handoffs on top of context that still lives only in someone's head.
 - This is not a replacement for mentorship and judgment transfer — if you use it to justify cutting coaching, you have inverted it.
 
+## Exemplars
+
+- Ibarra & Scoular, "The Leader as Coach" (*Harvard Business Review*, Nov–Dec 2019) — https://hbr.org/2019/11/the-leader-as-coach — classic antecedent: argues that the primary value of a senior leader shifts from having all the answers to unlocking capability in others through coaching; a precursor to the coach-player split this pattern applies to agentic work
+
 ## Related
 
 - `patterns/leverage-over-efficiency.md`

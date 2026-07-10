@@ -24,7 +24,8 @@ Greenfield work flatters an agentic system. A fresh prototype has no legacy cons
 
 ## Exemplars
 
-- Michael Feathers — https://www.oreilly.com/library/view/working-effectively-with/0131177052/ — Working Effectively with Legacy Code: the foundational discipline of putting characterization tests around existing behavior before changing it, the human practice this pattern hands to agents
+- Michael Feathers — https://www.informit.com/store/working-effectively-with-legacy-code-9780131177055 — Working Effectively with Legacy Code: the foundational discipline of putting characterization tests around existing behavior before changing it, the human practice this pattern hands to agents
+- Jimenez et al., "SWE-bench: Can Language Models Resolve Real-World GitHub Issues?" (arXiv:2310.06770) — https://arxiv.org/abs/2310.06770 — empirical support: real-repository evaluation reveals that models performing well on toy benchmarks resolve only ~2% of authentic brownfield GitHub issues, confirming that greenfield capability does not transfer to legacy codebases
 
 ## Related
 

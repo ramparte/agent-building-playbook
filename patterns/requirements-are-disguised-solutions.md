@@ -22,6 +22,12 @@ Stakeholders rarely state needs; they state implementations. They ask for a fiel
 - The cost of building the literal request is trivial and reversible — sometimes shipping the asked-for thing is the cheapest way to learn whether it was right.
 - Repeatedly asking "but why do you really want this?" has become an obstruction that erodes the stakeholder's trust — read the room and commit.
 
+## Exemplars
+
+- Gause & Weinberg, *Exploring Requirements: Quality Before Design* (1989) — https://geraldmweinberg.com/Site/Exploring_Requirements.html — classic requirements-engineering text focused on probing past stated solutions to find underlying needs; reviewers describe it as "full of tricks for eliciting from users what they cannot express without your help."
+- The XY Problem — https://xyproblem.info — computing community shorthand for this pattern: a questioner asks about their attempted solution (Y) rather than the actual goal (X); the page links Eric Raymond's "How To Ask Questions The Smart Way" as related reading.
+- Carmen Nobel, "Clay Christensen's Milkshake Marketing" (Harvard Business School Working Knowledge, 2011) — https://www.library.hbs.edu/working-knowledge/clay-christensens-milkshake-marketing — reports Christensen's Jobs-to-be-Done research: the job a product is "hired" to do often differs from the feature or demographic the stakeholder names; recovering the underlying job requires asking what decision or outcome the stated solution is meant to serve.
+
 ## Related
 
 - `patterns/interview-to-a-spec.md`

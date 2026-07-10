@@ -23,6 +23,11 @@ Agentic work changes what skill to train for. Historically, writing code by hand
 - This is not an argument that hand-writing code is now useless for learning — deliberate hands-on practice still builds judgment that pure operating does not.
 - Avoid turning "operating" into another set of memorized tricks; the literacy is transferable competence, not a new checklist to game.
 
+## Exemplars
+
+- Andrej Karpathy, "Software 2.0" — https://karpathy.medium.com/software-2-0-a64152b37c35 — classic antecedent: the shift from writing explicit code to specifying desired behavior anticipates the deeper shift this pattern names — from implementing to operating.
+- Simon Willison, "Vibe engineering" — https://simonwillison.net/2025/Oct/7/vibe-engineering/ — formalizes: distinguishes rigorous AI-assisted engineering (leaning on testing, planning, code review, and an updated sense of estimation) from mere prompting; argues that AI tools "amplify existing expertise" — operating judgment is what gets amplified, not what gets replaced.
+
 ## Related
 
 - `patterns/nontechnical-owners-with-guardrails.md`

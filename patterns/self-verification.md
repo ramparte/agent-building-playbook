@@ -25,7 +25,9 @@ An agent without verification capability is a single-pass system: it produces ou
 ## Exemplars
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: the evaluator pattern is a first-class agentic primitive — an LLM or programmatic check that inspects the generator's output and provides feedback before the result is accepted
-- Amplifier — https://github.com/microsoft/amplifier — the verification-before-completion skill: requires running verification commands and reading their output before any completion claim is made — the agent self-verifies rather than claiming success based on having performed the action
+- Amplifier — https://github.com/microsoft/amplifier-bundle-superpowers — the superpowers verify mode: requires running verification commands and reading their output before any completion claim — "'Should' is not evidence"; the agent self-verifies rather than claiming success based on having performed the action
+- Huang et al., "Large Language Models Cannot Self-Correct Reasoning Yet" (arXiv:2310.01798) — https://arxiv.org/abs/2310.01798 — limits: demonstrates that intrinsic self-correction (same model re-prompted) degrades rather than improves reasoning accuracy — verification must use an independent information source, not ask the same model the same question in different phrasing
+- Wang et al., "Self-Consistency Improves Chain of Thought Reasoning in Language Models" (arXiv:2203.11171) — https://arxiv.org/abs/2203.11171 — formalizes: sampling multiple independent reasoning paths and selecting the most consistent answer reduces errors compared to greedy decoding, establishing ensemble-based verification as an empirically effective technique
 
 ## Related
 

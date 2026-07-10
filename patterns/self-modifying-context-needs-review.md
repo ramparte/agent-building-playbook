@@ -23,6 +23,11 @@ An agent that can edit its own persona file or instruction set is one of the mos
 - For ephemeral, single-session scratch context that is discarded at the end — the overhead of a review gate is unwarranted for memory that never persists.
 - When the simpler fix is a human editing the instructions directly — not every adaptation needs to route through agent self-modification.
 
+## Exemplars
+
+- Packer et al., "MemGPT: Towards LLMs as Operating Systems" (arXiv:2310.08560) — https://arxiv.org/abs/2310.08560 — formalizes: agent-controlled persistence in which memory edits and retrieval are entirely self-directed, executed via LLM-generated function calls — exactly the capability this pattern's review gate puts under supervision.
+- Simon Willison, "Prompt injection attacks against GPT-3" — https://simonwillison.net/2022/Sep/12/prompt-injection/ — origin: first named and defined prompt injection (2022), the foundational attack vector showing how untrusted input can override agent instructions — the same risk that makes self-modifying context dangerous without a review gate, since injected content can trigger memory writes.
+
 ## Related
 
 - `patterns/scope-and-expire-memory.md`

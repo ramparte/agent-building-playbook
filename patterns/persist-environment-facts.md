@@ -23,7 +23,8 @@ Every agent run begins with a context window that knows nothing. Facts that were
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends writing to files as a primary persistence mechanism for agentic systems that need to preserve state across context resets
+- Anthropic — https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents — formalizes: structured note-taking to external memory as the primary mechanism for preserving environment facts when the active context window resets
+- Chatlatanagulchai et al., "Agent READMEs: An Empirical Study of Context Files for Agentic Coding" (arXiv:2511.12884) — https://arxiv.org/abs/2511.12884 — empirical support: a study of 2,303 agent context files across 1,925 repositories showing practitioners use README-style context files to persist project-level environment facts — implementation details (69.9%), architecture (67.7%), and build commands (62.3%) are the most common contents
 
 ## Related
 

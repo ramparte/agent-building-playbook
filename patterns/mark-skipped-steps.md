@@ -24,5 +24,6 @@ In multi-step workflows, some steps are skipped — due to conditions not being 
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends that agents surface their reasoning and the state of their work explicitly, enabling reviewers to identify where work was omitted rather than completed
-- Amplifier — https://github.com/microsoft/amplifier — the context-intelligence hook records every tool call attempt, including those that returned errors or were not executed, creating a complete inline record of what ran and what did not in each session
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends prioritizing transparency by explicitly showing the agent's planning steps
+- Amplifier — https://github.com/microsoft/amplifier — the context-intelligence hook records every tool call attempt, including those that returned errors or were not executed, creating a complete inline record of what ran and what did not in each session (per the Amplifier team's white papers; not visible in the current public repos)
+- Atul Gawande, *The Checklist Manifesto: How to Get Things Right* (2009) — http://atulgawande.com/book/the-checklist-manifesto/ — classic antecedent (the link is the author's book page, not the book text): argues that even experts need written checklists to avoid errors of ineptitude — knowing the right steps but failing to execute them reliably without a structured record

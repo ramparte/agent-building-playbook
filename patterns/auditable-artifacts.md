@@ -27,7 +27,8 @@ The same property makes durable artifacts the most reliable form of near-term me
 ## Exemplars
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: describes how agentic pipelines should maintain visibility of intermediate results, not just final outputs, to enable debugging and human oversight
-- Amplifier — https://github.com/microsoft/amplifier — the context-intelligence hook captures a structured artifact (JSONL event stream) at every session turn, making every agent action independently inspectable and replayable
+- Amplifier — https://github.com/microsoft/amplifier — event-first observability is a core philosophy: significant actions emit events to a JSONL log, making agent actions independently inspectable and replayable (per the Amplifier team's white papers; in the public repos, the amplifier-foundation session-analyst agent works from these events.jsonl streams)
+- Martin Fowler, "Event Sourcing" (2005) — https://martinfowler.com/eaaDev/EventSourcing.html — classic antecedent: formalizes the principle of capturing every state change as an immutable, replayable event record — the same property the pattern requires of pipeline stage artifacts
 
 ## Related
 

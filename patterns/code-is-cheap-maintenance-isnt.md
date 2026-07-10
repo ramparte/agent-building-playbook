@@ -20,6 +20,11 @@ The marginal cost of generating code with AI is near zero. The marginal cost of 
 - Exploratory throwaway code with an explicit expiry date — scripts that run once, prototypes that will be deleted after the demo, analysis notebooks that live for a sprint.
 - Code maintained by automated tooling with no human obligation (fully generated from a schema and regenerated on each schema change, for example).
 
+## Exemplars
+
+- Lehman, M.M., "Programs, Life Cycles, and Laws of Software Evolution" (Proc. IEEE, 1980) — https://blog.acolyer.org/2020/02/14/programs-life-cycles-laws/ — classic antecedent (link is Adrian Colyer's Morning Paper summary; the IEEE original is paywalled): establishes that E-type programs require never-ending change and that complexity grows unless actively countered, making cumulative maintenance cost exceed initial development cost over a system's lifetime
+- Ward Cunningham, "The WyCash Portfolio Management System" (OOPSLA 1992) — https://c2.com/doc/oopsla92.html — classic antecedent: coined the technical debt metaphor — shipping first-time code accrues an obligation that must be repaid through refactoring, and unpaid debt accumulates interest that eventually dominates the cost of all further development
+
 ## Related
 
 - `patterns/start-least-agentic.md`

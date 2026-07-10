@@ -23,3 +23,4 @@ The instinct to add capabilities before fixing reliability is almost always wron
 ## Exemplars
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends starting simple and only adding complexity once the simpler system is reliable
+- Beyer et al., *Site Reliability Engineering*, "Embracing Risk" (Google/O'Reilly) — https://sre.google/sre-book/embracing-risk/ — classic antecedent: error budgets operationalize the trade-off — when the reliability budget is exhausted, new releases halt until it is restored, encoding reliability as the gate on feature velocity

@@ -11,7 +11,7 @@ As a codebase grows tangled, agents degrade on it — and that degradation is a 
 ## When to reach for it
 
 - When an agent that used to handle a codebase well starts thrashing, stalling, or needing many attempts — treat the change in its performance as a diagnostic, not just bad luck.
-- When you see the classic tells — a change applied to one duplicate but not its siblings, "done" reported with tests failing, self-contradiction about what works — read them as duplication and complexity smells.
+- When you see the classic tells — a change applied to one duplicate but not its siblings, "I'm done" reported with tests failing, self-contradiction about what works — read them as duplication and complexity smells.
 - When you are tempted to blame the model for a task it handled fine on a cleaner codebase — check the code before you swap the tool.
 - As a standing habit: watch agent effort as a leading indicator of maintainability, the way you would watch build times or incident rates.
 
@@ -23,7 +23,7 @@ As a codebase grows tangled, agents degrade on it — and that degradation is a 
 
 ## Exemplars
 
-- Ivett Ördög (devill) — https://github.com/lexler/augmented-coding-patterns/blob/main/documents/patterns/canary-in-the-code-mine.md — "Canary in the Code Mine," the source this pattern is adapted from, with concrete tells (inconsistent updates across duplicated components, context exhaustion, tests-fail-but-"done", self-contradiction)
+- Ivett Ördög (devill) — https://github.com/lexler/augmented-coding-patterns/blob/main/documents/patterns/canary-in-the-code-mine.md — "Canary in the Code Mine," the source this pattern is adapted from, with concrete tells (inconsistent updates across duplicated components, context exhaustion, "I'm done" with tests still failing, self-contradiction)
 
 ## Related
 
