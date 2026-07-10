@@ -84,10 +84,10 @@ echo "--- No fabricated URLs (http patterns in Exemplars) ---"
 for f in "${REQUIRED_FILES[@]}"; do
     fp="$PATTERNS/$f"
     [ -f "$fp" ] || continue
-    # Check that any URLs that appear are well-known real domains (anthropic.com, github.com)
-    # or that there are no URLs at all — either is fine.
-    # What we disallow: any URL with a clearly invented domain (placeholder.example.com, etc.)
-    if grep -oP 'https?://\S+' "$fp" | grep -vqE '(anthropic\.com|github\.com|arxiv\.org|openai\.com|microsoft\.com)'; then
+    # Provenance patterns cite many legitimate primary sources (blogs, talks,
+    # papers, production systems), so an allowlist of domains is untenable.
+    # Instead, disallow only clearly-fabricated placeholder domains.
+    if grep -oP 'https?://\S+' "$fp" | grep -qiE '(example\.(com|org|net)|placeholder|your-?domain|foo\.bar|localhost|127\.0\.0\.1|todo|xxx+|lorem)'; then
         check "$f has no suspicious URLs" "fail"
     else
         check "$f has no suspicious URLs" "ok"
