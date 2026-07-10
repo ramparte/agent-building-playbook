@@ -25,8 +25,9 @@ The reason feature flags are one of the most important controls for deploying ag
 
 ## Exemplars
 
-- Martin Fowler / Pete Hodgson — https://martinfowler.com/articles/feature-toggles.html — the canonical treatment of feature toggles, including the separation of deployment from release and the lifecycle cost of stale flags
-- DORA / Accelerate — https://dora.dev — research linking small batches and staged, reversible exposure to lower change-failure rates and faster recovery
+- Pete Hodgson, "Feature Toggles" (hosted on martinfowler.com, 2017) — https://martinfowler.com/articles/feature-toggles.html — the canonical treatment of feature toggles, including the separation of deployment from release and the lifecycle cost of stale flags
+- DORA, "Working in small batches" — https://dora.dev/capabilities/working-in-small-batches/ — empirical support: names working in small batches as a core capability — it reduces the time to get feedback on changes, makes problems easier to triage and remediate, and acts as a countermeasure to the delivery instability that often accompanies AI adoption
+- Charity Majors — https://www.honeycomb.io/blog/deploys-wrong-way-change-user-experience — "Deploys Are the Wrong Way to Change User Experience" (Honeycomb, 2023): deploys and releases are structurally different operations, feature flags are the scalpel where deploys are a chainsaw, and wrapping changes behind flags enables continuous deployment while preserving control over when users are affected
 
 ## Related
 

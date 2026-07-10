@@ -26,7 +26,8 @@ Deployment is not the end of finishing; it is where the most valuable feedback s
 ## Exemplars
 
 - Toyota Production System — https://en.wikipedia.org/wiki/Toyota_Production_System — the lean discipline this pattern adapts: observe defects at the source, reduce batch size, stop-the-line on signal, and improve the process rather than the symptom
-- DORA / Accelerate — https://dora.dev — research on fast, low-risk delivery: small batches, short feedback loops, and staged exposure as the basis of safe continuous change
+- DORA, "Working in small batches" — https://dora.dev/capabilities/working-in-small-batches/ — empirical support: names small batches as essential wherever feedback loops matter — reducing the time to get feedback on changes and making problems easier to triage and remediate
+- Xia et al., "Evaluation-Driven Development and Operations of LLM Agents: A Process Model and Reference Architecture" (arXiv:2411.13768) — https://arxiv.org/abs/2411.13768 — formalizes production feedback as a continuous governing loop (EDDOps): offline evaluation, online monitoring, and iterative redevelopment form a closed cycle rather than a terminal pre-deployment checkpoint
 
 ## Related
 

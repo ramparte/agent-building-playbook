@@ -23,6 +23,10 @@ A contradiction inside an organization's body of knowledge is rarely a simple er
 - When the two "contradictory" statements are context-dependent and both correct in their own scope — a detector that cannot distinguish scope will generate false positives that erode trust.
 - When there is no human or forum prepared to actually discuss the surfaced conflicts — a contradiction list nobody triages is just another unread artifact.
 
+## Exemplars
+
+- Semnani et al., "Detecting Corpus-Level Knowledge Inconsistencies in Wikipedia with Large Language Models" (arXiv:2509.23233) — https://arxiv.org/abs/2509.23233 — empirical support: introduces CLAIRE, an LLM-agentic system that surfaces inconsistent claims in a large corpus for human review, finding at least 3.3% of English Wikipedia facts contradict another fact; confirms the core design constraint that contradiction detection requires surfacing for human discussion, not auto-resolution.
+
 ## Related
 
 - `patterns/keep-specs-in-sync.md`

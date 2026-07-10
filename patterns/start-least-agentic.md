@@ -23,7 +23,9 @@ The pull toward full autonomy, long-running loops, and multi-agent orchestration
 ## Exemplars
 
 - Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: explicitly recommends starting with the simplest prompt-based approach and only escalating to agents when simpler solutions are proven insufficient
-- Amplifier — https://github.com/microsoft/amplifier — framework designed to make single-LLM-call patterns as easy to reach for as full agent orchestration, reducing the pull toward unnecessary autonomy
+- Amplifier — https://github.com/microsoft/amplifier-bundle-recipes — workflows declared as YAML steps executed in stages with approval gates and automatic checkpointing — deterministic, predefined orchestration to reach for before granting an agent open-ended autonomy
+- Ward Cunningham, "The Simplest Thing That Could Possibly Work" (Artima, 2004) — https://www.artima.com/articles/the-simplest-thing-that-could-possibly-work — classic antecedent: the XP principle of always attempting the simplest viable solution first and adding complexity only when the simple version demonstrably fails
+- Simon Willison — https://simonwillison.net/2024/Dec/20/building-effective-agents/ — practitioner commentary emphasizing the five workflow patterns as intermediate steps before reaching for agents; "find the simplest solution possible, and only increasing complexity when needed"
 
 ## Related
 

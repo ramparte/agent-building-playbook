@@ -23,6 +23,10 @@ In many domains the honest answer to "what is the rule?" is "it depends," and th
 - The case space is so large or adversarial that a finite pile gives false confidence the dependency has been captured.
 - Privacy, compliance, or confidentiality constraints make the real examples unusable and synthetic ones would misrepresent the domain.
 
+## Exemplars
+
+- Michael Polanyi, *The Tacit Dimension* (1966) — https://en.wikipedia.org/wiki/Tacit_knowledge — classic antecedent: the foundational philosophical argument that "we can know more than we can tell" — experts reliably classify cases they cannot reduce to a stateable rule, which is exactly why collecting labeled examples beats demanding abstract rules.
+
 ## Related
 
 - `patterns/interview-to-a-spec.md`

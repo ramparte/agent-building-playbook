@@ -23,6 +23,10 @@ When a practice works well in one system, the instinct is to copy the whole tool
 - When the original tool is cheap to adopt wholesale and extraction buys nothing — do not decompose a dependency you could simply use.
 - When the transfer would bypass security review — behavior recreated across a trust boundary still needs the same scrutiny as imported code.
 
+## Exemplars
+
+- Wang et al., "Voyager: An Open-Ended Embodied Agent with Large Language Models" (arXiv:2305.16291) — https://arxiv.org/abs/2305.16291 — formalizes: Voyager's ever-growing skill library stores complex behaviors as executable code that is "temporally extended, interpretable, and compositional" — behaviors extracted from one task context and reused to solve novel tasks even in a new world, without copying the full agent.
+
 ## Related
 
 - `patterns/build-a-pattern-registry.md`

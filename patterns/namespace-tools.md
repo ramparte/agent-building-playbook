@@ -23,8 +23,8 @@ When an agent has access to many tools, tool selection becomes a reasoning task:
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: calls out tool naming and description quality as a key factor in reliable tool selection, recommending descriptions that specify both what the tool does and when NOT to use it
-- Anthropic — https://github.com/anthropics/anthropic-cookbook — Anthropic Cookbook: tool use examples show descriptions that include explicit contrasts with adjacent tools to reduce selection ambiguity
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: calls out tool definitions as deserving the same prompt-engineering attention as system prompts, with clear boundaries between tools
+- Anthropic, "Writing effective tools for agents — with agents" — https://www.anthropic.com/engineering/writing-tools-for-agents — formalizes: recommends grouping related tools under common prefixes and using unambiguously named parameters to reduce selection confusion
 
 ## Related
 

@@ -23,8 +23,9 @@ Every action an agent takes is a decision. When an orchestrator spawns a subagen
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: notes that subagents receiving underspecified tasks make compensating assumptions that create compounding errors; full-context delegation is the mitigation
-- Amplifier — https://github.com/microsoft/amplifier — the delegate() API includes explicit context_depth and context_scope parameters to let orchestrators pass exactly the context relevant to a delegation without always dumping the full transcript
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: notes the potential for compounding errors as a key risk in autonomous multi-step agents — the risk that full-context delegation mitigates
+- Amplifier — https://github.com/microsoft/amplifier — the delegate() API includes explicit context_depth and context_scope parameters to let orchestrators pass exactly the context relevant to a delegation without always dumping the full transcript (per the Amplifier team's white papers; these parameters are not visible in the current public repos)
+- Walden Yan, "Don't Build Multi-Agents" (Cognition, June 2025) — https://cognition.com/blog/dont-build-multi-agents — names "Share context, and share full agent traces, not just individual messages" as one of two core principles; direct origin of this pattern's framing
 
 ## Related
 

@@ -23,6 +23,13 @@ A simulated review squad is a panel of distinct perspectives — expert user, no
 - The task is a technical correctness check against a spec — use an auditor agent, not a stakeholder panel.
 - Treating squad approval as a substitute for ever talking to real users — it is a filter for cheap objections, not a release gate.
 
+## Exemplars
+
+- Li et al., "CAMEL: Communicative Agents for 'Mind' Exploration of Large Language Model Society" (arXiv:2303.17760) — https://arxiv.org/abs/2303.17760 — NeurIPS 2023; early work on sustaining distinct LLM personas through extended cooperative tasks via role-playing and inception prompting; a direct technical antecedent of multi-persona review.
+- Qian et al., "ChatDev: Communicative Agents for Software Development" (arXiv:2307.07924) — https://arxiv.org/abs/2307.07924 — assigns specialized agent roles across the design, coding, and testing phases of a software lifecycle; demonstrates role-grounded multi-agent review in a production workflow context.
+- Hong et al., "MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework" (arXiv:2308.00352) — https://arxiv.org/abs/2308.00352 — encodes Standardized Operating Procedures into a panel of agents (product manager, architect, engineer, QA), each generating role-appropriate artifacts; shows how grounding simulated reviewers in domain process knowledge increases output quality.
+- 2389 Research, review-squad — https://github.com/2389-research/review-squad — first-party: dispatches parallel review panels before launch — expert auditors (security, performance, SEO, accessibility), first-time visitors "across a sophistication spectrum", task-oriented regulars verifying real flows, and pedantic nitpickers — the expert-and-novice persona panel packaged as an installable plugin.
+
 ## Related
 
 - `patterns/auditor-agent.md`

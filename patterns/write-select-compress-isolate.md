@@ -22,7 +22,9 @@ When facing a context management problem, there are exactly four moves available
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: describes context management patterns that correspond to all four moves: writing artifacts, selecting relevant content, summarizing history, and isolating sub-tasks to specialized agents
+- LangChain Team — https://www.langchain.com/blog/context-engineering-for-agents — origin: coins the exact four-bucket taxonomy (write, select, compress, isolate); relays Cognition's framing that context engineering is "the #1 job of engineers building AI agents"
+- Breunig, "How Long Contexts Fail" — https://www.dbreunig.com/2025/06/22/how-contexts-fail-and-how-to-fix-them.html — empirical support: documents the four failure modes (poisoning, distraction, confusion, clash) that the four moves are designed to prevent
+- Breunig, "How to Fix Your Context" — https://www.dbreunig.com/2025/06/26/how-to-fix-your-context.html — formalizes: catalogs six practical fixes (RAG, tool loadout, quarantine, pruning, summarization, offloading) that correspond to the select, isolate, compress, and write moves
 
 ## Related
 

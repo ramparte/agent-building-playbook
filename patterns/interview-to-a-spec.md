@@ -23,6 +23,13 @@ Before any code is written, intent should pass through a dialogue whose job is t
 - The interviewer becomes an interrogation that never terminates — if it cannot converge, the bottleneck is missing information, not more questions.
 - Speed pressure makes a worse-but-shipped spec preferable to a perfect one that arrives too late.
 
+## Exemplars
+
+- Harper Reed, "My LLM codegen workflow atm" (2025) — https://harper.blog/2025/02/16/my-llm-codegen-workflow-atm/ — origin: the post that canonically describes having the LLM ask "one question at a time" to develop a thorough spec before implementation begins, producing a `spec.md` the developer can hand off.
+- Gause & Weinberg, *Exploring Requirements: Quality Before Design* (1989) — https://geraldmweinberg.com/Site/Exploring_Requirements.html — classic antecedent: the foundational work on eliciting genuine needs rather than accepting surface statements; emphasizes helping people articulate what they cannot easily express without skilled questioning.
+- Rob Fitzpatrick, *The Mom Test* (2013) — https://www.momtestbook.com/ — classic antecedent: practical discipline for extracting honest needs by asking about the customer's real life and problems rather than seeking validation of a proposed solution — directly parallels "ask why before how."
+- Korn et al., "LLMREI: Automating Requirements Elicitation Interviews with LLMs" (arXiv:2507.02564) — https://arxiv.org/abs/2507.02564 — formalizes: empirical study finding LLM chatbots match human interviewer error rates and successfully extract requirements through context-sensitive iterative questioning across 33 simulated stakeholder interviews.
+
 ## Related
 
 - `patterns/document-intent.md`

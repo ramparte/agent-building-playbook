@@ -23,6 +23,10 @@ Human attention is the scarce resource in an agentic system, and every interrupt
 - When the real problem is a missing guardrail, not a missing human — if the risk can be bounded by a validator or an action limit, bound it there instead of routing it to a person.
 - When interrupts are used to offload accountability for a decision the agent was designed to own — that is not earning the interruption, it is abdicating the task.
 
+## Exemplars
+
+- Mark, Gudith & Klocke, "The Cost of Interrupted Work: More Speed and Stress" (CHI 2008) — https://ics.uci.edu/~gmark/chi08-mark.pdf — empirical support: interrupted workers compensate by working faster but at the cost of significantly elevated stress and frustration, directly quantifying the cognitive tax that a miscalibrated interrupt policy imposes on the people it nominally helps
+
 ## Related
 
 - `patterns/guardrails-and-escalation.md`

@@ -24,8 +24,8 @@ Delegation is not free. When an orchestrator spawns a subagent, it spends tokens
 
 ## Exemplars
 
-- Amplifier — https://github.com/microsoft/amplifier — the delegate() API is the primary mechanism for token-economic delegation decisions; the context_depth parameter controls briefing cost (none = minimal briefing, all = full history briefing), and the model_role parameter controls subagent execution cost; making both explicit encourages engineers to reason about the economics of each delegation call
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: frames context window management as a first-class constraint in agent system design; the pattern of delegating detail-heavy work to sub-agents and returning only a summary is identified as the primary mechanism for keeping orchestrators coherent over long workflows — the token economics analysis makes explicit why this works
+- Amplifier — https://github.com/microsoft/amplifier — the delegate() API is the primary mechanism for token-economic delegation decisions; the context_depth parameter controls briefing cost (none = minimal briefing, all = full history briefing), and the model_role parameter controls subagent execution cost; making both explicit encourages engineers to reason about the economics of each delegation call (per the Amplifier team's white papers; the delegate() API and its parameters are not visible in the current public repos)
+- Anthropic Engineering, "How we built our multi-agent research system" — https://www.anthropic.com/engineering/multi-agent-research-system — empirical support: production data quantifying multi-agent delegation overhead (agents use ~4× more tokens than chat; multi-agent pipelines ~15×); shows the economics require tasks with sufficient value to justify delegation cost
 
 ## Related
 

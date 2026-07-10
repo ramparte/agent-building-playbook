@@ -23,6 +23,10 @@ A tempting but wrong way to adopt agents is to take the existing org chart and w
 - This is not a claim that role-shaped agents are always wrong; sometimes the cleanest design genuinely does map an agent to a familiar role — judge by the outcome, not the shape.
 - Do not discard generation metrics as telemetry; the error is treating them as the goal, not tracking them at all.
 
+## Exemplars
+
+- Michael Hammer, "Reengineering Work: Don't Automate, Obliterate," *Harvard Business Review* (July–August 1990) — https://hbr.org/1990/07/reengineering-work-dont-automate-obliterate — classic antecedent: the original argument that technology should obliterate outdated processes rather than automate them in place; Ford's 75% accounts-payable reduction came from redesigning the process, not staffing it with faster clerks
+
 ## Related
 
 - `patterns/leverage-over-efficiency.md`

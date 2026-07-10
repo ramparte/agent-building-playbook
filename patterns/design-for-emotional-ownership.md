@@ -23,6 +23,11 @@ Adoption is not purely rational, and a system that technically works can still f
 - When personas or playful affordances would mislead users about what the system actually is or can do — ownership built on a false impression backfires.
 - When the real problem is that the output is wrong — affordances cannot manufacture trust the work has not earned.
 
+## Exemplars
+
+- Norton, Mochon & Ariely, "The IKEA Effect: When Labor Leads to Love" (*Journal of Consumer Psychology* 22(3), 2012, pp. 453–460) — https://en.wikipedia.org/wiki/IKEA_effect — empirical support (link is the Wikipedia summary; the journal original is paywalled): participants who assembled products themselves valued them significantly more than pre-assembled equivalents, demonstrating that participation in creation generates ownership and valuation even for imperfect results
+- Norman, *Emotional Design: Why We Love (or Hate) Everyday Things* (2004) — https://www.nngroup.com/books/emotional-design/ — classic antecedent: established that emotional engagement with objects operates at visceral, behavioral, and reflective levels; automations that provide no designed emotional affordances fail the reflective layer and produce alienation rather than ownership
+
 ## Related
 
 - `patterns/supervise-many-agents.md`

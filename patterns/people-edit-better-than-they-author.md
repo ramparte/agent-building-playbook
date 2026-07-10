@@ -23,6 +23,10 @@ The limiting resource in an agentic organization is no longer the ability to bui
 - Only one stakeholder is ever consulted and their reactions are treated as ground truth — you will overfit to a single voice and miss whose constraints actually matter.
 - Producing the artifact has durable side effects (writing to production, notifying real customers) that the "throwaway" framing does not survive.
 
+## Exemplars
+
+- Nielsen Norman Group, "Memory Recognition and Recall in User Interfaces" — https://www.nngroup.com/articles/recognition-and-recall/ — cognitive psychology foundation: recognition (reacting to something shown) requires fewer memory cues than free recall (generating from nothing), explaining why stakeholders who cannot author a clean requirement can instantly identify what is wrong with a concrete artifact.
+
 ## Related
 
 - `patterns/interview-to-a-spec.md`

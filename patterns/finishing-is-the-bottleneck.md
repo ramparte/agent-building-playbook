@@ -24,7 +24,9 @@ The economics of agentic work have inverted: starting has become nearly free whi
 
 ## Exemplars
 
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: emphasizes measuring task completion and verified outcomes over the appearance of progress, the operational core of treating convergence as the metric
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: advises explicit stopping conditions to maintain control and having agents gain 'ground truth' from the environment at each step to assess progress — completion judged from verified environmental state, not from generated activity
+- Eliyahu M. Goldratt, *The Goal* (1984) — https://en.wikipedia.org/wiki/Theory_of_constraints — classic antecedent: introduces the principle that system throughput is determined by its slowest constraint; optimizing non-bottleneck stations produces no improvement in overall output
+- DORA — https://dora.dev/guides/dora-metrics-four-keys/ — empirical support: defines lead time for changes (commit to production) and deployment frequency as concrete throughput metrics for delivery velocity
 
 ## Related
 

@@ -23,6 +23,11 @@ As agents become capable, the limiting factor stops being how much work the mach
 - Do not over-build attention-management infrastructure for a single agent or a low-stakes workflow where a glance at the output is enough.
 - Avoid treating attention purely as a throughput metric to maximize; the goal is judgment landing where it counts, not the most artifacts reviewed per hour.
 
+## Exemplars
+
+- Simon, "Designing Organizations for an Information-Rich World," in Greenberger (ed.), *Computers, Communications, and the Public Interest* (Johns Hopkins Press, 1971) — https://conversableeconomist.com/2015/08/17/economics-of-information-overload-thoughts-from-herb-simon/ — origin (link is a secondary essay quoting the chapter; the 1971 original is not stably hosted): coined "a wealth of information creates a poverty of attention," the foundational statement that attention is a scarce resource requiring deliberate allocation
+- Davenport & Beck, *The Attention Economy: Understanding the New Currency of Business* (2001) — https://archive.org/details/attentioneconomy00thom — classic antecedent: brought Simon's attention-scarcity frame into management practice, arguing attention is the new currency of business that organizations must consciously manage
+
 ## Related
 
 - `patterns/leverage-over-efficiency.md`

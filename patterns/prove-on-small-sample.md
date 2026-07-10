@@ -26,3 +26,4 @@ Scaling a workflow before it has proven correct on a small sample multiplies err
 
 - Anthropic's building-effective-agents guidance explicitly recommends starting with simple use cases and scaling only after proven reliability — proving on small samples is the operational expression of that principle.
 - Every database migration script should be tested against a staging environment with representative data before running against production — the same principle, applied to schema changes.
+- John Gall, *Systemantics* (1975) — https://personalmba.com/galls-law/ — classic antecedent (link is Josh Kaufman's Personal MBA summary; the 1975 book has no stable web home): Gall's Law holds that a complex system that works invariably evolved from a simple system that worked; proving a pipeline on two items before scaling is the operational form of this principle.

@@ -24,10 +24,13 @@ A model's output is a roll of the dice; if you need a three and rarely get it on
 
 ## Exemplars
 
-- Lada Kesseler (lexler) — https://github.com/lexler/augmented-coding-patterns/blob/main/documents/patterns/parallel-implementations.md — "Parallel Implementations," the source this pattern is adapted from, with worked examples in game and UI development (video walkthrough: https://www.youtube.com/watch?v=_LSK2bVf0Lc&t=2671s)
+- Lada Kesseler (lexler) — https://github.com/lexler/augmented-coding-patterns/blob/main/documents/patterns/parallel-implementations.md — "Parallel Implementations," the source this pattern is adapted from; its Ricochet Robot example ran three attempts — one total failure, one mediocre, one whose movement logic worked — and shipped a combination of "the working movement with the better buttons" (video walkthrough: https://www.youtube.com/watch?v=_LSK2bVf0Lc&t=2671s)
+- 2389 Research, test-kitchen — https://github.com/2389-research/test-kitchen — first-party: the same fork-and-judge loop packaged as a plugin — "You have a spec. Three valid approaches exist." — it builds all of them in parallel git worktrees and "lets your tests pick the winner", making the selection step deterministic instead of a judgment call
+- 2389 Research, jam — https://github.com/2389-research/jam — first-party: parallel variants with recombination as the point — 3–5 variants built in parallel worktrees, a review panel evaluates them all, and the synthesis step "refuses to throw away what the losers figured out", folding the strongest ideas from losing variants into the winner
 
 ## Related
 
+- `patterns/build-five-to-throw-away.md`
 - `patterns/parallel-independent-tracks.md`
 - `patterns/single-threaded-default.md`
 - `patterns/delegation-token-economics.md`

@@ -22,6 +22,11 @@ A repository looks like storage — a place files live — but in an agentic wor
 - When reshaping the repo would break builds, ownership, or tooling more than it helps the agent — fix context scope with retrieval or sub-repo views instead of physically resplitting.
 - When the agent's context problems are really prompt or retrieval problems wearing a repo costume — diagnose before you reorganize the filesystem.
 
+## Exemplars
+
+- Chatlatanagulchai et al., "Agent READMEs: An Empirical Study of Context Files for Agentic Coding" (arXiv:2511.12884) — https://arxiv.org/abs/2511.12884 — empirical support: finds that repository-level context files (AGENTS.md, CLAUDE.md) are complex, evolving artifacts developers maintain precisely to shape agent cognition—evidence that repo structure functions as persistent cognitive infrastructure
+- Xu et al., "Everything is Context: Agentic File System Abstraction for Context Engineering" (arXiv:2512.05470) — https://arxiv.org/abs/2512.05470 — formalizes: proposes a Unix-inspired filesystem abstraction where directory organization IS the context management architecture, treating file layout as governed cognitive infrastructure for autonomous agents
+
 ## Related
 
 - `patterns/long-horizon-memory.md`

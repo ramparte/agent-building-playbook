@@ -23,6 +23,11 @@ Governance written as a policy document that sits outside the workflow does not 
 - When governance infrastructure would become bureaucracy that people route around — embedded governance only works if it is the path of least resistance, not an obstacle to circumvent.
 - When the policies themselves are unsettled — encoding governance into tools and validators before you know the rules just hardens the wrong constraints.
 
+## Exemplars
+
+- Open Policy Agent — https://www.openpolicyagent.org/ — formalizes: policy-as-code engine that embeds authorization and compliance rules directly in tools, pipelines, and APIs rather than separate documents, the concrete infrastructure substrate the pattern describes
+- NIST, *AI Risk Management Framework 1.0* (2023) — https://www.nist.gov/itl/ai-risk-management-framework — classic antecedent: defines the Govern, Map, Measure, and Manage functions for AI risk; the pattern's embedded-infrastructure approach operationalizes these governance concerns at enforcement time rather than review time
+
 ## Related
 
 - `patterns/guardrails-and-escalation.md`

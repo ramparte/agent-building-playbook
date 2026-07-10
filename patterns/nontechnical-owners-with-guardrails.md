@@ -23,6 +23,11 @@ Agentic software lowers the barrier between understanding a problem and implemen
 - Avoid this for high-stakes, low-reversibility systems where the consequences of plausible-but-wrong output exceed what guardrails can contain.
 - This is not a substitute for engineering judgment in the loop — if no one can actually evaluate the output, ownership has been handed off into a vacuum.
 
+## Exemplars
+
+- Gartner IT Glossary, "Citizen Developer" — https://www.gartner.com/en/information-technology/glossary/citizen-developer — classic antecedent: names the citizen-developer persona — an employee who creates application capabilities for consumption by themselves or others, using tools not actively forbidden by IT or business units — the nontechnical builder this pattern surrounds with explicit guardrails.
+- Microsoft Inside Track, "Empowerment with good governance: How our citizen developers get the most out of the Microsoft Power Platform" — https://www.microsoft.com/insidetrack/blog/empowerment-with-good-governance-how-our-citizen-developers-get-the-most-out-of-the-microsoft-power-platform/ — empirical support: documents Microsoft's own "protect, measure, enforce" governance model across 1 million+ Power Platform assets (including 170,000 Power Apps), with tiered permission reviews based on risk rating before production access.
+
 ## Related
 
 - `patterns/coaches-and-players.md`

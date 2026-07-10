@@ -24,8 +24,10 @@ A system that does important work but emits no record of it is a black box. Post
 
 ## Exemplars
 
-- Amplifier — https://github.com/microsoft/amplifier — the context-intelligence hook system: every significant agent action emits structured events to a property graph; the resulting event stream enables session replay, delegation tree tracing, tool call analysis, and pattern detection across runs
-- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends instrumenting agentic pipelines with monitoring and logging at each step to enable debugging of complex multi-step behaviors that are otherwise uninterpretable
+- Amplifier — https://github.com/microsoft/amplifier — event-first observability: 'if it's important, emit an event' — significant agent actions emit structured events to a JSONL event log with tracing IDs for correlation (per the Amplifier team's white papers; in the public repos, the amplifier-foundation session-analyst agent works from these events.jsonl streams)
+- Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends that agents gain ground truth from the environment at each step — tool call results, code execution output — to assess progress; the rationale for structured event capture at every transition
+- Martin Fowler, "Event Sourcing" — https://martinfowler.com/eaaDev/EventSourcing.html — the canonical 2005 software-engineering formulation: "Capture all changes to an application state as a sequence of events"; the classic SE pattern this directly echoes, including reconstruction, temporal queries, and audit capabilities
+- AlSayyad et al., "AgentTrace: A Structured Logging Framework for Agent System Observability" (arXiv:2602.10133) — https://arxiv.org/abs/2602.10133 — formalizes structured event capture across operational, cognitive, and contextual surfaces for LLM agents; directly implements this pattern as foundational layer for security, accountability, and real-time monitoring
 
 ## Related
 

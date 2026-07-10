@@ -23,6 +23,12 @@ A model that remembers everything, indiscriminately, is not more capable — it 
 - Genuinely durable facts that should persist indefinitely (a stable domain glossary, an architectural invariant) — these belong in a long-lived scope, not on a decay timer.
 - When the real problem is retrieval quality, not retention — adding aggressive expiry to a store you simply query badly will hide useful information without fixing the selection logic.
 
+## Exemplars
+
+- Packer et al., "MemGPT: Towards LLMs as Operating Systems" (arXiv:2310.08560) — https://arxiv.org/abs/2310.08560 — classic antecedent: introduces OS-inspired tiered memory (main context vs. archival storage) with interrupt-based paging, the foundational architecture for scoped memory management in LLM agents
+- Breunig, "How Long Contexts Fail" — https://www.dbreunig.com/2025/06/22/how-contexts-fail-and-how-to-fix-them.html — empirical support: names and documents four context failure modes (poisoning, distraction, confusion, clash) — the failure taxonomy this pattern's scoping and expiry exist to prevent
+- Anthropic — https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents — formalizes: structured note-taking to scoped external memory as the safe default for preserving state across context resets without poisoning the active window
+
 ## Related
 
 - `patterns/long-horizon-memory.md`

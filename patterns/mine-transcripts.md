@@ -23,6 +23,12 @@ Organizations generate enormous conversational exhaust — meeting transcripts, 
 - One-off conversations with no recurring value — the transform pipeline is overhead that only pays off across a corpus.
 - When a lightweight summary genuinely suffices and no one will ever need the structure — do not build an entity graph for a single status update.
 
+## Exemplars
+
+- Park et al., "Generative Agents: Interactive Simulacra of Human Behavior" (arXiv:2304.03442) — https://arxiv.org/abs/2304.03442 — formalizes: the memory stream + reflection mechanism transforms raw experience records into higher-level structured insights over time, the same record→transform→structure pipeline this pattern advocates for organizational transcripts.
+- Anthropic Applied AI Team, "Effective context engineering for AI agents" — https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents — formalizes: establishes structured note-taking, compaction, and agent-managed memory as the concrete techniques for turning raw conversational context into queryable, retrievable knowledge across long-horizon tasks.
+- 2389 Research, summarize-meetings — https://github.com/2389-research/summarize-meetings — first-party: turns a backlog of meeting transcripts into a connected knowledge graph — parallel agents batch-process each month, extracting people, action items, concepts, and project stubs and wiring them together with wiki-links; run against ~600 real meetings rather than left as recordings nobody rereads.
+
 ## Related
 
 - `patterns/contradiction-extraction.md`

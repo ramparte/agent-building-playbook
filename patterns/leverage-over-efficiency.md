@@ -23,6 +23,10 @@ There are two strategic frames for what agents are for, and the choice shapes ev
 - Leverage multiplies whatever judgment is steering it; do not scale a workflow whose underlying decisions or taste are not yet sound.
 - This is not a license to spin up unbounded agent activity; new operating surfaces still need attention budgets, guardrails, and evidence.
 
+## Exemplars
+
+- Andy Grove, *High Output Management* (1983) — https://www.shortform.com/blog/andrew-grove-high-output-management/ — classic antecedent (link is Shortform's summary; the book has no stable publisher page): the managerial leverage formula (manager output = Σ activity × leverage) establishes leverage—not speed or headcount—as the driver of output, which the AI-as-leverage framing directly extends.
+
 ## Related
 
 - `patterns/coaches-and-players.md`
