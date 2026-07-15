@@ -273,6 +273,8 @@ def main():
         '<p class="lede">Patterns for building better in the agentic age. '
         "Generated from the curated <code>patterns/</code> source &mdash; each "
         "pattern is listed once; filter by dimension to narrow the list.</p>",
+        '<p class="nav"><a href="explore.html">&#9673; Explore the interactive wheel</a> '
+        "&mdash; browse by family, zoom, search, and see how patterns connect.</p>",
         "</header>",
         "<h2>Filter by dimension</h2>",
         '<p class="dims">' + "".join(filter_buttons) + "</p>",

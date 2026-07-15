@@ -13,3 +13,13 @@
 .wiki/dist/
 /wiki/index.html
 /wiki/patterns/
+# Wheel assets copied into the site at deploy time (regenerate via build-wheel.py)
+/wiki/explore.html
+/wiki/wheel.svg
+/wiki/wheel.png
+
+# Wheel rendered/interactive build output (regenerate via scripts/build-wheel.py).
+# The structured agent-facing forms (taxonomy.yaml, wheel.md, wheel.dot) ARE tracked.
+/wheel/explore.html
+/wheel/wheel.svg
+/wheel/wheel.png
