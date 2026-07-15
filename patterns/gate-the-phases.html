@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gate the Phases Explicitly</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Gate the Phases Explicitly</h1><p class="lede">Declare a hard transition between design and build, and between build and ship — phases that blur produce work that cannot be reviewed or rolled back.</p><div class="dims"><a class="tag" href="../index.html#workflow-discipline">workflow-discipline</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Development work passes through recognizable phases: understanding the problem, designing the solution, implementing it, verifying it, and shipping it. In AI-assisted workflows, these phases collapse easily — an agent asked to &quot;figure it out&quot; will design, implement, and claim completion in a single uninterrupted turn, producing work that is impossible to review at the phase boundaries where problems are cheapest to catch. Gating the phases explicitly means declaring a visible checkpoint between each phase where progress is assessed, assumptions are surfaced, and the decision to proceed is made deliberately rather than by default. The gate does not have to involve a human — it can be a test, a validation script, or a structured agent handoff — but it must be a real decision point, not a formality.</p>
+<h3>When to reach for it</h3>
+<ul><li>Any multi-step workflow where the output of one phase becomes the input to the next — gate between them so errors propagate no further than one phase.</li><li>When delegating to an agent: specify explicitly which phase the agent is responsible for, and what artifact marks the end of its phase.</li><li>When requirements are partially known: gate after the design phase to verify the design before building, not after building to discover the design was wrong.</li><li>When multiple agents or humans are involved: gates are the coordination mechanism that keeps their work aligned without requiring constant synchronization.</li><li>When debugging a broken pipeline: identify which gate was missing or skipped; that is almost always where the error originated.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>Simple, well-understood tasks where all phases are trivial and phase blurring poses no meaningful risk — not every file rename needs a formal gate.</li><li>Tight feedback loops where the cost of gating exceeds the cost of rework — quick exploratory iterations where the whole thing is thrown away if the direction is wrong.</li><li>When the phases genuinely cannot be separated (e.g., certain types of design require running implementation to discover constraints) — in those cases, gate around the combined step.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>The Amplifier superpowers workflow structures phases explicitly: brainstorm → human approval → plan → human approval → implement → verify. Each arrow is a gate.</li><li>Staged deployment pipelines gate between build, test, staging, and production — the discipline is identical, applied to infrastructure rather than development workflow.</li><li>Robert G. Cooper, &quot;Stage-Gate Systems: A New Tool for Managing New Products&quot; (*Business Horizons*, 1990) — https://ideas.repec.org/a/eee/bushor/v33y1990i3p44-54.html — classic antecedent (link is IDEAS/RePEc bibliographic metadata; the 1990 article has no stable open-access home): introduced the stage-gate system of formal checkpoints requiring explicit go/kill decisions before work advances to the next phase</li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

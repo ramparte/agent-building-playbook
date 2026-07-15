@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulated Review Squad</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Simulated Review Squad</h1><p class="lede">Before work reaches real users, run it past a panel of simulated perspectives — expert and novice users, compliance, support, executive sponsor, skeptical engineer, accessibility, security — built from real transcripts and tickets, to surface objections early and cheaply.</p><div class="dims"><a class="tag" href="../index.html#intent">intent</a><a class="tag" href="../index.html#verification">verification</a><a class="tag" href="../index.html#reliability">reliability</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>A simulated review squad is a panel of distinct perspectives — expert user, novice user, compliance reviewer, support operator, executive sponsor, skeptical engineer, accessibility reviewer, security reviewer, and whatever domain-specific personas the work demands — run against an artifact before it reaches real people. The goal is explicitly not to pretend these simulations are perfect substitutes for the humans they stand in for; it is to produce the objections those humans would raise earlier and far more cheaply than a real review cycle, so that the obvious problems are caught before work ever reaches a live user. Each persona reads the artifact through its own concerns: the novice trips on the thing the expert never notices, the compliance reviewer flags the step that creates exposure, the support operator predicts the ticket it will generate, the skeptical engineer questions the assumption nobody stated. The weak version invents these personas from imagination; the strong version builds them from real material — transcripts, support tickets, sales calls, shadowing sessions, and domain documents — so the simulated reactions are grounded in how the actual constituencies actually behave. This is distinct from a technical code audit: an auditor checks an artifact against a specification, while a review squad stages multi-stakeholder reaction, surfacing the human objections that no spec encodes.</p>
+<h3>When to reach for it</h3>
+<ul><li>Work is about to reach real users and a full review cycle with every constituency would be slow or expensive.</li><li>The artifact touches many stakeholders (compliance, support, accessibility, security) whose objections you want surfaced before, not after, launch.</li><li>You have real material — transcripts, tickets, calls — to ground the personas in actual behavior rather than imagination.</li><li>Early, cheap objections are worth more than late, authoritative ones for this stage of the work.</li><li>You want to catch the obvious cross-perspective failures before spending a real reviewer&#x27;s attention.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>The decision genuinely requires a real human&#x27;s authority or accountability (a legal sign-off, a regulatory approval) — a simulation cannot stand in.</li><li>The personas would be pure invention with no grounding material, producing confident objections that misrepresent the real constituencies.</li><li>The task is a technical correctness check against a spec — use an auditor agent, not a stakeholder panel.</li><li>Treating squad approval as a substitute for ever talking to real users — it is a filter for cheap objections, not a release gate.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Li et al., &quot;CAMEL: Communicative Agents for &#x27;Mind&#x27; Exploration of Large Language Model Society&quot; (arXiv:2303.17760) — https://arxiv.org/abs/2303.17760 — NeurIPS 2023; early work on sustaining distinct LLM personas through extended cooperative tasks via role-playing and inception prompting; a direct technical antecedent of multi-persona review.</li><li>Qian et al., &quot;ChatDev: Communicative Agents for Software Development&quot; (arXiv:2307.07924) — https://arxiv.org/abs/2307.07924 — assigns specialized agent roles across the design, coding, and testing phases of a software lifecycle; demonstrates role-grounded multi-agent review in a production workflow context.</li><li>Hong et al., &quot;MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework&quot; (arXiv:2308.00352) — https://arxiv.org/abs/2308.00352 — encodes Standardized Operating Procedures into a panel of agents (product manager, architect, engineer, QA), each generating role-appropriate artifacts; shows how grounding simulated reviewers in domain process knowledge increases output quality.</li><li>2389 Research, review-squad — https://github.com/2389-research/review-squad — first-party: dispatches parallel review panels before launch — expert auditors (security, performance, SEO, accessibility), first-time visitors &quot;across a sophistication spectrum&quot;, task-oriented regulars verifying real flows, and pedantic nitpickers — the expert-and-novice persona panel packaged as an installable plugin.</li></ul>
+<h3>Related</h3>
+<ul><li><a href="auditor-agent.html"><code>patterns/auditor-agent.md</code></a></li><li><a href="adversarial-parallel-review.html"><code>patterns/adversarial-parallel-review.md</code></a></li><li><a href="good-pile-bad-pile.html"><code>patterns/good-pile-bad-pile.md</code></a></li><li><a href="shadow-then-transform.html"><code>patterns/shadow-then-transform.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

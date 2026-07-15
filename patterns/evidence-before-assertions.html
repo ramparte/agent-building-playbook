@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evidence Before Assertions</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Evidence Before Assertions</h1><p class="lede">A claim about a system&#x27;s state is not knowledge — it is a hypothesis. Run the verification command and read the output before making any assertion about whether something worked.</p><div class="dims"><a class="tag" href="../index.html#verification">verification</a><a class="tag" href="../index.html#reliability">reliability</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>An assertion about a system&#x27;s state that is not backed by independently gathered evidence is not a claim of fact — it is a guess with high confidence. &quot;The tests pass&quot; means something only if you ran the tests in this session, read the full output, and confirmed the count of passing and failing tests. &quot;The file was written&quot; means something only if you read the file back and verified its contents. &quot;The service is healthy&quot; means something only if you queried the health endpoint and read the response. The pattern seems obvious and yet fails constantly in agentic workflows: the agent performs an action, assumes the action had the intended effect, and proceeds to the next step on the basis of that assumption. When the assumption is wrong — which happens more often than intuition suggests, because errors are quiet and successes are loud — every subsequent step builds on a false foundation, and the resulting failure is both delayed and distant from its cause. Evidence before assertions breaks this by making the verification step non-optional: before any assertion is made (to an orchestrator, to a human, in a handoff artifact), the evidence that justifies the assertion must have been gathered and read in the current execution context.</p>
+<h3>When to reach for it</h3>
+<ul><li>Before any completion claim: identify what command or read operation would prove the claim, run it, read the full output including the exit code, and then make the claim based on what you observed.</li><li>After any tool call that modifies state (writes a file, calls an API, modifies a database): read back the result before assuming the action succeeded.</li><li>When debugging: gather evidence from the system before forming a hypothesis. Hypothesis-first debugging with evidence-last confirmation produces fixes for the wrong problem.</li><li>When reviewing an agent&#x27;s output that claims success: ask &quot;what is the evidence?&quot; before accepting the claim. If the evidence is the agent&#x27;s own assertion, it is not evidence.</li><li>Before any irreversible action (send, delete, deploy): gather evidence that the pre-conditions are exactly what you believe they are. Evidence of the state before the action is as important as evidence of the state after.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>When the evidence is immediately visible in the current context and requires no additional observation — a string returned by an LLM in the same turn is immediately observable and needs no additional verification step.</li><li>When the cost of gathering evidence exceeds the cost of the error it would prevent, and the error is easily reversible — proportionality applies; not every action requires a full verification pass.</li><li>When the evidence cannot be gathered because the system is not observable — in that case, the correct response is to flag the observability gap, not to proceed on assumption. Unobservable actions are dangerous regardless of how confident you are in their success.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: notes it is crucial for agents to gain &#x27;ground truth&#x27; from the environment at each step — tool call results, code execution output — to assess progress, with checkpoints where agents pause for human feedback — the assertion follows the gathered evidence, not the other way around</li><li>Amplifier — https://github.com/microsoft/amplifier — the honest-stopping principle: when a required item cannot be satisfied with real evidence, the agent must stop and report rather than fabricate a plausible-looking result; a fabricated attestation is worse than an honest gap (per the Amplifier team&#x27;s white papers; not visible in the current public repos)</li></ul>
+<h3>Related</h3>
+<ul><li><a href="demand-independent-proof.html"><code>patterns/demand-independent-proof.md</code></a></li><li><a href="verify-independently.html"><code>patterns/verify-independently.md</code></a></li><li><a href="self-verification.html"><code>patterns/self-verification.md</code></a></li><li><a href="fail-loud-over-fallbacks.html"><code>patterns/fail-loud-over-fallbacks.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

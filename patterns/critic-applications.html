@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Critic Applications</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Critic Applications</h1><p class="lede">Build a deterministic tool — a binary, parser, validator, or CLI — that acts as law from the agent&#x27;s perspective; it cannot be negotiated with, only satisfied, which compresses complex intent into a checkable affordance and compensates for model weakness.</p><div class="dims"><a class="tag" href="../index.html#tool-design">tool-design</a><a class="tag" href="../index.html#verification">verification</a><a class="tag" href="../index.html#reliability">reliability</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>A critic application is an external tool — a binary, parser, validator, or CLI — built specifically to act as law from the agent&#x27;s perspective. The defining property is non-negotiability: a model can argue with a prompt, reinterpret an instruction, or talk itself into believing it satisfied a policy, but it cannot argue with a program that returns pass or fail. It must actually satisfy the program. This makes a critic application the most powerful available tool for compressing complex intent into a checkable affordance. Instead of asking a model to hold a long, intricate PDF-processing policy in its head and apply it consistently, you build a PDF utility that exposes exactly the affordances the policy requires and refuses everything else. Instead of asking a model to visually inspect a UI unaided — a known weakness — you give it object detection, screenshot comparison, accessibility checks, or browser automation that report ground truth. A critic application earns its keep by doing what models are bad at reliably: it can parse domain-specific artifacts, validate policy constraints, expose hidden state the model would otherwise have to guess at, compare before-and-after outputs, generate test fixtures, check invariants, score outputs against a rubric, and in general compensate for a specific model weakness with a deterministic mechanism. Crucially, a critic application is not a product for humans and need not be polished, discoverable, or pretty — it only needs to be useful to an agent and reliable enough to serve as a validator. The investment is in building the right unyielding surface, then letting the agent grind against it until it passes. The agent&#x27;s job shifts from &quot;convince me you&#x27;re done&quot; to &quot;make the critic say yes,&quot; which is a far harder claim to fake. Where deterministic rails are about which steps in a workflow are model-driven and which are checked, a critic application is the check itself — the unyielding surface, built deliberately as a first-class artifact.</p>
+<h3>When to reach for it</h3>
+<ul><li>When intent is complex enough that asking a model to remember and apply it reliably is the weak point — encode the policy in a tool the model must satisfy rather than recall.</li><li>When the model has a known blind spot (visual inspection, precise parsing, numeric tolerances, format validation) — build a deterministic check that supplies ground truth where the model is unreliable.</li><li>When you need verification that an agent cannot talk its way past — a program&#x27;s pass/fail is far harder to hallucinate than a self-assessment.</li><li>When the same class of correctness check recurs across many tasks — a reusable validator amortizes its build cost across every future run.</li><li>When you need to expose hidden state (database contents, rendered output, runtime behavior) that the agent would otherwise have to infer — a tool that reports the real state removes the guesswork.</li><li>When converting a recurring review finding into a permanent guardrail — turn the lesson into a check the agent must pass next time, not a note it might read.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>When the judgment is genuinely subjective or open-ended (taste, tone, design quality) and no deterministic rule captures &quot;correct&quot; — forcing a brittle critic produces confident wrong verdicts.</li><li>When the critic would be so expensive or complex to build that a cheaper check (a human glance, an existing test) gives equal assurance — proportion the tool to the risk.</li><li>When the critic itself would become an unmaintained, drifting source of false pass/fail signals — an unreliable validator is worse than none because it launders bad work as verified.</li><li>When the constraint changes faster than the tool can be kept correct — a stale critic enforces yesterday&#x27;s policy.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends giving agents well-specified tools with carefully engineered definitions and verifying outputs against them</li><li>Amplifier — https://github.com/microsoft/amplifier-bundle-superpowers — the superpowers verify mode requires evidence-based completion verification — run the verification command, read its output, then claim — treating the command as the authority rather than the agent&#x27;s claim</li><li>Chen et al., &quot;Teaching Large Language Models to Self-Debug&quot; (arXiv:2304.05128) — https://arxiv.org/abs/2304.05128 — classic antecedent: demonstrates that feeding execution results into the model&#x27;s self-reflection loop (&quot;rubber duck debugging&quot;) substantially improves code generation across benchmarks</li><li>Shinn et al., &quot;Reflexion: Language Agents with Verbal Reinforcement Learning&quot; (arXiv:2303.11366) — https://arxiv.org/abs/2303.11366 — classic antecedent: agents reflect verbally on task feedback signals — external (such as test results) or internally simulated — and iterate against them across attempts, a critic signal distinct from the model&#x27;s in-the-moment self-assessment</li></ul>
+<h3>Related</h3>
+<ul><li><a href="demand-independent-proof.html"><code>patterns/demand-independent-proof.md</code></a></li><li><a href="deterministic-rails.html"><code>patterns/deterministic-rails.md</code></a></li><li><a href="video-driven-development.html"><code>patterns/video-driven-development.md</code></a></li><li><a href="test-what-not-how.html"><code>patterns/test-what-not-how.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

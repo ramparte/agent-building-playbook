@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>From Personal Workflow to Shared Operating Model</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>From Personal Workflow to Shared Operating Model</h1><p class="lede">Individual engineers develop powerful personal workflows that don&#x27;t compose into a team operating model — and the best local agent answer can violate strategy or shared taste; an organization needs shared artifacts, review norms, observability, and patterns.</p><div class="dims"><a class="tag" href="../index.html#meta-principles">meta-principles</a><a class="tag" href="../index.html#workflow-discipline">workflow-discipline</a><a class="tag" href="../index.html#human-factors">human-factors</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Individual practitioners become remarkably effective with agents, evolving personal workflows — their own prompts, tools, session habits, and steering instincts — that produce excellent local results. But personal cleverness does not automatically compose into a team operating model. A dozen people each running their own private, undocumented workflow is not an organization that operates well with agents; it is a dozen islands whose practices cannot be reviewed, transferred, governed, or improved together. Worse, agents optimize locally by default, and the best local answer can quietly violate the organization&#x27;s strategy, policy, or shared taste — a workflow that is optimal for one engineer&#x27;s task may pull against where the whole system needs to go. The fix is to deliberately build organizational topology on top of personal effectiveness: shared artifacts (specs, plans, decisions, logs) that make work portable across people; shared review norms so quality is a team property rather than an individual habit; shared observability so the organization can see what its agents are doing and spending; and a shared pattern library so a useful operating move discovered by one person becomes available, with its failure modes, to everyone. The aim is not to flatten individual ingenuity but to make it compose — to turn private leverage into an aligned operating model.</p>
+<h3>When to reach for it</h3>
+<ul><li>When several people have each become effective with agents in isolation and their practices cannot be reviewed, transferred, or improved collectively.</li><li>When a locally optimal agent workflow keeps producing results that drift from team strategy, policy, or shared taste.</li><li>When valuable operating moves live only in individuals&#x27; heads or private setups, capture them as shared patterns with usage guidance and failure modes.</li><li>When onboarding is slow because there is no shared operating model to hand new people, only a scatter of personal workflows.</li><li>When the organization cannot see, across people, what its agents are doing or costing, invest in shared observability and review norms.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>Do not standardize prematurely; in early exploration, let personal workflows diverge and prove themselves before you harden them into shared norms.</li><li>Avoid bureaucratizing individual effectiveness into compliance overhead that kills the ingenuity you were trying to compose.</li><li>This is not a mandate that every practice be identical; the goal is alignment and portability, not uniformity for its own sake.</li><li>Do not impose shared topology where the work is genuinely one person&#x27;s isolated, low-stakes domain with nothing to compose against.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Mel Conway, &quot;How Do Committees Invent?&quot; (Datamation, 1968) — http://www.melconway.com/Home/Committees_Paper.html — classic antecedent: demonstrates that systems mirror their organization&#x27;s communication structure; the &quot;inverse Conway maneuver&quot; — deliberately restructuring team topology to achieve a desired system shape — is a later practitioner extension of Conway&#x27;s Law (not from the 1968 paper) and grounds this pattern&#x27;s prescription to build shared artifacts and review norms on top of personal effectiveness</li></ul>
+<h3>Related</h3>
+<ul><li><a href="redesign-work-dont-fill-slots.html"><code>patterns/redesign-work-dont-fill-slots.md</code></a></li><li><a href="build-a-pattern-registry.html"><code>patterns/build-a-pattern-registry.md</code></a></li><li><a href="coaches-and-players.html"><code>patterns/coaches-and-players.md</code></a></li><li><a href="match-topology-to-the-work.html"><code>patterns/match-topology-to-the-work.md</code></a></li><li><a href="repository-shape-is-cognitive-architecture.html"><code>patterns/repository-shape-is-cognitive-architecture.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

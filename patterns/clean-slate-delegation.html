@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Default to Clean-Slate Delegation</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Default to Clean-Slate Delegation</h1><p class="lede">When spawning a subagent, start with an empty context and provide only what the task needs — shared history is a source of inherited confusion, not free context.</p><div class="dims"><a class="tag" href="../index.html#orchestration">orchestration</a><a class="tag" href="../index.html#context-engineering">context-engineering</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>When an orchestrator spawns a subagent, the default assumption is often that more shared context is better — give the subagent the full conversation history, all prior tool results, every decision made so far, and it will have everything it needs to succeed. This assumption is usually wrong. Context passed wholesale carries not just the relevant information but also the irrelevant, the contradictory, and the already-superseded. A subagent that inherits the orchestrator&#x27;s full history also inherits every wrong turn, every discarded approach, and every provisional decision that the orchestrator since reversed. The subagent cannot distinguish the live signal from the noise. It fills its context window with what doesn&#x27;t matter, has less space for what does, and may be actively confused by intermediate state that looks like a constraint but isn&#x27;t. Clean-slate delegation inverts this: the default for any subagent is an empty context. The orchestrator explicitly constructs what the subagent needs — the task, the constraints, the conclusions to take as given — and passes only that. This is not less information; it is more accurate information, without the confounding matter. The orchestrator&#x27;s responsibility is to distill, not to dump.</p>
+<h3>When to reach for it</h3>
+<ul><li>When spinning up a subagent to perform a focused, self-contained task — give it a task-specific briefing rather than the full conversation history.</li><li>When the orchestrator&#x27;s conversation is long or contains exploratory content that a focused subagent would find confusing or distracting.</li><li>When multiple subagents are running in parallel and each needs a consistent, accurate view of the same constraints — a per-agent briefing is more reliable than each inheriting the same long history and extracting from it independently.</li><li>When a subagent will make decisions that need to be right on the first try — a clean-slate briefing reduces the chance that irrelevant inherited state contaminates the decision.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>When the subagent genuinely needs the conversational history to reason correctly — for example, a summarization or analysis task where the full context is the subject being analyzed, not the background.</li><li>When the cost of constructing the briefing exceeds the cost of passing the history — for very short conversations, distillation may be more work than it&#x27;s worth.</li><li>When the subagent is resuming a prior session and continuity with that session&#x27;s state is explicitly required — clean-slate is the wrong default in a continuation context.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Amplifier — https://github.com/microsoft/amplifier — the delegate() API defaults to context_depth=&quot;none&quot; (clean slate); passing history requires an explicit opt-in via context_depth=&quot;recent&quot; or context_depth=&quot;all&quot;, making clean-slate delegation the path of least resistance (per the Amplifier team&#x27;s white papers; the context_depth API is not visible in the current public repos)</li><li>Anthropic — https://www.anthropic.com/engineering/multi-agent-research-system — &quot;How we built our multi-agent research system&quot; (2025): describes the production multi-agent architecture for Claude&#x27;s Research feature; includes the practice of spawning fresh subagents with clean contexts when approaching token limits, with continuity preserved through deliberate handoff briefings rather than inherited history</li></ul>
+<h3>Related</h3>
+<ul><li><a href="share-full-context.html"><code>patterns/share-full-context.md</code></a></li><li><a href="checkpoint-handoff-file.html"><code>patterns/checkpoint-handoff-file.md</code></a></li><li><a href="context-over-prompt.html"><code>patterns/context-over-prompt.md</code></a></li><li><a href="write-select-compress-isolate.html"><code>patterns/write-select-compress-isolate.md</code></a></li><li><a href="hang-up-call-back.html"><code>patterns/hang-up-call-back.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

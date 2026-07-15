@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkpoint to a Handoff File, Then Restart Clean</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Checkpoint to a Handoff File, Then Restart Clean</h1><p class="lede">When context grows unwieldy or a session must end, write a structured handoff file capturing exactly what the next session needs, then start fresh with only that file.</p><div class="dims"><a class="tag" href="../index.html#context-engineering">context-engineering</a><a class="tag" href="../index.html#workflow-discipline">workflow-discipline</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Long-running tasks accumulate context: decisions made, attempts tried, state discovered, errors encountered. As that history grows, two failure modes emerge. First, the model begins to weight early framing too heavily, even when later information should have updated its approach. Second, the context fills with noise — tool outputs, intermediate reasoning, failed branches — that competes with the signal that actually matters for the next step. A handoff file is the antidote: a deliberately structured document written at a checkpoint that captures only what the next session genuinely needs — the current goal, what has been completed, what is in progress, what was tried and abandoned and why, what the next concrete action is, and where the relevant artifacts live. The session that reads the handoff file starts with a clean context window containing exactly this curated briefing, not an inherited mess of accumulated history. The act of writing the handoff is itself a clarifying operation — it forces distillation of what matters from what merely happened.</p>
+<p>The same file is what a journal entry should be. A good journal entry is a handoff packet, not a vague diary: it records the task goal, the final state, the decisions made, the failed attempts and why they were abandoned, the unresolved questions, the files changed, the tests run, the assumptions worth revisiting, and the recommendations for the next session. A bad journal entry narrates feelings and activity; a good one hands the next session everything it needs to resume cold. For long-lived agent personas the journal does more than transfer task state — it reinforces continuity of style, goals, and &quot;vibe,&quot; letting a later session restart in character without replaying an entire transcript.</p>
+<h3>When to reach for it</h3>
+<ul><li>When a task will span multiple sessions and context must be transferred without loss of essential state.</li><li>When the current context window is more than two-thirds full and the task is not complete — the remaining work will be better served by a fresh context with a handoff than by continuing to compress into an overloaded window.</li><li>When an agent loop is about to be reset (system restart, context limit, scheduled job end) — checkpoint before the reset, not after.</li><li>When handing off work between agents or between a human and an agent — the handoff file is the interface.</li><li>When debugging reveals that the model has anchored on early framing that is now stale — a handoff file forces re-grounding on current state.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>Short tasks that complete within a single session with room to spare — the overhead of writing and reading a handoff file is not worth it for a task that will finish in the same context.</li><li>Tasks where the full conversation history is genuinely required for continuity — some multi-turn interactions depend on the conversational thread itself, not just the state.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Anthropic — https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents — Effective Context Engineering for AI Agents (Sept 2025): describes compaction and structured note-taking as core long-horizon techniques — its example agent persists a NOTES.md outside the context window and restores it after reset, the checkpoint-then-restart move this pattern generalizes</li><li>Yichao &quot;Peak&quot; Ji, Manus AI — https://manus.im/blog/Context-Engineering-for-AI-Agents-Lessons-from-Building-Manus — Context Engineering for AI Agents: Lessons from Building Manus (July 2025): production account of using the file system as persistent external memory and reciting a todo.md into recent context to hold objectives in focus — the same pattern derived empirically from practice</li><li>Packer et al., &quot;MemGPT: Towards LLMs as Operating Systems&quot; (arXiv:2310.08560) — https://arxiv.org/abs/2310.08560 — formalizes virtual context management with tiered memory and OS-style paging; the theoretical model that underlies checkpoint-and-restart as a memory architecture</li></ul>
+<h3>Related</h3>
+<ul><li><a href="context-is-finite.html"><code>patterns/context-is-finite.md</code></a></li><li><a href="write-select-compress-isolate.html"><code>patterns/write-select-compress-isolate.md</code></a></li><li><a href="persist-environment-facts.html"><code>patterns/persist-environment-facts.md</code></a></li><li><a href="long-horizon-memory.html"><code>patterns/long-horizon-memory.md</code></a></li><li><a href="hang-up-call-back.html"><code>patterns/hang-up-call-back.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

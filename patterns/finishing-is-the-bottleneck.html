@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finishing Is the Bottleneck, Not Starting</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Finishing Is the Bottleneck, Not Starting</h1><p class="lede">Models make starting easy — a plausible 80% appears fast — but plausible work is not finished work, and the final 20% consumes most of the attention and risk; the real metric is convergence — work that reliably reaches an accepted, shipped, observed state.</p><div class="dims"><a class="tag" href="../index.html#workflow-discipline">workflow-discipline</a><a class="tag" href="../index.html#reliability">reliability</a><a class="tag" href="../index.html#meta-principles">meta-principles</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>The economics of agentic work have inverted: starting has become nearly free while finishing remains expensive. A model can produce a plausible 80% solution — code, a demo, a document, a prototype — in minutes, and the very speed of that production is the trap, because plausible work and finished work are not the same thing. Finished work has passed tests, survived independent review, produced evidence, handled edge cases, met user expectations, complied with constraints, shipped safely, and generated feedback that can be acted on. The final 20% — the part the model makes look almost-done — is where most of the attention, risk, and organizational cost actually live. Worse, agentic systems generate unfinished work faster than humans can inspect it, so without a finishing discipline the organization silently accumulates demos, branches, prototypes, unmerged code, half-fixed bugs, shallow tests, and &quot;almost done&quot; artifacts that look like progress and are really debt. The bottleneck is therefore not code generation. It is convergence: the property that work reliably reaches an accepted state — implemented, reviewed, tested, documented, deployed, observed, and incorporated into the product or organization. A demo is the most seductive false signal here, because a demo shows possibility, not readiness; treating &quot;it demoed&quot; as &quot;it is done&quot; is the canonical way teams mistake an 80% artifact for a finished one. The right metric for an agentic system is not how much it can start but how reliably it can converge.</p>
+<h3>When to reach for it</h3>
+<ul><li>When evaluating an agentic workflow&#x27;s value: measure convergence (percentage of started work that reaches an accepted, shipped, observed state), not throughput of generated artifacts.</li><li>When a team feels productive but nothing is shipping — the symptom of a starting-rich, finishing-poor pipeline is a backlog of impressive, unmerged, &quot;almost done&quot; work.</li><li>When deciding where to invest engineering effort in a harness: the finishing stages (validation, review, evidence, deployment, feedback) usually deserve more investment than generation.</li><li>When someone proposes shipping on the strength of a demo — pause and ask what would have to be true for this to be finished, not just shown.</li><li>When the volume of agent output has outgrown human inspection capacity — that is the signal that you need finishing discipline encoded into the workflow, not more reviewers.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>For genuinely throwaway exploration — spikes, sketches, and one-day prototypes that will be discarded — where reaching an accepted state was never the goal.</li><li>When the work product genuinely is the start (a brainstorm, an options memo, a research scan) and no convergence is expected downstream.</li><li>When forcing premature finishing discipline onto an exploratory phase would kill the cheap iteration that exploration depends on — converge once the problem is understood, not before.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: advises explicit stopping conditions to maintain control and having agents gain &#x27;ground truth&#x27; from the environment at each step to assess progress — completion judged from verified environmental state, not from generated activity</li><li>Eliyahu M. Goldratt, *The Goal* (1984) — https://en.wikipedia.org/wiki/Theory_of_constraints — classic antecedent: introduces the principle that system throughput is determined by its slowest constraint; optimizing non-bottleneck stations produces no improvement in overall output</li><li>DORA — https://dora.dev/guides/dora-metrics-four-keys/ — empirical support: defines lead time for changes (commit to production) and deployment frequency as concrete throughput metrics for delivery velocity</li></ul>
+<h3>Related</h3>
+<ul><li><a href="work-backward-from-the-shipping-dock.html"><code>patterns/work-backward-from-the-shipping-dock.md</code></a></li><li><a href="demand-independent-proof.html"><code>patterns/demand-independent-proof.md</code></a></li><li><a href="video-driven-development.html"><code>patterns/video-driven-development.md</code></a></li><li><a href="production-feedback-loop.html"><code>patterns/production-feedback-loop.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design Tools for Agents, Not Humans</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Design Tools for Agents, Not Humans</h1><p class="lede">Agent tools should be structured for machine parsing — unambiguous outputs, complete information in every response, no UI affordances that only make sense for humans.</p><div class="dims"><a class="tag" href="../index.html#tool-design">tool-design</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Tools built for human use are optimized for legibility: they paginate, they truncate long output with &quot;...&quot; ellipsis, they format for terminal width, they return user-friendly error messages that assume the caller can ask a follow-up question. When agents use these same tools, each of those human affordances becomes a failure mode. Truncated output means the agent acts on an incomplete picture. Pagination means the agent must know to fetch the next page — and may not realize it didn&#x27;t see the whole thing. User-friendly error messages are ambiguous strings that must be parsed to extract the actual failure code. &quot;Design tools for agents, not humans&quot; means rethinking the contract at the level of what a machine needs: complete, structured, deterministic outputs. An agent tool should return all relevant data in a single call unless the data is genuinely too large. Error cases should be expressed as structured fields — a code, a reason, a recoverable flag — not as prose. Success cases should include the metadata the agent needs to decide what to do next, not just the primary payload. The caller is not a human who can glance at the output and intuit the context; it is a model with a fixed context window that will treat whatever it receives as complete truth.</p>
+<h3>When to reach for it</h3>
+<ul><li>When designing tools that will be registered in an agent&#x27;s tool list — every design decision should assume the caller is a model, not a human reading output in a terminal.</li><li>When adapting existing CLI tools or APIs for agent use — identify all the human affordances (truncation, pagination, user-friendly error messages) and replace them with machine-readable equivalents.</li><li>When agents are making incorrect decisions because they&#x27;re acting on partial or ambiguous tool output — the tool&#x27;s output contract, not the agent&#x27;s reasoning, is usually the root cause.</li><li>When writing tool descriptions: the description is not a tooltip for a human hovering over a button, it is the sole specification the model uses to decide when and how to call the tool.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>When the tool is genuinely dual-use — consumed by both humans in a terminal and by agents in a loop. In this case, add a machine-readable output mode (<code>--format json</code>, <code>--output structured</code>) rather than replacing the human-readable default.</li><li>When the tool wraps an external API that you don&#x27;t control — you cannot redesign the contract, so focus on the wrapper layer that translates the external response into an agent-friendly structure.</li><li>When the &quot;human affordance&quot; is actually useful to an agent — a summary section at the top of a long response can help the agent reason without attending to every detail; don&#x27;t remove structure that aids reasoning just because it was originally designed for humans.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: emphasizes that tool definitions deserve as much prompt-engineering attention as overall prompts, with specifications clear enough to leave no ambiguity in how to use the tool</li><li>Anthropic, &quot;Writing effective tools for agents — with agents&quot; — https://www.anthropic.com/engineering/writing-tools-for-agents — formalizes: practical guide to designing tool contracts for agents — recommends human-readable, semantically meaningful field names over cryptic identifiers, unambiguous descriptions, and response formats that give the agent exactly the context it needs</li><li>Schick et al., &quot;Toolformer: Language Models Can Teach Themselves to Use Tools&quot; (arXiv:2302.04761) — https://arxiv.org/abs/2302.04761 — classic antecedent: established the paradigm of models using external tools via simple APIs, motivating the need for well-designed agent-facing tool interfaces</li></ul>
+<h3>Related</h3>
+<ul><li><a href="namespace-tools.html"><code>patterns/namespace-tools.md</code></a></li><li><a href="search-over-list.html"><code>patterns/search-over-list.md</code></a></li><li><a href="agents-optimize-tools.html"><code>patterns/agents-optimize-tools.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

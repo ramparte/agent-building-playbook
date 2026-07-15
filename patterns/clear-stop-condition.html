@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hand Off With a Clear Stop Condition</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Hand Off With a Clear Stop Condition</h1><p class="lede">An agent without a stop condition will find one itself — and it will not be the one you wanted.</p><div class="dims"><a class="tag" href="../index.html#workflow-discipline">workflow-discipline</a><a class="tag" href="../index.html#orchestration">orchestration</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>When a task is handed to an agent, a human, or a downstream system without a defined stop condition, the recipient will determine their own stopping point — based on their local sense of &quot;done,&quot; their budget, their context, or their default behavior. That self-determined stop condition is almost never aligned with the orchestrator&#x27;s intent. A clear stop condition specifies exactly what constitutes completion: a specific file produced, a test passing, a threshold reached, a signal emitted, or an explicit count of items processed. Without it, handoffs become open-ended, work expands to fill available capacity, and the orchestrator has no reliable way to detect completion without re-inspecting the full output.</p>
+<h3>When to reach for it</h3>
+<ul><li>Every time a task is delegated to a sub-agent: include the stop condition in the instruction, not just the task description.</li><li>When designing agentic loops: define the termination condition before writing any loop logic.</li><li>When a pipeline step could legitimately stop at multiple points: specify which one is correct for this invocation.</li><li>When handoffs involve LLM calls: LLMs will complete their own stop condition if none is provided, and it will be some local notion of &quot;the answer is done,&quot; not your orchestration-level definition.</li><li>When debugging an agent that ran too long or too far: the missing stop condition is the most common root cause.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>Tasks so small and atomic that the stop condition is identical to the task description itself — &quot;return the count&quot; has an inherent stop condition.</li><li>Exploratory agentic tasks where the stop condition is explicitly &quot;stop when you have formed a judgment&quot; and that judgment is the output — but even here, specify a time or cost budget as a practical bound.</li><li>When the downstream system enforces its own stop condition correctly and you have verified it — don&#x27;t duplicate a constraint that is already reliably enforced.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Amplifier delegate() calls include an instruction that specifies what the agent should return and when it should stop — agents without that instruction will continue until context is exhausted (per the Amplifier team&#x27;s white papers; the delegate() API is not visible in the current public repos).</li><li>Loop termination in formal specification languages (TLA+, Alloy) is defined before the loop body — the discipline of specifying stop conditions before behavior is the same principle applied to formal verification.</li><li>Anthropic, &quot;Building Effective Agents&quot; — https://www.anthropic.com/research/building-effective-agents — formalizes: recommends including explicit stopping conditions (such as a maximum number of iterations) in agent loops so orchestrators maintain control rather than relying on the agent&#x27;s own sense of done</li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>If It&#x27;s Important, Emit an Event</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>If It&#x27;s Important, Emit an Event</h1><p class="lede">If a decision, state change, or outcome matters to understanding what happened, it should produce a structured event — not a log line, not a comment, not a hope that someone was watching.</p><div class="dims"><a class="tag" href="../index.html#observability">observability</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>A system that does important work but emits no record of it is a black box. Post-hoc reconstruction from outputs — trying to infer what happened from what currently exists — is archaeology, not observability. Emitting structured events at moments that matter is the practice of making a system narrate its own execution: when a tool call completes, emit a completion event with inputs and outputs; when a decision branch is taken, emit a decision event with the context that drove it; when a retry happens, emit a retry event with the failure reason. These events are not log lines — they are typed, structured records that carry enough information to reconstruct the system&#x27;s reasoning after the fact. The crucial difference is intent: log lines are notes to developers; events are first-class output of the system, designed to be consumed by other systems, agents, dashboards, and analysis pipelines. An agent that emits events is observable. An agent that prints to stdout is guessable.</p>
+<h3>When to reach for it</h3>
+<ul><li>At every significant state transition: session start, session end, task assignment, task completion, handoff, failure, retry. Each transition that matters to understanding the run should produce a record.</li><li>When a decision is made that affects subsequent behavior: which branch was taken, which tool was selected, which model was chosen. Decisions without records are invisible.</li><li>When an external call is made: tool invocations, API calls, database writes. Record the inputs, the outputs, the latency, and the outcome. External calls are the highest-value events because they are the points where the system interacts with the world.</li><li>When building any pipeline that will run unattended: unattended systems with no event stream cannot be diagnosed when they fail. Event emission is not optional for autonomous operation.</li><li>When designing the handoff between agents in a multi-agent system: the events from one agent&#x27;s execution are the working memory for the next agent and the audit trail for the orchestrator.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>When the volume of events would overwhelm downstream consumers without filtering: emit at the right granularity. Emitting every token of inference output as an event is not observability — it is noise that hides signal.</li><li>When events contain sensitive data that should not be persisted — credentials, PII, or security tokens should not appear in event payloads. Scrub before emission or use structured redaction.</li><li>When the system is truly ephemeral and disposable and no analysis of its behavior will ever be needed — but be honest about this judgment; most systems that seem disposable turn out to have consequences that matter.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Amplifier — https://github.com/microsoft/amplifier — event-first observability: &#x27;if it&#x27;s important, emit an event&#x27; — significant agent actions emit structured events to a JSONL event log with tracing IDs for correlation (per the Amplifier team&#x27;s white papers; in the public repos, the amplifier-foundation session-analyst agent works from these events.jsonl streams)</li><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends that agents gain ground truth from the environment at each step — tool call results, code execution output — to assess progress; the rationale for structured event capture at every transition</li><li>Martin Fowler, &quot;Event Sourcing&quot; — https://martinfowler.com/eaaDev/EventSourcing.html — the canonical 2005 software-engineering formulation: &quot;Capture all changes to an application state as a sequence of events&quot;; the classic SE pattern this directly echoes, including reconstruction, temporal queries, and audit capabilities</li><li>AlSayyad et al., &quot;AgentTrace: A Structured Logging Framework for Agent System Observability&quot; (arXiv:2602.10133) — https://arxiv.org/abs/2602.10133 — formalizes structured event capture across operational, cognitive, and contextual surfaces for LLM agents; directly implements this pattern as foundational layer for security, accountability, and real-time monitoring</li></ul>
+<h3>Related</h3>
+<ul><li><a href="awareness-layer.html"><code>patterns/awareness-layer.md</code></a></li><li><a href="real-environment-execution.html"><code>patterns/real-environment-execution.md</code></a></li><li><a href="session-archaeology.html"><code>patterns/session-archaeology.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code Execution Beats Loading Hundreds of Tool Defs</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Code Execution Beats Loading Hundreds of Tool Defs</h1><p class="lede">A single code-execution tool — bash, Python, a REPL — often replaces dozens of specialized tools and avoids the context cost of registering a large tool set that the agent must reason over on every call.</p><div class="dims"><a class="tag" href="../index.html#tool-design">tool-design</a><a class="tag" href="../index.html#context-engineering">context-engineering</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Every tool registered in an agent&#x27;s tool list occupies space in the context window through its name and description, and imposes a reasoning cost on the model that must evaluate each candidate tool before selecting one. A tool set that grows to 50 or 100 tools creates substantial overhead: the model attends to dozens of descriptions on every reasoning step, selection errors multiply as tools become harder to distinguish, and the total context budget consumed by tool definitions crowds out working content. Code execution tools — bash, a Python REPL, a JavaScript runtime — offer a different architecture: instead of registering a specialized tool for every operation, register one general-purpose executor and let the agent write the operation as code. Need to list files matching a pattern? Write a shell glob. Need to query a database? Write a SQL statement. Need to parse JSON? Write a jq expression or a Python one-liner. The tool definition cost is fixed at one description regardless of how many operations the agent needs to perform. The generality is bounded only by what the execution environment allows. This is not appropriate for all situations — code execution requires careful sandboxing, carries security implications, and is harder to audit than a predefined tool call — but when the alternative is a sprawling tool catalog that exceeds what a model can reliably reason over, code execution is the more reliable design.</p>
+<h3>When to reach for it</h3>
+<ul><li>When the tool set has grown beyond 20–30 tools and selection errors are increasing — consolidate groups of related tools into a single code-execution endpoint and let the agent write code for the operations it needs.</li><li>When tool definitions are consuming a significant fraction of the context window — measure the token cost of your tool list; if it exceeds 10–15% of available context, evaluate consolidation via code execution.</li><li>When tasks require combinations of operations that no single tool supports — rather than adding a new tool for each combination, let the agent compose operations in code.</li><li>When the operations needed by the agent are data transformations, file manipulation, or system queries — these map naturally to code and do not require custom tool logic.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>When the execution environment cannot be safely sandboxed — unrestricted code execution gives the agent the ability to make irreversible changes; always define the blast radius before enabling code execution.</li><li>When the operations require structured inputs and outputs that are harder to enforce through code than through a typed tool interface — tools with defined schemas provide guarantees that free-form code execution does not.</li><li>When the agent population is not reliable enough to write correct code — code execution amplifies both the capability and the error surface; for high-stakes environments, predefined tools with constrained inputs are safer.</li><li>When auditability is a hard requirement — a log of <code>bash(&quot;rm -rf /tmp/old-build&quot;)</code> is harder to audit than a log of <code>delete_build_artifacts(path=&quot;/tmp/old-build&quot;)</code> with a typed schema.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Anthropic, &quot;Code Execution with MCP&quot; — https://www.anthropic.com/engineering/code-execution-with-mcp — formalizes: agents writing code against MCP servers as APIs reduces token usage by 98.7% vs. loading all tool definitions directly into context</li><li>Cloudflare, &quot;Code Mode&quot; — https://blog.cloudflare.com/code-mode/ — formalizes: LLMs are better at writing code to invoke APIs than at direct tool calls, because training data contains far more real code than synthetic tool-call examples</li></ul>
+<h3>Related</h3>
+<ul><li><a href="search-over-list.html"><code>patterns/search-over-list.md</code></a></li><li><a href="tools-for-agents.html"><code>patterns/tools-for-agents.md</code></a></li><li><a href="context-is-finite.html"><code>patterns/context-is-finite.md</code></a></li><li><a href="namespace-tools.html"><code>patterns/namespace-tools.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

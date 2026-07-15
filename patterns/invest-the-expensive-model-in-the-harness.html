@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invest the Expensive Model in the Harness</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Invest the Expensive Model in the Harness</h1><p class="lede">Spend your strongest, most expensive model on improving the harness itself — then run cheaper models through the better harness — because better orchestration is second-order leverage that makes weaker models more useful.</p><div class="dims"><a class="tag" href="../index.html#cost-routing">cost-routing</a><a class="tag" href="../index.html#orchestration">orchestration</a><a class="tag" href="../index.html#meta-principles">meta-principles</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Model routing is usually discussed as a first-order cost trade: put the expensive model on the hard tasks, the cheap model on the easy ones, pay only for the capability you use. That framing misses a more powerful move. The harness — the orchestration graph, the prompts, the skills, the validators, the artifact formats — is itself a thing the expensive model can improve, and improving it pays off on every run that follows. So you spend your strongest model not directly on the work, but on the system that produces the work: have it sharpen the prompts, restructure the graph, design the checks, and tighten the handoff artifacts, and then route cheaper models through that better harness to do the actual production. This is second-order leverage. A first-order investment makes one output better; a harness investment makes every subsequent output better, including the outputs of weaker models. Better orchestration can make a cheap model behave like an expensive one for the task at hand, because the scaffolding now carries the structure the cheap model would otherwise have to supply itself. The expensive model&#x27;s highest-value work is often not the deliverable — it is the factory.</p>
+<h3>When to reach for it</h3>
+<ul><li>When a workflow will run many times: the harness improvement amortizes across every future run, so the expensive model&#x27;s time is best spent there first.</li><li>When cheaper models almost work but drift on structure — invest the strong model in scaffolding that supplies the structure, then let the cheap model fill it in.</li><li>When designing prompts, skills, or graph nodes that many later runs will inherit — author and refine them with your best model.</li><li>When token budget is tight: one expensive harness-improvement pass can lower the per-run cost of everything downstream.</li><li>When you find yourself reaching for the expensive model on every individual task — that is a signal the leverage belongs one level up, in the harness.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>For genuinely one-shot work that will never recur — there is no downstream to amortize the harness investment against.</li><li>When the harness is already good enough and the bottleneck is the task&#x27;s intrinsic difficulty — then the expensive model belongs on the task, not the scaffolding.</li><li>When you cannot measure whether the harness change helped — blind harness tinkering with the expensive model burns budget without the second-order payoff.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Lee et al., &quot;Meta-Harness: End-to-End Optimization of Model Harnesses&quot; (arXiv:2603.28052) — https://arxiv.org/abs/2603.28052 — empirical support: a single automatically-discovered harness improved accuracy by 4.7 points on average across five held-out models, demonstrating that harness engineering is a transferable, reusable investment</li></ul>
+<h3>Related</h3>
+<ul><li><a href="match-model-to-stage.html"><code>patterns/match-model-to-stage.md</code></a></li><li><a href="self-ablating-harness.html"><code>patterns/self-ablating-harness.md</code></a></li><li><a href="leverage-over-efficiency.html"><code>patterns/leverage-over-efficiency.md</code></a></li><li><a href="match-topology-to-the-work.html"><code>patterns/match-topology-to-the-work.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

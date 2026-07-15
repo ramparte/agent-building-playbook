@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>&quot;Four Moves: Write, Select, Compress, Isolate&quot;</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>&quot;Four Moves: Write, Select, Compress, Isolate&quot;</h1><p class="lede">Every context management decision is one of four moves — write it out, select only the relevant part, compress the verbose into the essential, or isolate the detail into a sub-agent.</p><div class="dims"><a class="tag" href="../index.html#context-engineering">context-engineering</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>When facing a context management problem, there are exactly four moves available. Write: convert ephemeral reasoning or intermediate results into a persistent artifact (a file, a note, a checkpoint) so they can survive context resets and be read back precisely. Select: from a large body of available material, choose only the portion that is relevant to the current step — retrieve, filter, slice, excerpt. Compress: take verbose content (a long document, a full conversation history, a detailed plan) and reduce it to a dense summary that preserves signal while shedding token cost. Isolate: delegate a detail-heavy sub-task to a fresh agent so the work happens outside the main context window and only the result returns. These four moves are not arbitrary — they map exhaustively onto the ways context can be shaped. A well-engineered context pipeline can be described entirely in terms of which moves are applied, in what order, to what content.</p>
+<h3>When to reach for it</h3>
+<ul><li>When diagnosing context management problems: identify which move is missing. Growing context? Need compress or isolate. Lost state across sessions? Need write. Too much retrieved content? Need select.</li><li>When designing a multi-agent pipeline: specify which agent applies which move before passing content to the next stage.</li><li>When writing a system prompt or injection: ask whether each piece of content is the raw artifact (write), the most relevant slice (select), a summary (compress), or something that should be offloaded entirely (isolate).</li><li>When a long-running agent&#x27;s outputs degrade: the four-move framework is a diagnostic — identify which move is absent or misapplied.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>Simple single-turn tasks where the input naturally fits in context without any of the four moves — applying the framework to trivial tasks adds unnecessary overhead.</li><li>Tasks where the full verbatim content is required by the model (legal text, contracts, code under review where every line matters) — compression would destroy necessary signal; selection would leave gaps; the move here is simply &quot;include it.&quot;</li></ul>
+<h3>Exemplars</h3>
+<ul><li>LangChain Team — https://www.langchain.com/blog/context-engineering-for-agents — origin: coins the exact four-bucket taxonomy (write, select, compress, isolate); relays Cognition&#x27;s framing that context engineering is &quot;the #1 job of engineers building AI agents&quot;</li><li>Breunig, &quot;How Long Contexts Fail&quot; — https://www.dbreunig.com/2025/06/22/how-contexts-fail-and-how-to-fix-them.html — empirical support: documents the four failure modes (poisoning, distraction, confusion, clash) that the four moves are designed to prevent</li><li>Breunig, &quot;How to Fix Your Context&quot; — https://www.dbreunig.com/2025/06/26/how-to-fix-your-context.html — formalizes: catalogs six practical fixes (RAG, tool loadout, quarantine, pruning, summarization, offloading) that correspond to the select, isolate, compress, and write moves</li></ul>
+<h3>Related</h3>
+<ul><li><a href="context-is-finite.html"><code>patterns/context-is-finite.md</code></a></li><li><a href="context-over-prompt.html"><code>patterns/context-over-prompt.md</code></a></li><li><a href="just-in-time-retrieval.html"><code>patterns/just-in-time-retrieval.md</code></a></li><li><a href="subagents-as-context-sinks.html"><code>patterns/subagents-as-context-sinks.md</code></a></li><li><a href="checkpoint-handoff-file.html"><code>patterns/checkpoint-handoff-file.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

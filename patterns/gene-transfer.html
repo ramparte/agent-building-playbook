@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gene Transfer — Port the Behavior, Not the Code</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Gene Transfer — Port the Behavior, Not the Code</h1><p class="lede">The reusable unit between systems is rarely a whole tool but a trait — a review prompt, a validation loop, a context-file structure, a CLI affordance — so separate phenotype from organism and transfer what&#x27;s valuable; at system scale this becomes semantic porting of behavior across stacks.</p><div class="dims"><a class="tag" href="../index.html#knowledge">knowledge</a><a class="tag" href="../index.html#tool-design">tool-design</a><a class="tag" href="../index.html#meta-principles">meta-principles</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>When a practice works well in one system, the instinct is to copy the whole tool that embodied it. That is usually the wrong unit. The valuable thing is rarely the full tool — it is a single trait that can be extracted and moved into another system the way a gene transfers between organisms. The reusable unit might be a review prompt, a validation loop, a planning sequence, a context-file structure, a CLI affordance, a test-generation pattern, a transcript-processing step, a model-routing strategy, a policy check, or a persona design. Gene transfer is the discipline of separating phenotype from organism: identifying which behavior is actually valuable versus which implementation merely happened to produce it, and carrying only the former across. This applies to code, prompts, skills, workflows, validators, and organizational practices alike. At system scale the same idea becomes semantic porting: if a library, system, or workflow embodies useful behavior, an agent can recreate that behavior in another language, stack, or policy environment without copying the original code — a kind of behavioral memory that preserves what a system does rather than the exact way it did it. Semantic porting earns its keep in clean-room and internal-policy settings, where it reduces dependency risk, and in modernization, where it preserves behavior while the architecture changes underneath. But porting behavior rather than code carries legal, security, and semantic-fidelity risk — the recreated behavior can subtly diverge, leak, or violate a license — so it needs governance, not just a clever prompt.</p>
+<h3>When to reach for it</h3>
+<ul><li>When a pattern works in one team or system and you want its value elsewhere without dragging the entire originating tool along with it.</li><li>When the genuinely reusable unit is a trait — a prompt, a loop, a file structure, an affordance — rather than a deployable artifact.</li><li>When modernizing a legacy system: preserve what it does behaviorally while replacing how it does it.</li><li>When a clean-room or internal-policy constraint forbids copying source but permits recreating behavior from a specification of what it does.</li><li>When building a pattern registry — gene transfer is the mechanism by which registry entries actually move between teams.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>When licensing, copyright, or contractual terms govern the original behavior — semantic porting does not launder legal obligations, and &quot;we rewrote it&quot; is not always a defense.</li><li>When exact fidelity is safety-critical and the recreated behavior cannot be proven equivalent — subtle semantic drift in a reimplementation can be worse than an honest dependency.</li><li>When the original tool is cheap to adopt wholesale and extraction buys nothing — do not decompose a dependency you could simply use.</li><li>When the transfer would bypass security review — behavior recreated across a trust boundary still needs the same scrutiny as imported code.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Wang et al., &quot;Voyager: An Open-Ended Embodied Agent with Large Language Models&quot; (arXiv:2305.16291) — https://arxiv.org/abs/2305.16291 — formalizes: Voyager&#x27;s ever-growing skill library stores complex behaviors as executable code that is &quot;temporally extended, interpretable, and compositional&quot; — behaviors extracted from one task context and reused to solve novel tasks even in a new world, without copying the full agent.</li></ul>
+<h3>Related</h3>
+<ul><li><a href="build-a-pattern-registry.html"><code>patterns/build-a-pattern-registry.md</code></a></li><li><a href="brownfield-is-the-real-test.html"><code>patterns/brownfield-is-the-real-test.md</code></a></li><li><a href="governance-is-infrastructure.html"><code>patterns/governance-is-infrastructure.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

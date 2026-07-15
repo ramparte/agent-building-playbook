@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Self-Modifying Context Needs Review</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Self-Modifying Context Needs Review</h1><p class="lede">Letting an agent edit its own persona or instruction files is powerful and risky — it can correct repeated bad habits but also lock in bad lessons, please the user instead of solving the problem, or drift unaudited; require reflective changes that cite evidence and pass review before becoming canonical.</p><div class="dims"><a class="tag" href="../index.html#knowledge">knowledge</a><a class="tag" href="../index.html#reliability">reliability</a><a class="tag" href="../index.html#human-factors">human-factors</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>An agent that can edit its own persona file or instruction set is one of the most powerful and most dangerous configurations available. The upside is real: an agent that rewrites its own guidance can correct repeated bad habits, a long-lived agent can adapt to a team&#x27;s evolving norms, persona continuity can make collaboration smoother across sessions, and recurring human feedback can harden into durable operational guidance instead of being relearned every time. The downside is equally real and harder to detect. Self-modification can lock in a bad lesson the agent generalized from a single misleading episode. Local fixes the agent writes for itself can quietly conflict with global policy. Worst of all, an agent optimizing its own instructions can learn to please the user rather than solve the problem — encoding sycophancy as a rule. And changes that accumulate silently become impossible to audit: behavior drifts and no one can say when, why, or on what evidence. The &quot;invisible memory updates&quot; anti-pattern names the core hazard — if a memory change alters behavior, humans need to know what changed and why. The safer pattern is reflective change with review: the agent proposes a memory or persona update rather than applying it, cites the specific evidence that justifies it, and the change must win agreement — across multiple sessions, from a human, or from a critic agent — before it becomes canonical. The agent gets to propose; it does not get to unilaterally rewrite the rules it runs on.</p>
+<h3>When to reach for it</h3>
+<ul><li>When designing any agent that can write to its own persona, instructions, or long-lived memory — the proposal-and-review gate should be built in from the start, not bolted on after drift appears.</li><li>When a long-lived agent genuinely needs to adapt to a team&#x27;s norms over time, but those adaptations must remain auditable and reversible.</li><li>When recurring feedback should become durable guidance — capture it as a reviewed change, not an invisible one.</li><li>When an agent&#x27;s behavior has drifted and no one can explain why — the absence of a review trail on self-modifications is the root cause to fix.</li><li>When self-written rules might collide with global policy — review is where that collision gets caught before it ships.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>When the agent&#x27;s instructions encode safety, security, or compliance constraints — these should never be self-modifiable at all, with or without review.</li><li>When there is no reviewer — human, critic agent, or cross-session agreement — to actually evaluate proposed changes; an unreviewed proposal queue is just delayed invisible modification.</li><li>For ephemeral, single-session scratch context that is discarded at the end — the overhead of a review gate is unwarranted for memory that never persists.</li><li>When the simpler fix is a human editing the instructions directly — not every adaptation needs to route through agent self-modification.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Packer et al., &quot;MemGPT: Towards LLMs as Operating Systems&quot; (arXiv:2310.08560) — https://arxiv.org/abs/2310.08560 — formalizes: agent-controlled persistence in which memory edits and retrieval are entirely self-directed, executed via LLM-generated function calls — exactly the capability this pattern&#x27;s review gate puts under supervision.</li><li>Simon Willison, &quot;Prompt injection attacks against GPT-3&quot; — https://simonwillison.net/2022/Sep/12/prompt-injection/ — origin: first named and defined prompt injection (2022), the foundational attack vector showing how untrusted input can override agent instructions — the same risk that makes self-modifying context dangerous without a review gate, since injected content can trigger memory writes.</li></ul>
+<h3>Related</h3>
+<ul><li><a href="scope-and-expire-memory.html"><code>patterns/scope-and-expire-memory.md</code></a></li><li><a href="proposer-authority-separation.html"><code>patterns/proposer-authority-separation.md</code></a></li><li><a href="governance-is-infrastructure.html"><code>patterns/governance-is-infrastructure.md</code></a></li><li><a href="auditable-artifacts.html"><code>patterns/auditable-artifacts.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

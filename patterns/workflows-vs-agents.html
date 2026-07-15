@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Distinguish Workflows From Agents</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Distinguish Workflows From Agents</h1><p class="lede">A workflow is a fixed sequence of steps with known branching; an agent decides dynamically what to do next. Conflating the two produces systems that are harder to test, monitor, and trust.</p><div class="dims"><a class="tag" href="../index.html#orchestration">orchestration</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Workflows and agents occupy different points on a control spectrum, and choosing the wrong abstraction produces real costs. A workflow is a predetermined control flow: step A runs, then step B, then a conditional that leads to either C or D. The path is known in advance; the model fills in content at each step but does not choose the path. An agent is a control loop where the model decides what to do next at each turn, selecting from available tools and actions based on the current state. The distinction matters operationally. Workflows are predictable, testable, and auditable — you can trace every execution against a fixed graph. Agents are adaptive and flexible — they can handle situations the designer did not anticipate — but they are also non-deterministic in their control flow, harder to test exhaustively, and more likely to go down unexpected paths. Most practical systems that are called agents are actually workflows: the model fills in text, makes a classification, or generates a plan, but the control flow is fixed by the code. Naming these correctly is not a semantic preference. If a team believes they are building an agent but they have actually wired a workflow, they will design for flexibility they cannot have and be surprised when the system cannot deviate from the programmed path. If they believe they have a workflow but the model is actually driving control flow, they will underestimate the surface area for unexpected behavior.</p>
+<h3>When to reach for it</h3>
+<ul><li>When designing a new system: decide upfront whether you want predetermined control flow (workflow) or dynamic tool selection (agent). Name the architecture, write it down, and test against that model.</li><li>When a workflow is growing complex branching logic driven by model output — before adding more conditionals, ask whether you should be building an agent with tool selection instead.</li><li>When debugging: if the system is taking unexpected paths, check whether control flow is supposed to be determined by code or by model — the failure modes differ significantly.</li><li>When staffing and testing: workflow logic can be unit-tested against known paths. Agent loops require behavioral testing across diverse prompts and inputs.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>When the distinction does not matter operationally — some systems are simple enough that calling them workflow-or-agent is just taxonomy, not an architectural decision with consequences.</li><li>When the system genuinely lives in the middle of the spectrum — a workflow with one or two agent-driven decisions is neither purely one nor the other, and forcing it into a label creates more confusion than it resolves.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: draws the workflow-agent distinction explicitly and provides examples of each, arguing that many &quot;agent&quot; systems are better implemented as pipelines</li><li>Amplifier — https://github.com/microsoft/amplifier-bundle-recipes — the recipe system provides workflow primitives (sequenced steps, foreach loops, requires_approval gates) separate from agent delegation, making the distinction explicit in the authoring model</li><li>LangChain, &quot;Workflows and agents&quot; (LangGraph docs) — https://docs.langchain.com/oss/python/langgraph/workflows-agents — defines the same distinction in framework terms: workflows have &quot;predetermined code paths,&quot; agents &quot;dynamically define their own processes and tool usage&quot;; represents the distinction codified in a widely-used production framework</li></ul>
+<h3>Related</h3>
+<ul><li><a href="single-threaded-default.html"><code>patterns/single-threaded-default.md</code></a></li><li><a href="composable-patterns.html"><code>patterns/composable-patterns.md</code></a></li><li><a href="recipe-not-conversation.html"><code>patterns/recipe-not-conversation.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

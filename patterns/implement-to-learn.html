@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Implement to Learn</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Implement to Learn</h1><p class="lede">The fastest way to understand a problem is to build a small, throwaway version of the solution.</p><div class="dims"><a class="tag" href="../index.html#workflow-discipline">workflow-discipline</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Understanding a problem well enough to specify it correctly almost always requires building something first. When a task is new or poorly understood, writing a full specification before touching code inverts the learning order — you are trying to reason abstractly about something you have not yet made concrete. Implementing a small, intentionally throwaway version forces the real questions to surface: which inputs are ambiguous, which outputs are hard to define, which assumptions were wrong. The throwaway implementation is not the deliverable; it is a research instrument that produces a better specification for the real deliverable.</p>
+<p>Cheap software extends this beyond the builder&#x27;s own understanding: a prototype is also a <strong>probe for eliciting intent</strong> from stakeholders who cannot author a clean requirement but can react sharply to something concrete. The move is to build *several* prototypes, not one, put them in front of users or domain experts, and capture their reactions, objections, and the workarounds they reach for — then convert that signal into user stories and acceptance criteria. This is especially powerful in domains where stakeholders answer every question with &quot;it depends&quot;: the rule may be unstateable, but the dependency structure can be learned from how experts respond to concrete examples. Generating one prototype risks anchoring everyone on it; generating a spread of alternatives invites the comparative judgments that reveal what people actually want.</p>
+<h3>When to reach for it</h3>
+<ul><li>Before writing a detailed specification for a task you have never done before — implement a rough version first, then write the spec from what you learned.</li><li>When a task description sounds clear but the outputs keep coming out wrong — the spec probably has a hidden assumption that only implementation will reveal.</li><li>When asked to estimate effort for an unfamiliar task — build a spike first, throw it away, and estimate from the spike.</li><li>When an agent is producing poor results on a task — try a hand-built implementation of a small slice to understand where the difficulty actually lives.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>When the task is well-understood and the specification is genuinely complete — implementation-to-learn wastes time when you already know the problem.</li><li>When a throwaway implementation creates external side effects that are hard to undo (writing to production systems, sending emails, charging accounts) — the throwaway assumption breaks when side effects are durable.</li><li>When time pressure requires shipping the first attempt — accept a worse specification rather than spending time on a spike you cannot afford.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>The term &quot;spike&quot; in Extreme Programming names this pattern explicitly: a time-boxed experiment to gain knowledge, with the explicit expectation that the spike code is discarded when the knowledge is gained.</li><li>Ward Cunningham, &quot;Spike Solution&quot; (C2 wiki) — https://c2.com/ppr/wiki/ExtremeProgrammingRoadmap/SpikeSolution.html — origin: the earliest XP definition of the spike — Kent Beck&#x27;s coinage, answering Cunningham&#x27;s recurring question &#x27;what is the simplest thing we can program that will convince us we are on the right track?&#x27;; the code is planned to be thrown away, though sometimes something is salvaged</li><li>Amplifier session workflows — implementation attempts that fail and are then retried with a better task definition are a form of implement-to-learn at the orchestration level.</li></ul>
+<h3>Related</h3>
+<ul><li><a href="build-five-to-throw-away.html"><code>patterns/build-five-to-throw-away.md</code></a></li><li><a href="hang-up-call-back.html"><code>patterns/hang-up-call-back.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build Five to Throw Away</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Build Five to Throw Away</h1><p class="lede">When you don&#x27;t understand the requirements yet, build several variants in parallel — comparing them reveals what you actually care about.</p><div class="dims"><a class="tag" href="../index.html#taste">taste</a><a class="tag" href="../index.html#workflow-discipline">workflow-discipline</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Agentic building is waterfall, but really fast — and once a full design-build cycle costs an afternoon instead of a quarter, it becomes rational to go crashing into a design before you understand the requirements. Brooks told us to plan to throw one away; with agents running in parallel, five throwaways cost the same wall-clock time as one.</p>
+<p>The point of building five is not redundancy — it&#x27;s comparison. A single spike teaches you about the problem; five variants side by side teach you about your own preferences. You don&#x27;t know which properties of a design are essential and which are incidental until you see where the variants agree and where they diverge, and you often can&#x27;t articulate what you care about until you&#x27;re looking at one version that has it and one that doesn&#x27;t.</p>
+<p>There are three ways to generate the variants. You can hint the dimensions you want explored, giving each build a deliberate stance — MVP-first, performance-first, UX-first. You can ask the model itself to pick diverse approaches. Or you can give every variant the exact same prompt and play the slot machine, letting sampling variance do the exploring.</p>
+<p>What happens to the variants afterward is flexible: sometimes all five die and only the extracted spec survives; sometimes one is genuinely right and graduates to the real build; sometimes you quarry the best pieces of several into a fresh synthesis. The commitment is the willingness to throw all five away. The guaranteed output is the learning, not any artifact.</p>
+<h3>When to reach for it</h3>
+<ul><li>When you can&#x27;t yet articulate what good looks like — the requirements are the thing you&#x27;re trying to discover.</li><li>When the design space is wide and a single attempt&#x27;s choices would be arbitrary — you can&#x27;t tell essential from incidental with a sample size of one.</li><li>When a stakeholder will know it when they see it but can&#x27;t spec it — variants give them something concrete to react to.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>When the requirements are actually understood — just build it; parallel variants are pure waste when there&#x27;s nothing left to discover.</li><li>When a single spike answers the question. If the unknown is the problem itself rather than your preferences, one throwaway build is enough — that&#x27;s <code>implement-to-learn</code>.</li><li>When the variants would create durable side effects (production writes, provisioned infrastructure, sent messages) — the throwaway assumption breaks when the builds leave residue.</li><li>When compute budget is the constraint rather than wall-clock time — five builds cost roughly five times the tokens even though they finish together.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Fred Brooks — *The Mythical Man-Month* — &quot;plan to throw one away; you will, anyhow.&quot; This pattern is the same insight at agent economics: when builds are cheap and parallel, plan to throw five away.</li><li>Fred Brooks, *The Mythical Man-Month*, Anniversary Edition (1995) — https://en.wikipedia.org/wiki/The_Mythical_Man-Month — the 20th-anniversary edition revisits the 1975 advice under the heading &quot;Don&#x27;t Build One to Throw Away—The Waterfall Model Is Wrong!&quot; — Brooks&#x27;s own partial retraction toward iterative development (heading appears in the anniversary edition itself; the linked Wikipedia overview covers the edition but not its contents list); this pattern is a third step in that same evolution, made possible by agent economics</li><li>Drew Breunig, &quot;10 Lessons for Agentic Coding&quot; — https://www.dbreunig.com/2026/05/04/10-lessons-for-agentic-coding.html — Lesson 2 &quot;Rebuild often&quot;: cheap code means you can fork and recode thought experiments, reconnoitering and reinventing in ways you never could — the same economics this pattern pushes from one throwaway to five</li><li>2389 Research, test-kitchen — https://github.com/2389-research/test-kitchen — first-party: &quot;You have a spec. Three valid approaches exist.&quot; — instead of guessing which to build, it builds all of them in parallel git worktrees and lets the tests pick the winner, with a design-exploration gate (omakase-off) before building and an implementation competition (cookoff) at the design-to-implementation transition</li><li>2389 Research, jam — https://github.com/2389-research/jam — first-party: diverse perspective panels propose approaches, three to five variants get built in parallel worktrees, and a review panel evaluates them all — premised on the view that a single agent generating &quot;multiple approaches&quot; is still one mind imagining what different people would think, and that the process should refuse &quot;to throw away what the losers figured out&quot;</li></ul>
+<h3>Related</h3>
+<ul><li><a href="implement-to-learn.html"><code>patterns/implement-to-learn.md</code></a></li><li><a href="parallel-attempts-at-one-task.html"><code>patterns/parallel-attempts-at-one-task.md</code></a></li><li><a href="parallel-independent-tracks.html"><code>patterns/parallel-independent-tracks.md</code></a></li><li><a href="develop-your-taste.html"><code>patterns/develop-your-taste.md</code></a></li><li><a href="hang-up-call-back.html"><code>patterns/hang-up-call-back.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

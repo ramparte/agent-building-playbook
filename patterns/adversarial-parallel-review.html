@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adversarial Parallel Review</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Adversarial Parallel Review</h1><p class="lede">Run several reviewers with different models or roles and little shared context, reward significant findings over volume, then have a meta-reviewer rank what matters — because an implementer shares the blind spots that produced its own bugs.</p><div class="dims"><a class="tag" href="../index.html#verification">verification</a><a class="tag" href="../index.html#reliability">reliability</a><a class="tag" href="../index.html#orchestration">orchestration</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>The model that wrote the code is the worst reviewer of it, because it reviews from the same assumptions that produced the bug — the blind spot that created the error also hides it. Adversarial parallel review breaks that correlation by running several reviewers at once, each given different model families or different roles, each with little or no prior context about how the code came to be. &quot;Fresh eyes&quot; here is literal: a separate model that did not author the work and does not carry its rationalizations. The reviewers are scored on significant findings, not volume — a reviewer rewarded for quantity learns to manufacture nitpicks, so the incentive must point at impact. Because independent reviewers will surface overlapping, conflicting, and unequal critiques, a meta-reviewer reads all of them, compares, and ranks which findings actually matter, discarding noise and elevating the few that change the outcome. The ranked, actionable critique routes back to implementation, the fix is made, and the result is re-reviewed by a fresh reviewer rather than the one who already engaged with it. The whole structure exists to manufacture genuine independence — different models, different roles, separated context, impact-weighted scoring — because shared context is exactly what lets a bug survive its own review.</p>
+<h3>When to reach for it</h3>
+<ul><li>When the cost of missing a bug is high — security-sensitive code, irreversible actions, anything expensive to get wrong in production.</li><li>When failures are subtle and high-impact rather than obvious — the class of error a single reviewer sharing the author&#x27;s mental model will miss.</li><li>When the implementing model also did its own review and &quot;found nothing&quot; — that is the signal to bring in independent reviewers, not reassurance.</li><li>When one reviewer&#x27;s verdict is not trustworthy enough to act on alone — multiple independent critiques plus a meta-reviewer give you a ranked, defensible result.</li><li>When you can afford the extra model calls and the latency of a fan-out-then-rank step at a checkpoint.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>For low-stakes or easily reversible work where a single reviewer, or a deterministic check, is sufficient and parallel review is pure overhead.</li><li>In tight interactive loops where the latency and token cost of multiple reviewers plus a meta-reviewer exceed the acceptable feedback cycle.</li><li>When the reviewers are not actually independent — same model, same context, same prompt produces correlated critiques and a false sense of coverage.</li><li>When a deterministic verifier already settles the question — run the test or the linter instead of convening a review squad to judge a checkable fact.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Irving, Christiano &amp; Amodei, &quot;AI safety via debate&quot; (arXiv:1805.00899) — https://arxiv.org/abs/1805.00899 — classic antecedent: establishes adversarial debate between two AI agents before a human judge as a mechanism for surfacing errors a single reviewer shares with the author, founding the adversarial critique structure this pattern inherits</li><li>McAleese et al. (OpenAI), &quot;LLM Critics Help Catch LLM Bugs&quot; (arXiv:2407.00215) — https://arxiv.org/abs/2407.00215 — empirical support: on code with naturally occurring LLM errors, critiques written by a trained LLM critic were preferred over human critiques in 63% of cases, and the critics caught more bugs than paid human code reviewers — independent machine critique of machine output as a validated reliability layer</li><li>2389 Research, simmer — https://github.com/2389-research/simmer — first-party: multi-round artifact refinement where a panel of judges reads the artifact, scores it per criterion, and distills the round&#x27;s findings into the single highest-leverage fix for the generator to apply — the critique, fix, re-review loop packaged as a plugin</li></ul>
+<h3>Related</h3>
+<ul><li><a href="auditor-agent.html"><code>patterns/auditor-agent.md</code></a></li><li><a href="match-model-to-stage.html"><code>patterns/match-model-to-stage.md</code></a></li><li><a href="deterministic-rails.html"><code>patterns/deterministic-rails.md</code></a></li><li><a href="shape-work-as-an-attractor.html"><code>patterns/shape-work-as-an-attractor.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Use a Second Agent as Auditor</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Use a Second Agent as Auditor</h1><p class="lede">The agent that did the work is the worst possible choice to verify the work — put a second agent in the audit seat with no stake in the original claim.</p><div class="dims"><a class="tag" href="../index.html#reliability">reliability</a><a class="tag" href="../index.html#orchestration">orchestration</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>When a task is completed by an agent, that agent&#x27;s verification of its own output is structurally compromised: it is reasoning from the same assumptions, biases, and context that produced the original work. A second agent placed in the auditor role has none of those anchors. It reads the artifact cold — without the history of decisions that led to it — and applies independent judgment about whether the output matches the specification, whether required steps were actually taken, and whether claims of success are backed by evidence. The auditor agent is not asked to redo the work; it is asked to verify the work&#x27;s outputs against stated requirements. The separation of roles is the mechanism that makes the verification meaningful.</p>
+<h3>When to reach for it</h3>
+<ul><li>Any high-stakes pipeline step whose failure has significant downstream costs — add an auditor agent before the output is consumed by the next stage.</li><li>When an agent has a history of falsely reporting completion — an auditor surfaces the pattern systematically rather than catching it case by case.</li><li>Before any irreversible action (deploying, sending, deleting, publishing) — route through an auditor agent first.</li><li>When implementing a multi-agent workflow: design the auditor role explicitly as part of the orchestration, not as an afterthought.</li><li>When compliance or accountability is required: the auditor agent&#x27;s verdict becomes the audit trail.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>Simple deterministic steps where the output is machine-checkable without reasoning (e.g., file exists, test passes, HTTP status 200) — use a deterministic verifier instead of an agent.</li><li>Tight interactive loops where the latency of a second agent call exceeds the acceptable feedback cycle — use auditor agents at checkpoints, not at every micro-step.</li><li>When the audit itself is a conflict of interest (same model, same context, same prompt) — the second agent must be genuinely independent to provide meaningful verification.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: describes the evaluator-optimizer workflow — one model generates while a second evaluates against criteria in a loop — separating generation from evaluation to improve output quality</li><li>Amplifier — https://github.com/microsoft/amplifier-bundle-superpowers — the superpowers bundle ships dedicated spec-reviewer and code-quality-reviewer agents as auditor roles downstream of the implementer agent; the spec-reviewer&#x27;s sole job is to evaluate whether the implementation matches its specification, checking the work itself rather than the implementer&#x27;s self-report</li><li>Huang et al., &quot;Large Language Models Cannot Self-Correct Reasoning Yet&quot; (arXiv:2310.01798) — https://arxiv.org/abs/2310.01798 — empirical support: LLMs reviewing their own outputs degrade rather than improve performance, establishing why the auditor must be a structurally separate agent rather than a self-review pass</li><li>Krakovna et al., &quot;Specification Gaming: The Flip Side of AI Ingenuity&quot; (2020) — https://deepmind.google/blog/specification-gaming-the-flip-side-of-ai-ingenuity/ — empirical support: catalogs how agents satisfy literal objectives while failing intended outcomes — the failure mode an independent auditor exists to catch</li><li>McAleese et al. (OpenAI), &quot;LLM Critics Help Catch LLM Bugs&quot; (arXiv:2407.00215) — https://arxiv.org/abs/2407.00215 — empirical support: the CriticGPT work — LLM critics trained to review model-written code caught more bugs than paid human code reviewers and identified hundreds of errors in ChatGPT training data that had been rated &quot;flawless&quot;</li><li>2389 Research, fresh-eyes-review — https://github.com/2389-research/fresh-eyes-review — first-party: a mandatory review gate that runs after tests pass but before any commit or PR — &quot;NO COMMIT WITHOUT FRESH-EYES REVIEW FIRST&quot; — built on the observation that &quot;Tests are comprehensive&quot; and &quot;I&#x27;m confident it&#x27;s correct&quot; are exactly the circumstances when critical bugs escape</li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

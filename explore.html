@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent-Building Playbook — Explore the Wheel</title>
+<style>
+  :root { --fg:#1b1b1f; --muted:#63636e; --line:#e6e6ec; --bg:#fbfbfd; --accent:#3858a6; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg);
+    font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .app { display:flex; flex-wrap:wrap; gap:10px; max-width:1260px; margin:0 auto; padding:16px; }
+  .stage { flex:1 1 560px; min-width:320px; position:relative; }
+  .side { flex:0 1 380px; min-width:300px; }
+  h1 { font-size:1.35rem; margin:.2rem 0 .1rem; }
+  .sub { color:var(--muted); font-size:.9rem; margin:0 0 .6rem; }
+  .controls { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:0 0 .5rem; }
+  .seg { display:inline-flex; border:1px solid var(--line); border-radius:9px; overflow:hidden; }
+  .seg button { border:0; background:#fff; padding:.4rem .8rem; font:inherit; cursor:pointer; color:var(--muted); }
+  .seg button.on { background:var(--accent); color:#fff; }
+  .toggle { display:inline-flex; align-items:center; gap:.35rem; font-size:.85rem; color:var(--muted);
+    border:1px solid var(--line); border-radius:9px; padding:.35rem .6rem; background:#fff; cursor:pointer; }
+  #wheel { width:100%; height:auto; display:block; -webkit-tap-highlight-color:transparent; }
+  #wheel path { cursor:pointer; }
+  #wheel path:hover { stroke:#1b1b1f; stroke-width:1.8; }
+  #wheel text { pointer-events:none; user-select:none; }
+  #map { position:absolute; top:44px; right:4px; width:150px; height:150px;
+    background:rgba(255,255,255,.72); border:1px solid var(--line); border-radius:10px; }
+  #map path { cursor:pointer; }
+  #outline { display:none; background:#fff; border:1px solid var(--line); border-radius:12px;
+    padding:.6rem .9rem; max-height:76vh; overflow:auto; }
+  #outline details { margin:.15rem 0; }
+  #outline summary { cursor:pointer; padding:.2rem .1rem; font-weight:600; }
+  #outline summary::marker { color:var(--muted); }
+  #outline .dim > summary { font-weight:500; color:#3a3a44; }
+  #outline .badge { color:var(--muted); font-weight:400; font-size:.8rem; }
+  #outline .leaf { padding:.2rem .3rem .2rem 1.3rem; cursor:pointer; border-radius:7px; }
+  #outline .leaf:hover { background:#f0f2fa; }
+  #outline .leaf .ol { color:var(--muted); font-size:.8rem; }
+  #outline .swatch { display:inline-block; width:9px; height:9px; border-radius:2px; margin-right:.4rem;
+    vertical-align:middle; }
+  .crumb { font-size:.9rem; margin:0 0 .5rem; min-height:1.4em; }
+  .crumb a { color:var(--accent); text-decoration:none; cursor:pointer; }
+  .crumb a:hover { text-decoration:underline; }
+  .crumb .sep { color:var(--muted); margin:0 .35rem; }
+  .search { width:100%; padding:.55rem .7rem; font-size:.95rem; border:1px solid var(--line);
+    border-radius:9px; background:#fff; }
+  .panel { background:#fff; border:1px solid var(--line); border-radius:12px; padding:1rem 1.15rem;
+    margin-top:.7rem; }
+  .panel h2 { font-size:1.05rem; margin:0 0 .3rem; }
+  .panel .ol { color:var(--muted); }
+  .chips { margin:.6rem 0 0; }
+  .chip { display:inline-block; font-size:.72rem; padding:.12rem .55rem; margin:0 .3rem .35rem 0;
+    background:#eef1fa; color:var(--accent); border-radius:999px; cursor:pointer; }
+  .chip.home { background:var(--accent); color:#fff; cursor:default; }
+  .chip.plain { background:#f0f0f4; color:var(--muted); cursor:default; }
+  .lbl { font-size:.72rem; text-transform:uppercase; letter-spacing:.04em; color:var(--muted);
+    margin:.85rem 0 .2rem; }
+  .readmore { display:inline-block; margin-top:.7rem; color:var(--accent); font-weight:600; text-decoration:none; }
+  .readmore:hover { text-decoration:underline; }
+  .results { list-style:none; margin:.3rem 0 0; padding:0; max-height:52vh; overflow:auto; }
+  .results li { padding:.4rem .5rem; border-radius:8px; cursor:pointer; }
+  .results li:hover { background:#f0f2fa; }
+  .results .rt { font-weight:600; }
+  .results .rd { color:var(--muted); font-size:.8rem; }
+  .hint { color:var(--muted); font-size:.82rem; margin-top:.6rem; }
+  kbd { font:inherit; font-size:.75rem; background:#f0f0f4; border:1px solid var(--line);
+    border-bottom-width:2px; border-radius:5px; padding:0 .3rem; }
+  .count-pill { color:var(--muted); font-size:.8rem; }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="stage">
+    <h1>The Agent-Building Playbook Wheel</h1>
+    <p class="sub">113 patterns · 6 families · 13 dimensions —
+      click to zoom in, click the center to zoom out. ·
+      <a href="index.html" style="color:var(--accent)">List view ↗</a></p>
+    <div class="controls">
+      <span class="seg" id="viewseg">
+        <button data-view="wheel" class="on">◉ Wheel</button>
+        <button data-view="outline">☰ Outline</button>
+      </span>
+      <label class="toggle"><input type="checkbox" id="heat"> Density heat</label>
+    </div>
+    <svg id="wheel" viewBox="0 0 900 900" role="img" aria-label="Zoomable pattern wheel"></svg>
+    <svg id="map" viewBox="0 0 164 164" aria-label="Overview minimap"></svg>
+    <div id="outline"></div>
+  </div>
+  <div class="side">
+    <div class="crumb" id="crumb"></div>
+    <input class="search" id="q" type="search" placeholder="Search patterns…  (press / )" autocomplete="off">
+    <div id="detail"></div>
+  </div>
+</div>
+<script>
+const DATA = {"name": "Agent-Building Playbook", "kind": "root", "children": [{"name": "Mindset", "kind": "family", "gloss": "How to think and what to value before you build.", "color": "#7a32ad", "children": [{"name": "meta-principles", "kind": "dimension", "color": "#a163ce", "children": [{"name": "Code Is Cheap, Maintenance Isn't", "kind": "pattern", "slug": "code-is-cheap-maintenance-isnt", "one_liner": "AI-generated code is free as in puppies — someone still has to feed it, secure it, and maintain it for as long as it lives.", "also": [], "family": "Mindset", "dimension": "meta-principles", "color": "#dcc1ef"}, {"name": "Context Is a Finite Resource", "kind": "pattern", "slug": "context-is-finite", "one_liner": "Curate the smallest high-signal token set — every token of noise degrades every token of signal.", "also": ["context-engineering"], "family": "Mindset", "dimension": "meta-principles", "color": "#e8d6f4"}, {"name": "Fail-Loud Harnesses", "kind": "pattern", "slug": "fail-loud-harnesses", "one_liner": "Build harnesses that fail visibly — a harness that silently substitutes its own answer hides the agent's failure from you.", "also": ["reliability", "tool-design"], "family": "Mindset", "dimension": "meta-principles", "color": "#dcc1ef"}, {"name": "Fix Reliability Before Features", "kind": "pattern", "slug": "reliability-before-features", "one_liner": "Flakiness, not capability, is the enemy — a system that only sometimes works is harder to improve than one that reliably fails.", "also": ["reliability"], "family": "Mindset", "dimension": "meta-principles", "color": "#e8d6f4"}, {"name": "From Personal Workflow to Shared Operating Model", "kind": "pattern", "slug": "personal-to-shared-topology", "one_liner": "Individual engineers develop powerful personal workflows that don't compose into a team operating model — and the best local agent answer can violate strategy or shared taste; an organization needs shared artifacts, review norms, observability, and patterns.", "also": ["workflow-discipline", "human-factors"], "family": "Mindset", "dimension": "meta-principles", "color": "#dcc1ef"}, {"name": "Redesign the Work, Don't Fill Human-Shaped Slots", "kind": "pattern", "slug": "redesign-work-dont-fill-slots", "one_liner": "Replacing each human role with an agent-shaped equivalent preserves old inefficiencies — and measuring maturity by percent of code generated measures the wrong thing; redesign the work around what models and tools can now do.", "also": ["human-factors", "workflow-discipline"], "family": "Mindset", "dimension": "meta-principles", "color": "#e8d6f4"}, {"name": "Start With the Least Agentic Thing", "kind": "pattern", "slug": "start-least-agentic", "one_liner": "Many problems that look like multi-agent workflows need only one well-crafted LLM call.", "also": ["orchestration"], "family": "Mindset", "dimension": "meta-principles", "color": "#dcc1ef"}, {"name": "Verify Independently — Agents Fake \"Done\"", "kind": "pattern", "slug": "verify-independently", "one_liner": "An unobservable step is effectively unrun — treat \"complete\" as a claim that must be independently verified.", "also": ["reliability"], "family": "Mindset", "dimension": "meta-principles", "color": "#e8d6f4"}]}, {"name": "taste", "kind": "dimension", "color": "#a163ce", "children": [{"name": "Agents Amplify Experience", "kind": "pattern", "slug": "agents-amplify-experience", "one_liner": "Agents multiply the output of whoever wields them — great judgment gets amplified into great results; poor judgment gets amplified into confident mistakes at scale.", "also": [], "family": "Mindset", "dimension": "taste", "color": "#dcc1ef"}, {"name": "Automate the Easy, Avoid the Mystery House", "kind": "pattern", "slug": "automate-but-avoid-mystery-house", "one_liner": "Automate what you understand completely; never automate your way into a system where nobody knows why it works or what it does.", "also": ["workflow-discipline"], "family": "Mindset", "dimension": "taste", "color": "#e8d6f4"}, {"name": "Build Five to Throw Away", "kind": "pattern", "slug": "build-five-to-throw-away", "one_liner": "When you don't understand the requirements yet, build several variants in parallel — comparing them reveals what you actually care about.", "also": ["workflow-discipline"], "family": "Mindset", "dimension": "taste", "color": "#dcc1ef"}, {"name": "Develop Your Taste", "kind": "pattern", "slug": "develop-your-taste", "one_liner": "Taste — the ability to recognize quality and know when something is wrong — is a craft that must be deliberately built; it does not emerge from volume of output alone.", "also": [], "family": "Mindset", "dimension": "taste", "color": "#e8d6f4"}, {"name": "Find the Hard Stuff", "kind": "pattern", "slug": "find-the-hard-stuff", "one_liner": "Deliberately seek the genuinely difficult parts of a problem — where the real work lives is almost never where it looks like it should be.", "also": [], "family": "Mindset", "dimension": "taste", "color": "#dcc1ef"}]}]}, {"name": "Context", "kind": "family", "gloss": "What the model sees and remembers.", "color": "#327aad", "children": [{"name": "context-engineering", "kind": "dimension", "color": "#63a1ce", "children": [{"name": "\"Four Moves: Write, Select, Compress, Isolate\"", "kind": "pattern", "slug": "write-select-compress-isolate", "one_liner": "Every context management decision is one of four moves — write it out, select only the relevant part, compress the verbose into the essential, or isolate the detail into a sub-agent.", "also": [], "family": "Context", "dimension": "context-engineering", "color": "#c1dcef"}, {"name": "\"Long-Horizon Memory: Compaction, Notes, Isolation\"", "kind": "pattern", "slug": "long-horizon-memory", "one_liner": "Long-running tasks require three memory strategies — compacting history as it ages, maintaining running notes files, and isolating sub-tasks to separate sessions to prevent context collapse.", "also": [], "family": "Context", "dimension": "context-engineering", "color": "#d6e8f4"}, {"name": "\"Thin Pointers, Zero Poisoning\"", "kind": "pattern", "slug": "thin-pointers", "one_liner": "Pass file paths and references between agents instead of full content — let each agent pull only what it needs, only when it needs it.", "also": ["orchestration"], "family": "Context", "dimension": "context-engineering", "color": "#c1dcef"}, {"name": "Anchor on Canonical Names", "kind": "pattern", "slug": "anchor-on-canonical-names", "one_liner": "A single well-known domain term — \"TDD, London School\", \"arc42\" — activates a whole coherent methodology the model already learned in training, far more reliably than a paragraph paraphrasing the same idea, so name the concept instead of describing it.", "also": ["meta-principles"], "family": "Context", "dimension": "context-engineering", "color": "#d6e8f4"}, {"name": "Checkpoint to a Handoff File, Then Restart Clean", "kind": "pattern", "slug": "checkpoint-handoff-file", "one_liner": "When context grows unwieldy or a session must end, write a structured handoff file capturing exactly what the next session needs, then start fresh with only that file.", "also": ["workflow-discipline"], "family": "Context", "dimension": "context-engineering", "color": "#c1dcef"}, {"name": "Context Engineering Over Prompt Engineering", "kind": "pattern", "slug": "context-over-prompt", "one_liner": "The model's output quality is bounded by context quality — sculpting what the model sees matters more than sculpting the instruction text.", "also": [], "family": "Context", "dimension": "context-engineering", "color": "#d6e8f4"}, {"name": "Embed Guidance in Tool Output", "kind": "pattern", "slug": "embed-guidance-in-tool-output", "one_liner": "Instead of front-loading every project gotcha into a giant instructions file the model forgets, put the guidance in the outputs of scripts and tools — error and success messages — so the reminder appears exactly where and when it is relevant.", "also": ["tool-design"], "family": "Context", "dimension": "context-engineering", "color": "#c1dcef"}, {"name": "Hang Up, Call Back", "kind": "pattern", "slug": "hang-up-call-back", "one_liner": "When an agent conversation goes down the wrong path, don't course-correct — rewind history and re-prompt so the model never sees the bad idea.", "also": ["workflow-discipline"], "family": "Context", "dimension": "context-engineering", "color": "#d6e8f4"}, {"name": "Just-in-Time Retrieval Over Pre-Loading", "kind": "pattern", "slug": "just-in-time-retrieval", "one_liner": "Don't fill context with everything that might be relevant — retrieve only what is needed, exactly when it is needed, and discard it after use.", "also": [], "family": "Context", "dimension": "context-engineering", "color": "#c1dcef"}, {"name": "Persist Environment Facts", "kind": "pattern", "slug": "persist-environment-facts", "one_liner": "Facts about the environment — directory layout, versions, credentials, topology — belong in files the agent can re-read, not floating in context that disappears on reset.", "also": [], "family": "Context", "dimension": "context-engineering", "color": "#d6e8f4"}, {"name": "Repository Shape Is Cognitive Architecture", "kind": "pattern", "slug": "repository-shape-is-cognitive-architecture", "one_liner": "A repository is not just code storage — it is the working memory and context boundary of an agentic workflow; too broad and it poisons context, too narrow and the agent starves, so repo shape is a design decision, not an accident.", "also": ["workflow-discipline", "meta-principles"], "family": "Context", "dimension": "context-engineering", "color": "#c1dcef"}, {"name": "Scope and Expire Memory", "kind": "pattern", "slug": "scope-and-expire-memory", "one_liner": "A single global memory pool causes context poisoning, obsession, and stagnation — agents cling to discarded architectures and stale assumptions; default to scoped, expiring memory (project-, role-, task-specific), because forgetting is a feature, not a bug.", "also": ["knowledge", "reliability"], "family": "Context", "dimension": "context-engineering", "color": "#d6e8f4"}, {"name": "State the Target, Not the Prohibition", "kind": "pattern", "slug": "state-the-target", "one_liner": "Telling a model what not to do activates the very concept you're suppressing — 'list the planets but not the moon' tends to produce the moon — so phrase instructions as a positive description of the target, and enforce hard prohibitions with a deterministic check rather than louder \"do NOT\".", "also": ["reliability"], "family": "Context", "dimension": "context-engineering", "color": "#c1dcef"}, {"name": "Use Sub-Agents as Context Sinks", "kind": "pattern", "slug": "subagents-as-context-sinks", "one_liner": "Delegate detail-heavy work to sub-agents so the orchestrator's context stays clean — the sub-agent absorbs the complexity and returns only a summary.", "also": ["orchestration"], "family": "Context", "dimension": "context-engineering", "color": "#d6e8f4"}]}, {"name": "knowledge", "kind": "dimension", "color": "#63a1ce", "children": [{"name": "Build a Pattern Registry", "kind": "pattern", "slug": "build-a-pattern-registry", "one_liner": "Teams independently rediscover the same loops, validators, and review tricks — a pattern registry captures the reusable operating moves with usage guidance and contraindications, so practice transfers without forcing everyone onto the same stack; it is the package manager of agentic practice.", "also": ["meta-principles", "workflow-discipline"], "family": "Context", "dimension": "knowledge", "color": "#c1dcef"}, {"name": "Gene Transfer — Port the Behavior, Not the Code", "kind": "pattern", "slug": "gene-transfer", "one_liner": "The reusable unit between systems is rarely a whole tool but a trait — a review prompt, a validation loop, a context-file structure, a CLI affordance — so separate phenotype from organism and transfer what's valuable; at system scale this becomes semantic porting of behavior across stacks.", "also": ["tool-design", "meta-principles"], "family": "Context", "dimension": "knowledge", "color": "#d6e8f4"}, {"name": "Mine for Contradictions", "kind": "pattern", "slug": "contradiction-extraction", "one_liner": "Contradictions are high-signal — they reveal where an organization has changed its mind without updating its artifacts or has never reconciled competing goals; run a detector across transcripts, specs, and decisions that surfaces conflicts for discussion rather than auto-fixing them.", "also": ["intent", "verification"], "family": "Context", "dimension": "knowledge", "color": "#c1dcef"}, {"name": "Mine Transcripts Into Structured Knowledge", "kind": "pattern", "slug": "mine-transcripts", "one_liner": "Meeting transcripts, session logs, and Slack threads are raw material, not output — record, then transform them into topic clusters, entity graphs, contradiction lists, action repositories, takebooks, and persona material; recording everything without transformation produces storage, not knowledge.", "also": ["context-engineering", "observability"], "family": "Context", "dimension": "knowledge", "color": "#d6e8f4"}, {"name": "Self-Modifying Context Needs Review", "kind": "pattern", "slug": "self-modifying-context-needs-review", "one_liner": "Letting an agent edit its own persona or instruction files is powerful and risky — it can correct repeated bad habits but also lock in bad lessons, please the user instead of solving the problem, or drift unaudited; require reflective changes that cite evidence and pass review before becoming canonical.", "also": ["reliability", "human-factors"], "family": "Context", "dimension": "knowledge", "color": "#c1dcef"}]}]}, {"name": "Tooling", "kind": "family", "gloss": "The model's hands, and what they cost.", "color": "#32ad65", "children": [{"name": "tool-design", "kind": "dimension", "color": "#63ce90", "children": [{"name": "Code Execution Beats Loading Hundreds of Tool Defs", "kind": "pattern", "slug": "code-execution-tools", "one_liner": "A single code-execution tool — bash, Python, a REPL — often replaces dozens of specialized tools and avoids the context cost of registering a large tool set that the agent must reason over on every call.", "also": ["context-engineering"], "family": "Tooling", "dimension": "tool-design", "color": "#c1efd4"}, {"name": "Critic Applications", "kind": "pattern", "slug": "critic-applications", "one_liner": "Build a deterministic tool — a binary, parser, validator, or CLI — that acts as law from the agent's perspective; it cannot be negotiated with, only satisfied, which compresses complex intent into a checkable affordance and compensates for model weakness.", "also": ["verification", "reliability"], "family": "Tooling", "dimension": "tool-design", "color": "#d6f4e2"}, {"name": "Design Tools for Agents, Not Humans", "kind": "pattern", "slug": "tools-for-agents", "one_liner": "Agent tools should be structured for machine parsing — unambiguous outputs, complete information in every response, no UI affordances that only make sense for humans.", "also": [], "family": "Tooling", "dimension": "tool-design", "color": "#c1efd4"}, {"name": "Let Agents Evaluate and Optimize Your Tools", "kind": "pattern", "slug": "agents-optimize-tools", "one_liner": "Use an agent to test your tool set — have it attempt real tasks, observe where it selects incorrectly or fails, and feed those observations back into tool descriptions and interfaces before deploying.", "also": ["verification"], "family": "Tooling", "dimension": "tool-design", "color": "#d6f4e2"}, {"name": "Namespace Tools, Write Unambiguous Descriptions", "kind": "pattern", "slug": "namespace-tools", "one_liner": "Group tools under a clear namespace and write descriptions that tell the model exactly when to call this tool and when to call a similar one instead — ambiguous tool selection is a primary source of agent errors.", "also": [], "family": "Tooling", "dimension": "tool-design", "color": "#c1efd4"}, {"name": "Prefer Search/Filter Over List-Everything", "kind": "pattern", "slug": "search-over-list", "one_liner": "Give agents a search or filter interface rather than a tool that returns a full list — agents that list everything then scan results are burning context on data they'll mostly discard.", "also": ["context-engineering"], "family": "Tooling", "dimension": "tool-design", "color": "#d6f4e2"}]}, {"name": "cost-routing", "kind": "dimension", "color": "#63ce90", "children": [{"name": "Delegation Is Token Economics", "kind": "pattern", "slug": "delegation-token-economics", "one_liner": "Every delegation decision is a token investment — the tokens spent spawning and briefing a subagent must be justified by the value of offloading the work from the orchestrator's context budget.", "also": ["context-engineering", "orchestration"], "family": "Tooling", "dimension": "cost-routing", "color": "#c1efd4"}, {"name": "Invest the Expensive Model in the Harness", "kind": "pattern", "slug": "invest-the-expensive-model-in-the-harness", "one_liner": "Spend your strongest, most expensive model on improving the harness itself — then run cheaper models through the better harness — because better orchestration is second-order leverage that makes weaker models more useful.", "also": ["orchestration", "meta-principles"], "family": "Tooling", "dimension": "cost-routing", "color": "#d6f4e2"}, {"name": "Match Model to Stage", "kind": "pattern", "slug": "match-model-to-stage", "one_liner": "Different stages of a workflow warrant different model capability levels — route expensive models to complex reasoning stages and cheap models to mechanical stages, not the other way around.", "also": [], "family": "Tooling", "dimension": "cost-routing", "color": "#c1efd4"}, {"name": "Pull Models From Provisioned Roles", "kind": "pattern", "slug": "role-based-routing", "one_liner": "Reference abstract capability roles in code rather than model names — let external configuration map roles to models, so routing decisions survive model changes without code changes.", "also": [], "family": "Tooling", "dimension": "cost-routing", "color": "#d6f4e2"}]}]}, {"name": "Orchestration", "kind": "family", "gloss": "How work is shaped, decomposed, and run.", "color": "#ad7a32", "children": [{"name": "orchestration", "kind": "dimension", "color": "#cea163", "children": [{"name": "Add Autonomy Only When Justified", "kind": "pattern", "slug": "autonomy-when-justified", "one_liner": "Every degree of autonomy you give an agent must be paid for with oversight proportional to the risk — add it only when the cost-benefit calculation is explicit and positive.", "also": [], "family": "Orchestration", "dimension": "orchestration", "color": "#efdcc1"}, {"name": "Build From Three Primitives", "kind": "pattern", "slug": "three-primitives", "one_liner": "Every agentic system is built from three primitives — LLM call, tool call, and loop. Understand these primitives completely before reaching for higher-level abstractions.", "also": ["tool-design"], "family": "Orchestration", "dimension": "orchestration", "color": "#f4e8d6"}, {"name": "Close the Loop From Production Back to Fix", "kind": "pattern", "slug": "production-feedback-loop", "one_liner": "Finishing doesn't end at deployment — route support messages, incidents, metrics, and user reports into a triage loop that proposes a fix, validates it, ships it behind a flag, and watches whether the signal disappears; this is the agentic version of a Toyota production system.", "also": ["observability", "workflow-discipline"], "family": "Orchestration", "dimension": "orchestration", "color": "#efdcc1"}, {"name": "Composable Orchestration Patterns", "kind": "pattern", "slug": "composable-patterns", "one_liner": "Build orchestration from a small set of named, reusable primitives — sequences, conditionals, fan-outs, and loops — rather than writing bespoke control flow for every workflow.", "also": [], "family": "Orchestration", "dimension": "orchestration", "color": "#f4e8d6"}, {"name": "Default to a Single-Threaded Linear Agent", "kind": "pattern", "slug": "single-threaded-default", "one_liner": "Run one task at a time in sequence unless you have a concrete reason to fan out — parallelism is an optimization, not a starting point.", "also": [], "family": "Orchestration", "dimension": "orchestration", "color": "#efdcc1"}, {"name": "Default to Clean-Slate Delegation", "kind": "pattern", "slug": "clean-slate-delegation", "one_liner": "When spawning a subagent, start with an empty context and provide only what the task needs — shared history is a source of inherited confusion, not free context.", "also": ["context-engineering"], "family": "Orchestration", "dimension": "orchestration", "color": "#f4e8d6"}, {"name": "Distinguish Workflows From Agents", "kind": "pattern", "slug": "workflows-vs-agents", "one_liner": "A workflow is a fixed sequence of steps with known branching; an agent decides dynamically what to do next. Conflating the two produces systems that are harder to test, monitor, and trust.", "also": [], "family": "Orchestration", "dimension": "orchestration", "color": "#efdcc1"}, {"name": "Layer Guardrails and Human Escalation", "kind": "pattern", "slug": "guardrails-and-escalation", "one_liner": "Build in multiple layers of guardrails — input validation, output checking, action limits, and explicit escalation paths — so errors are caught before they compound and humans are brought in before damage is done.", "also": ["reliability"], "family": "Orchestration", "dimension": "orchestration", "color": "#f4e8d6"}, {"name": "Lead With Recon Before Action", "kind": "pattern", "slug": "recon-before-action", "one_liner": "Before taking any action that touches external state, first run a read-only reconnaissance pass to understand what exists, what constraints apply, and what the action will actually affect.", "also": [], "family": "Orchestration", "dimension": "orchestration", "color": "#efdcc1"}, {"name": "Match the Topology to the Work", "kind": "pattern", "slug": "match-topology-to-the-work", "one_liner": "Choose your agentic topology deliberately — from one-shot prompt to slash-goal loop to skill to graph to hierarchy to studio — by the cost of failure, clarity of intent, size of the work, and degree of repeatability.", "also": ["workflow-discipline", "meta-principles"], "family": "Orchestration", "dimension": "orchestration", "color": "#f4e8d6"}, {"name": "Parallel Attempts at One Task", "kind": "pattern", "slug": "parallel-attempts-at-one-task", "one_liner": "Because a model is non-deterministic, one attempt is a single die roll — for a hard or quality-sensitive task, run several implementations of the same task in parallel from one checkpoint, then pick the best or splice the strongest parts of each.", "also": ["cost-routing", "workflow-discipline"], "family": "Orchestration", "dimension": "orchestration", "color": "#efdcc1"}, {"name": "Put Deterministic Rails Around Model Judgment", "kind": "pattern", "slug": "deterministic-rails", "one_liner": "The strongest agentic workflows interleave deterministic steps and model-mediated steps so neither layer must be perfect — the model translates intent into checkable state, and scripts, tests, and validators catch drift.", "also": ["reliability", "verification", "tool-design"], "family": "Orchestration", "dimension": "orchestration", "color": "#f4e8d6"}, {"name": "Run Independent Agents in Parallel", "kind": "pattern", "slug": "parallel-independent-tracks", "one_liner": "When two or more tasks have no ordering dependency and no shared mutable state, run them in parallel agents rather than sequentially — wall-clock latency is the only cost that matters.", "also": [], "family": "Orchestration", "dimension": "orchestration", "color": "#efdcc1"}, {"name": "Shape the Workflow as an Attractor", "kind": "pattern", "slug": "shape-work-as-an-attractor", "one_liner": "Design the workflow so the correct outcome is its stable equilibrium — the state it converges toward from a wide range of starting points and returns to after the model drifts — and judge success by that convergence, not by whether a step reported done.", "also": ["workflow-discipline", "meta-principles"], "family": "Orchestration", "dimension": "orchestration", "color": "#f4e8d6"}, {"name": "Share Full Context; Every Action Carries Decisions", "kind": "pattern", "slug": "share-full-context", "one_liner": "When delegating to a subagent or spawning a parallel worker, include everything the agent needs to make good decisions — the goal, constraints, prior findings, and any decisions already made.", "also": [], "family": "Orchestration", "dimension": "orchestration", "color": "#efdcc1"}, {"name": "Two-Phase Build: Architect Then Builder", "kind": "pattern", "slug": "architect-then-builder", "one_liner": "Separate design from implementation by running an architect agent first to produce a complete specification, then a builder agent to implement it — never conflate the two roles in one pass.", "also": ["workflow-discipline"], "family": "Orchestration", "dimension": "orchestration", "color": "#f4e8d6"}]}, {"name": "workflow-discipline", "kind": "dimension", "color": "#cea163", "children": [{"name": "Ablate the Harness as Models Improve", "kind": "pattern", "slug": "self-ablating-harness", "one_liner": "Periodically have a stronger model inspect your workflow and delete steps that are no longer needed, shorten prompts, and merge nodes — because model capability changes faster than workflow habits, and yesterday's scaffolding becomes today's tax.", "also": ["meta-principles", "cost-routing"], "family": "Orchestration", "dimension": "workflow-discipline", "color": "#efdcc1"}, {"name": "Bite-Sized Tasks", "kind": "pattern", "slug": "bite-sized-tasks", "one_liner": "Break work into units small enough that each completes, commits, and can be reviewed independently.", "also": [], "family": "Orchestration", "dimension": "workflow-discipline", "color": "#f4e8d6"}, {"name": "Brownfield Is the Real Test", "kind": "pattern", "slug": "brownfield-is-the-real-test", "one_liner": "Greenfield prototypes are easy to celebrate; brownfield systems expose whether a workflow can handle legacy constraints, hidden dependencies, and production risk — the mature move is to characterize existing behavior and write regression tests before any rewrite, never a blind rewrite.", "also": ["reliability", "verification"], "family": "Orchestration", "dimension": "workflow-discipline", "color": "#efdcc1"}, {"name": "Decompose and Retry on Timeout", "kind": "pattern", "slug": "decompose-on-timeout", "one_liner": "When a task times out, the answer is almost never to raise the timeout — it is to break the task into smaller pieces.", "also": ["orchestration"], "family": "Orchestration", "dimension": "workflow-discipline", "color": "#f4e8d6"}, {"name": "Document Intent, Not Just Method", "kind": "pattern", "slug": "document-intent", "one_liner": "Code describes how; comments and specs must describe why — the reasoning that code cannot encode.", "also": [], "family": "Orchestration", "dimension": "workflow-discipline", "color": "#efdcc1"}, {"name": "Finishing Is the Bottleneck, Not Starting", "kind": "pattern", "slug": "finishing-is-the-bottleneck", "one_liner": "Models make starting easy — a plausible 80% appears fast — but plausible work is not finished work, and the final 20% consumes most of the attention and risk; the real metric is convergence — work that reliably reaches an accepted, shipped, observed state.", "also": ["reliability", "meta-principles"], "family": "Orchestration", "dimension": "workflow-discipline", "color": "#f4e8d6"}, {"name": "Gate the Phases Explicitly", "kind": "pattern", "slug": "gate-the-phases", "one_liner": "Declare a hard transition between design and build, and between build and ship — phases that blur produce work that cannot be reviewed or rolled back.", "also": [], "family": "Orchestration", "dimension": "workflow-discipline", "color": "#efdcc1"}, {"name": "Hand Off With a Clear Stop Condition", "kind": "pattern", "slug": "clear-stop-condition", "one_liner": "An agent without a stop condition will find one itself — and it will not be the one you wanted.", "also": ["orchestration"], "family": "Orchestration", "dimension": "workflow-discipline", "color": "#f4e8d6"}, {"name": "Implement to Learn", "kind": "pattern", "slug": "implement-to-learn", "one_liner": "The fastest way to understand a problem is to build a small, throwaway version of the solution.", "also": [], "family": "Orchestration", "dimension": "workflow-discipline", "color": "#efdcc1"}, {"name": "Keep Specs in Sync", "kind": "pattern", "slug": "keep-specs-in-sync", "one_liner": "A spec that diverges from the implementation is worse than no spec — it actively misleads every agent that reads it.", "also": [], "family": "Orchestration", "dimension": "workflow-discipline", "color": "#f4e8d6"}, {"name": "Prove the Pipeline on 2 Before 20", "kind": "pattern", "slug": "prove-on-small-sample", "one_liner": "Run the full pipeline on two items end-to-end before scaling to the full dataset.", "also": ["reliability"], "family": "Orchestration", "dimension": "workflow-discipline", "color": "#efdcc1"}, {"name": "Rebuild Often", "kind": "pattern", "slug": "rebuild-often", "one_liner": "Regular rebuilds from scratch catch accumulated drift that incremental changes normalize.", "also": [], "family": "Orchestration", "dimension": "workflow-discipline", "color": "#f4e8d6"}, {"name": "Work Backward From the Shipping Dock", "kind": "pattern", "slug": "work-backward-from-the-shipping-dock", "one_liner": "Start from where work becomes real — production, approval, operator adoption, user comprehension — and ask what proof would convince you it's ready; the proof system then shapes the workflow, instead of asking \"can the model build this?\"", "also": ["verification", "reliability"], "family": "Orchestration", "dimension": "workflow-discipline", "color": "#efdcc1"}]}]}, {"name": "Trust", "kind": "family", "gloss": "Making the result correct, reliable, and observable.", "color": "#ad3242", "children": [{"name": "verification", "kind": "dimension", "color": "#ce6372", "children": [{"name": "Adversarial Parallel Review", "kind": "pattern", "slug": "adversarial-parallel-review", "one_liner": "Run several reviewers with different models or roles and little shared context, reward significant findings over volume, then have a meta-reviewer rank what matters — because an implementer shares the blind spots that produced its own bugs.", "also": ["reliability", "orchestration"], "family": "Trust", "dimension": "verification", "color": "#efc1c7"}, {"name": "Designing the Agentic Loop Is the Core Skill", "kind": "pattern", "slug": "design-the-loop", "one_liner": "The quality of an agentic system is determined almost entirely by the design of its loop — how the agent perceives, decides, acts, and verifies before cycling again.", "also": [], "family": "Trust", "dimension": "verification", "color": "#f4d6da"}, {"name": "Eval-Driven Development", "kind": "pattern", "slug": "eval-driven-development", "one_liner": "Build evals before building features — you cannot improve what you cannot measure, and you cannot trust improvements you have not defined a measurement for.", "also": ["workflow-discipline"], "family": "Trust", "dimension": "verification", "color": "#efc1c7"}, {"name": "Evals Are a Standing Capability, Not a One-Time Gate", "kind": "pattern", "slug": "standing-eval-capability", "one_liner": "An eval suite that runs once at launch and is never run again is not an eval suite — it is a historical document that measured a system that no longer exists.", "also": [], "family": "Trust", "dimension": "verification", "color": "#f4d6da"}, {"name": "Evidence Before Assertions", "kind": "pattern", "slug": "evidence-before-assertions", "one_liner": "A claim about a system's state is not knowledge — it is a hypothesis. Run the verification command and read the output before making any assertion about whether something worked.", "also": ["reliability"], "family": "Trust", "dimension": "verification", "color": "#efc1c7"}, {"name": "Give Agents the Ability to Verify Their Own Work", "kind": "pattern", "slug": "self-verification", "one_liner": "An agent that can detect its own errors is orders of magnitude more reliable than one that can only produce output — build verification into the agent before shipping it.", "also": ["reliability"], "family": "Trust", "dimension": "verification", "color": "#f4d6da"}, {"name": "Incremental Validation: The 3-File Rule", "kind": "pattern", "slug": "three-file-rule", "one_liner": "Before processing a full batch, verify the pipeline works correctly on three representative files — catching bugs at three is dramatically cheaper than catching them at three thousand.", "also": ["workflow-discipline"], "family": "Trust", "dimension": "verification", "color": "#efc1c7"}, {"name": "Test What the Product Does, Not How", "kind": "pattern", "slug": "test-what-not-how", "one_liner": "Tests that describe externally observable behavior survive refactoring; tests that describe internal implementation become a maintenance tax that grows with every change.", "also": [], "family": "Trust", "dimension": "verification", "color": "#f4d6da"}, {"name": "Tests Are Code — Update Them First on API Change", "kind": "pattern", "slug": "tests-first-on-api-change", "one_liner": "When an API changes, update its tests before updating its implementation — the tests are the specification, and updating them first forces you to define what the change means before you build it.", "also": ["workflow-discipline"], "family": "Trust", "dimension": "verification", "color": "#efc1c7"}, {"name": "Video-Driven Development", "kind": "pattern", "slug": "video-driven-development", "one_liner": "Require agents to produce a before-and-after video of the real user scenario — a video sets a higher bar than a textual claim and forces the agent to exercise the actual product surface, not just the code; the rule is show, don't assert.", "also": ["reliability", "observability"], "family": "Trust", "dimension": "verification", "color": "#f4d6da"}]}, {"name": "reliability", "kind": "dimension", "color": "#ce6372", "children": [{"name": "Demand Independent Proof, Not a Status Report", "kind": "pattern", "slug": "demand-independent-proof", "one_liner": "An agent's claim of success is a hypothesis — treat it as one until you hold evidence that no longer originates from the agent itself.", "also": [], "family": "Trust", "dimension": "reliability", "color": "#efc1c7"}, {"name": "Encode Multi-Step Work as a Recipe", "kind": "pattern", "slug": "recipe-not-conversation", "one_liner": "A conversation is a trace of what happened once — a recipe is a specification that can be replayed, inspected, versioned, and recovered from.", "also": ["workflow-discipline"], "family": "Trust", "dimension": "reliability", "color": "#f4d6da"}, {"name": "Fail Loud Over Fallbacks", "kind": "pattern", "slug": "fail-loud-over-fallbacks", "one_liner": "A fallback that hides a failure teaches the system nothing and costs the same as the failure it replaced — prefer a loud stop over a silent substitution.", "also": [], "family": "Trust", "dimension": "reliability", "color": "#efc1c7"}, {"name": "Fix the Root Cause, Demand a Diagnosis", "kind": "pattern", "slug": "fix-the-root-cause", "one_liner": "Agents tend to patch the visible symptom without pulling the thread to the cause — for recurring, production, or architecture-level issues, require a diagnosis artifact that explains the root cause before any fix is accepted.", "also": ["verification", "workflow-discipline"], "family": "Trust", "dimension": "reliability", "color": "#f4d6da"}, {"name": "Make Every Stage Produce an Auditable Artifact", "kind": "pattern", "slug": "auditable-artifacts", "one_liner": "A stage with no artifact is a stage that cannot be audited — and a stage that cannot be audited is a stage you must trust blindly.", "also": ["observability"], "family": "Trust", "dimension": "reliability", "color": "#efc1c7"}, {"name": "Mark Un-Run Steps Inline for Review", "kind": "pattern", "slug": "mark-skipped-steps", "one_liner": "A skipped step that is not explicitly marked is indistinguishable from a completed step — make the gap visible or it will be treated as a gap that was filled.", "also": ["observability"], "family": "Trust", "dimension": "reliability", "color": "#f4d6da"}, {"name": "Separate Merge From Exposure", "kind": "pattern", "slug": "separate-merge-from-exposure", "one_liner": "Feature flags are one of the most important controls for agent-generated work because they separate merging code from exposing it — default risky changes to staged exposure with explicit rollout criteria and automated rollback, so merge no longer means everyone is affected.", "also": ["workflow-discipline", "orchestration"], "family": "Trust", "dimension": "reliability", "color": "#efc1c7"}, {"name": "Separate the Proposer From the Authority", "kind": "pattern", "slug": "proposer-authority-separation", "one_liner": "The entity that proposes an action is the worst authority to approve it — route approval through a role with no stake in the proposal's acceptance.", "also": ["orchestration"], "family": "Trust", "dimension": "reliability", "color": "#f4d6da"}, {"name": "Use a Second Agent as Auditor", "kind": "pattern", "slug": "auditor-agent", "one_liner": "The agent that did the work is the worst possible choice to verify the work — put a second agent in the audit seat with no stake in the original claim.", "also": ["orchestration"], "family": "Trust", "dimension": "reliability", "color": "#efc1c7"}]}, {"name": "observability", "kind": "dimension", "color": "#ce6372", "children": [{"name": "Build an Awareness Layer That Watches Your Work", "kind": "pattern", "slug": "awareness-layer", "one_liner": "A separate process or agent that monitors the primary agent's actions in real time catches drift, failures, and unexpected behavior before they compound — the watcher that the working agent cannot be for itself.", "also": [], "family": "Trust", "dimension": "observability", "color": "#efc1c7"}, {"name": "If It's Important, Emit an Event", "kind": "pattern", "slug": "emit-events", "one_liner": "If a decision, state change, or outcome matters to understanding what happened, it should produce a structured event — not a log line, not a comment, not a hope that someone was watching.", "also": [], "family": "Trust", "dimension": "observability", "color": "#f4d6da"}, {"name": "Run Real Workloads in Their Proper Environment", "kind": "pattern", "slug": "real-environment-execution", "one_liner": "Agents that run workloads in simulated or sandboxed environments discover only simulated problems — run the real thing in the real place if you want real answers.", "also": [], "family": "Trust", "dimension": "observability", "color": "#efc1c7"}, {"name": "Supervise Many Agents Through One Interface", "kind": "pattern", "slug": "supervise-many-agents", "one_liner": "As agents multiply, the limiting factor is the human's ability to see them — build the supervision surface — a dashboard of what's running, stuck, done, costly, or waiting; status exhaust; an attention firewall; a review queue; a cost monitor; and the ability to resurrect and hold old sessions accountable.", "also": ["human-factors", "orchestration"], "family": "Trust", "dimension": "observability", "color": "#f4d6da"}, {"name": "The Agent's Struggle Is a Signal", "kind": "pattern", "slug": "agent-struggle-is-a-signal", "one_liner": "When an AI agent starts thrashing on a codebase — missing duplicated call sites, running out of context mid-change, making excuses about failing tests — read it as an early warning that maintainability is decaying, and refactor, instead of just fighting the agent.", "also": ["taste"], "family": "Trust", "dimension": "observability", "color": "#efc1c7"}, {"name": "Use Session History as Primary Evidence", "kind": "pattern", "slug": "session-archaeology", "one_liner": "When something went wrong — or right — in a prior run, the session transcript is the primary evidence; reading it is the first act of diagnosis, not a fallback after other approaches fail.", "also": [], "family": "Trust", "dimension": "observability", "color": "#f4d6da"}]}]}, {"name": "People", "kind": "family", "gloss": "Human intent, attention, and leverage.", "color": "#ad32a3", "children": [{"name": "human-factors", "kind": "dimension", "color": "#ce63c5", "children": [{"name": "Attention Is the Scarce Resource", "kind": "pattern", "slug": "attention-is-the-scarce-resource", "one_liner": "When agents generate more work, options, and output than humans can inspect, the bottleneck is no longer machine throughput but human attention — so treat attention as a managed, budgeted resource, not an infinite input.", "also": ["meta-principles", "observability"], "family": "People", "dimension": "human-factors", "color": "#efc1eb"}, {"name": "Coaches and Players", "kind": "pattern", "slug": "coaches-and-players", "one_liner": "Leverage no longer comes only from senior people doing senior work directly — it comes from injecting senior judgment into many agent-driven workflows; coaches frame problems and steer, players drive the agents day to day.", "also": ["orchestration", "meta-principles"], "family": "People", "dimension": "human-factors", "color": "#f4d6f2"}, {"name": "Design for Emotional Ownership", "kind": "pattern", "slug": "design-for-emotional-ownership", "one_liner": "A system that technically works can still fail to be adopted — fully headless automation can feel alienating, and people who feel no ownership of an output won't trust it; design the human interface to autonomy with visible progress, proof artifacts, and moments of authorship.", "also": ["observability", "taste"], "family": "People", "dimension": "human-factors", "color": "#efc1eb"}, {"name": "Earn the Interruption", "kind": "pattern", "slug": "earn-the-interruption", "one_liner": "Human attention is scarce, so an agent should not interrupt merely because it hit a normal checkpoint — it should interrupt only when human judgment is now the bottleneck; insert humans at specific edges (risky deploy, unclear intent, high-cost loop, compliance exception, repeated nonconvergence), not everywhere.", "also": ["orchestration", "workflow-discipline"], "family": "People", "dimension": "human-factors", "color": "#f4d6f2"}, {"name": "Governance Is Infrastructure, Not a Document", "kind": "pattern", "slug": "governance-is-infrastructure", "one_liner": "In agentic organizations governance can't be a policy doc that sits outside the workflow — it must be embedded in tools, prompts, validators, logs, and approval edges; the common substrate is an LLM proxy/gateway that logs usage, tracks cost, enforces policy, and provides observability.", "also": ["observability", "orchestration"], "family": "People", "dimension": "human-factors", "color": "#efc1eb"}, {"name": "Leverage Over Efficiency", "kind": "pattern", "slug": "leverage-over-efficiency", "one_liner": "Framing AI as efficiency asks how to do the same work with fewer people; framing it as leverage asks how the same people can build, explore, and operate at a larger scale — and leverage is the frame that matches what advanced practitioners actually do.", "also": ["meta-principles"], "family": "People", "dimension": "human-factors", "color": "#f4d6f2"}, {"name": "Match the Agent Metaphor to the Layer", "kind": "pattern", "slug": "match-agent-metaphor-to-layer", "one_liner": "Treating every agent as a person creates confusion; treating every agent as a stateless tool loses useful continuity — choose the framing per layer — disposable process, independent critic, manager-like orchestrator, long-lived assistant, or policy-bound organizational actor.", "also": ["orchestration", "meta-principles"], "family": "People", "dimension": "human-factors", "color": "#efc1eb"}, {"name": "Nontechnical Owners, With Guardrails", "kind": "pattern", "slug": "nontechnical-owners-with-guardrails", "one_liner": "Agentic tooling lets people with clear intent and domain knowledge ship software they could never have built before — but ownership by nontechnical builders only works when surrounded by scaffolds, review loops, acceptance evidence, rollback, and coaching.", "also": ["reliability", "workflow-discipline"], "family": "People", "dimension": "human-factors", "color": "#f4d6f2"}, {"name": "The New Literacy Is Operating, Not Prompting", "kind": "pattern", "slug": "the-new-literacy-is-operating", "one_liner": "When the machine writes most of the implementation, the skill that matters shifts from typing code to steering, decomposing, inspecting, validating, and governing agentic workflows — train for operating, not for prompting tricks.", "also": ["workflow-discipline", "meta-principles"], "family": "People", "dimension": "human-factors", "color": "#efc1eb"}]}, {"name": "intent", "kind": "dimension", "color": "#ce63c5", "children": [{"name": "Decision Theater", "kind": "pattern", "slug": "decision-theater", "one_liner": "Build a small interactive artifact — a model, simulator, spreadsheet, or scenario explorer — that lets stakeholders change assumptions instead of debating abstractions; if they disagree with the conclusion, they must reveal which assumption they reject.", "also": ["workflow-discipline", "human-factors"], "family": "People", "dimension": "intent", "color": "#efc1eb"}, {"name": "Don't Automate the Workaround", "kind": "pattern", "slug": "dont-automate-the-workaround", "one_liner": "In legacy and bureaucratic domains the stated process is often itself a workaround for another broken process — automating it with an agent entrenches the dysfunction at speed; ask whether the workflow should still exist before you accelerate it.", "also": ["workflow-discipline", "meta-principles"], "family": "People", "dimension": "intent", "color": "#f4d6f2"}, {"name": "Good Pile, Bad Pile", "kind": "pattern", "slug": "good-pile-bad-pile", "one_liner": "In domains where stakeholders say \"it depends,\" stop asking for abstract rules and start collecting labeled examples in the domain's own language — good, bad, acceptable-but-awkward, compliant, risky — because examples become intent training data agents can learn the dependency structure from.", "also": ["verification", "knowledge"], "family": "People", "dimension": "intent", "color": "#efc1eb"}, {"name": "Interview to a Spec Before Implementing", "kind": "pattern", "slug": "interview-to-a-spec", "one_liner": "Put a skeptical interviewer in front of intent — one that asks why before how, reflects back its understanding, refuses to implement until it can restate the goal cleanly, and emits a concise spec the human can reject — turning messy intent into an executable specification.", "also": ["workflow-discipline", "verification"], "family": "People", "dimension": "intent", "color": "#f4d6f2"}, {"name": "People Edit Better Than They Author", "kind": "pattern", "slug": "people-edit-better-than-they-author", "one_liner": "Most stakeholders cannot write a clean requirement, but shown a concrete artifact they can instantly say what's wrong — so elicit intent by giving people something to react to, because cheap software has made a throwaway artifact the fastest way to extract intent.", "also": ["workflow-discipline", "human-factors"], "family": "People", "dimension": "intent", "color": "#efc1eb"}, {"name": "Requirements Are Disguised Solutions", "kind": "pattern", "slug": "requirements-are-disguised-solutions", "one_liner": "Stakeholders ask for a field, a button, a report, or a workflow change — but agents will happily implement the stated solution even when it's a workaround for a broken process, so the intent layer must ask what the request is actually trying to accomplish.", "also": ["workflow-discipline"], "family": "People", "dimension": "intent", "color": "#f4d6f2"}, {"name": "Shadow the User, Then Transform the Transcript", "kind": "pattern", "slug": "shadow-then-transform", "one_liner": "Tacit knowledge — workarounds, local norms, exception paths, institutional memory — lives in how people actually work, so sit with users and record them; agentic tooling doesn't remove the observation, it accelerates what happens after it.", "also": ["knowledge", "human-factors"], "family": "People", "dimension": "intent", "color": "#efc1eb"}, {"name": "Simulated Review Squad", "kind": "pattern", "slug": "simulated-review-squad", "one_liner": "Before work reaches real users, run it past a panel of simulated perspectives — expert and novice users, compliance, support, executive sponsor, skeptical engineer, accessibility, security — built from real transcripts and tickets, to surface objections early and cheaply.", "also": ["verification", "reliability"], "family": "People", "dimension": "intent", "color": "#f4d6f2"}]}]}]};
+const SITE_BASE = "";
+const SVGNS = "http://www.w3.org/2000/svg";
+const CX = 450, CY = 450, R_HUB = 90, R1 = 214, R2 = 356;
+const svg = document.getElementById("wheel");
+const mapSvg = document.getElementById("map");
+const outlineEl = document.getElementById("outline");
+const crumbEl = document.getElementById("crumb");
+const detailEl = document.getElementById("detail");
+const qEl = document.getElementById("q");
+
+// ---- layout: leaf-count weighting, [x0,x1] in [0,1], depth ----
+function layout(root){
+  (function count(n){
+    if(n.children && n.children.length){ n.value = n.children.reduce((s,c)=>s+count(c),0); }
+    else { n.value = 1; }
+    return n.value;
+  })(root);
+  root.x0=0; root.x1=1; root.depth=0; root.parent=null;
+  (function part(n){
+    if(!n.children) return;
+    let x=n.x0; const w=n.x1-n.x0;
+    for(const c of n.children){
+      const cw = w * (c.value/n.value);
+      c.x0=x; c.x1=x+cw; c.depth=n.depth+1; c.parent=n; x+=cw; part(c);
+    }
+  })(root);
+}
+layout(DATA);
+
+const nodes=[];
+(function walk(n){ nodes.push(n); (n.children||[]).forEach(walk); })(DATA);
+nodes.forEach((n,i)=>{ n.id=i; });
+const leaves = nodes.filter(n=>n.kind==="pattern");
+const families = DATA.children;
+
+// ---- lookups + relatedness index ----
+const famByName={}, dimByKey={}, patBySlug={};
+for(const f of families){
+  famByName[f.name]=f;
+  for(const d of f.children){
+    dimByKey[f.name+"/"+d.name]=d;
+    for(const p of d.children){ patBySlug[p.slug]=p; p.dims=[p.dimension].concat(p.also||[]); }
+  }
+}
+const dimIndex={};  // dimName -> [patterns that carry it as home or also]
+for(const p of leaves){ for(const dn of p.dims){ (dimIndex[dn]=dimIndex[dn]||[]).push(p); } }
+function relatedTo(p){
+  const score=new Map();
+  for(const dn of p.dims){ for(const q of (dimIndex[dn]||[])){ if(q!==p) score.set(q,(score.get(q)||0)+1); } }
+  return [...score.entries()].sort((a,b)=> b[1]-a[1] || a[0].name.localeCompare(b[0].name))
+    .slice(0,6).map(e=>e[0]);
+}
+
+// heat ranges (per ring)
+const famVals=families.map(f=>f.value);
+const dimVals=[]; for(const f of families) for(const d of f.children) dimVals.push(d.value);
+const famMin=Math.min(...famVals), famMax=Math.max(...famVals);
+const dimMin=Math.min(...dimVals), dimMax=Math.max(...dimVals);
+
+// ---- geometry helpers ----
+function pol(r,a){ const t=(a-90)*Math.PI/180; return [CX+r*Math.cos(t), CY+r*Math.sin(t)]; }
+function arcPath(a0,a1,rIn,rOut,cx,cy){
+  cx=cx===undefined?CX:cx; cy=cy===undefined?CY:cy;
+  if(a1-a0 < 0.0001) return "";
+  const large=(a1-a0)>180?1:0;
+  const P=(r,a)=>{ const t=(a-90)*Math.PI/180; return [cx+r*Math.cos(t), cy+r*Math.sin(t)]; };
+  const p1=P(rOut,a0), p2=P(rOut,a1), p3=P(rIn,a1), p4=P(rIn,a0);
+  return "M"+p1+" A"+rOut+","+rOut+" 0 "+large+" 1 "+p2+" L"+p3+" A"+rIn+","+rIn+" 0 "+large+" 0 "+p4+" Z";
+}
+function clip(s,m){ return s.length>m ? s.slice(0,m-1)+"\u2026" : s; }
+function esc(s){ return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function lerp(a,b,t){ return a+(b-a)*t; }
+function heatColor(v,min,max){
+  const t=Math.max(0,Math.min(1,(v-min)/((max-min)||1)));
+  const stops=[[255,247,214],[254,196,79],[227,120,40],[189,0,38]];
+  const s=t*(stops.length-1); const i=Math.min(stops.length-2,Math.floor(s)); const f=s-i;
+  const c=[0,1,2].map(k=>Math.round(lerp(stops[i][k],stops[i+1][k],f)));
+  return "rgb("+c[0]+","+c[1]+","+c[2]+")";
+}
+function nodeFill(n){
+  if(heatOn && (n.kind==="family"||n.kind==="dimension")){
+    return n.kind==="family" ? heatColor(n.value,famMin,famMax) : heatColor(n.value,dimMin,dimMax);
+  }
+  return n.color;
+}
+
+// ---- build main-wheel DOM: one path + one label per node ----
+const gArcs=document.createElementNS(SVGNS,"g"), gLabels=document.createElementNS(SVGNS,"g");
+svg.appendChild(gArcs); svg.appendChild(gLabels);
+nodes.forEach(n=>{
+  if(n.kind==="root") return;
+  const path=document.createElementNS(SVGNS,"path");
+  path.setAttribute("stroke","#fbfbfd");
+  path.setAttribute("stroke-width", n.kind==="pattern" ? "0.7" : "1.3");
+  path.setAttribute("opacity","0");
+  const tip=document.createElementNS(SVGNS,"title");
+  tip.textContent = n.kind==="pattern" ? (n.name+" — "+n.one_liner) : (n.name+(n.gloss?" — "+n.gloss:""));
+  path.appendChild(tip);
+  path.addEventListener("click",e=>{ e.stopPropagation(); onClick(n); });
+  gArcs.appendChild(path); n.el=path;
+  const lbl=document.createElementNS(SVGNS,"text");
+  lbl.setAttribute("opacity","0"); lbl.setAttribute("dominant-baseline","central");
+  lbl.setAttribute("fill", n.kind==="pattern" ? "#26262b" : "#ffffff");
+  lbl.setAttribute("font-size", n.kind==="family" ? "17" : n.kind==="dimension" ? "12.5" : "9.2");
+  lbl.setAttribute("font-weight", n.kind==="family" ? "700" : n.kind==="dimension" ? "600" : "400");
+  lbl.textContent = n.kind==="pattern" ? clip(n.name,40) : n.name;
+  gLabels.appendChild(lbl); n.lbl=lbl;
+});
+
+// center hub
+const hub=document.createElementNS(SVGNS,"circle");
+hub.setAttribute("cx",CX); hub.setAttribute("cy",CY); hub.setAttribute("r",R_HUB);
+hub.setAttribute("fill","#1b1b1f"); hub.style.cursor="pointer";
+hub.addEventListener("click",()=>{ if(focus.parent) setFocus(focus.parent); });
+svg.appendChild(hub);
+function mkHubText(y,size,weight,fill){
+  const t=document.createElementNS(SVGNS,"text");
+  t.setAttribute("x",CX); t.setAttribute("y",y); t.setAttribute("text-anchor","middle");
+  t.setAttribute("font-size",size); t.setAttribute("font-weight",weight); t.setAttribute("fill",fill);
+  t.style.pointerEvents="none"; svg.appendChild(t); return t;
+}
+const hubL1=mkHubText(CY-8,"17","700","#ffffff");
+const hubL2=mkHubText(CY+14,"11","400","#9a9aa8");
+const hubL3=mkHubText(CY+34,"10","400","#6f6f7d");
+
+// ---- minimap (families + dimensions, absolute geometry) ----
+const MC=82, MR_HUB=16, MR1=40, MR2=66;
+function buildMap(){
+  for(const f of families){
+    for(const d of f.children){
+      const p=document.createElementNS(SVGNS,"path");
+      p.setAttribute("d",arcPath(d.x0*360,d.x1*360,MR1,MR2,MC,MC));
+      p.setAttribute("fill",d.color); p.setAttribute("stroke","#fff"); p.setAttribute("stroke-width","0.5");
+      p.addEventListener("click",e=>{ e.stopPropagation(); onClick(d); });
+      mapSvg.appendChild(p); d.mapEl=p;
+    }
+    const pf=document.createElementNS(SVGNS,"path");
+    pf.setAttribute("d",arcPath(f.x0*360,f.x1*360,MR_HUB,MR1,MC,MC));
+    pf.setAttribute("fill",f.color); pf.setAttribute("stroke","#fff"); pf.setAttribute("stroke-width","0.7");
+    pf.addEventListener("click",e=>{ e.stopPropagation(); onClick(f); });
+    mapSvg.appendChild(pf); f.mapEl=pf;
+  }
+  const you=document.createElementNS(SVGNS,"text");
+  you.setAttribute("x",MC); you.setAttribute("y",MC+3); you.setAttribute("text-anchor","middle");
+  you.setAttribute("font-size","7"); you.setAttribute("fill","#6f6f7d"); you.textContent="you are here";
+  mapSvg.appendChild(you);
+}
+function isAncestor(a,d){ while(d){ if(d===a) return true; d=d.parent; } return false; }
+function inBranch(n){ return n===focus || isAncestor(n,focus) || isAncestor(focus,n); }
+function updateMinimap(){
+  for(const f of families){
+    if(f.mapEl){ f.mapEl.setAttribute("opacity", (focus===DATA||inBranch(f))?1:0.28);
+      f.mapEl.setAttribute("fill", heatOn?heatColor(f.value,famMin,famMax):f.color); }
+    for(const d of f.children){ if(d.mapEl){ d.mapEl.setAttribute("opacity",(focus===DATA||inBranch(d))?1:0.28);
+      d.mapEl.setAttribute("fill", heatOn?heatColor(d.value,dimMin,dimMax):d.color); } }
+  }
+}
+
+// ---- focus / target geometry (progressive: 2 rings from focus) ----
+let focus=DATA, query="", heatOn=false, view="wheel", selected=null;
+let highlight=new Set(), _silent=false;
+
+function computeTargets(f){
+  const span=f.x1-f.x0;
+  for(const n of nodes){
+    if(n.kind==="root"){ n.tgt={a0:0,a1:0,rIn:0,rOut:0,op:0}; continue; }
+    const rel=n.depth-f.depth;
+    let x0=(n.x0-f.x0)/span, x1=(n.x1-f.x0)/span;
+    x0=Math.max(0,Math.min(1,x0)); x1=Math.max(0,Math.min(1,x1));
+    let rIn=0,rOut=0,vis=false;
+    if(rel===1){ rIn=R_HUB; rOut=R1; vis=true; }
+    else if(rel===2){ rIn=R1; rOut=R2; vis=true; }
+    if(x1-x0<1e-4) vis=false;
+    n.tgt={ a0:x0*360, a1:x1*360, rIn, rOut, op: vis?1:0 };
+  }
+}
+function draw(){
+  for(const n of nodes){
+    if(n.kind==="root"||!n.cur) continue;
+    const c=n.cur;
+    if(c.op<=0.004 && (!n.tgt||n.tgt.op<=0.004)){ n.el.setAttribute("opacity","0"); n.lbl.setAttribute("opacity","0"); continue; }
+    n.el.setAttribute("d", arcPath(c.a0,c.a1,c.rIn,c.rOut));
+    n.el.setAttribute("fill", nodeFill(n));
+    let op=c.op; if(query){ op *= n.matchAny?1:0.12; }
+    n.el.setAttribute("opacity", op.toFixed(3));
+    if(highlight.has(n.id)){ n.el.setAttribute("stroke","#1b1b1f"); n.el.setAttribute("stroke-width","2.6"); }
+    else { n.el.setAttribute("stroke","#fbfbfd"); n.el.setAttribute("stroke-width", n.kind==="pattern"?"0.7":"1.3"); }
+    positionLabel(n,c,op);
+  }
+}
+function positionLabel(n,c,op){
+  const wdeg=c.a1-c.a0, mid=(c.a0+c.a1)/2, isLeaf=(n.kind==="pattern");
+  const minW=isLeaf?2.6:5;
+  if(op<0.45||wdeg<minW){ n.lbl.setAttribute("opacity","0"); return; }
+  let x,y,rot,anchor;
+  if(isLeaf){
+    if(mid<=180){ [x,y]=pol(c.rIn+6,mid); rot=mid-90; anchor="start"; }
+    else { [x,y]=pol(c.rOut-6,mid); rot=mid+90; anchor="start"; }
+  } else { [x,y]=pol((c.rIn+c.rOut)/2,mid); rot=mid; if(mid>90&&mid<270) rot+=180; anchor="middle"; }
+  n.lbl.setAttribute("x",x.toFixed(2)); n.lbl.setAttribute("y",y.toFixed(2));
+  n.lbl.setAttribute("transform","rotate("+rot.toFixed(2)+" "+x.toFixed(2)+" "+y.toFixed(2)+")");
+  n.lbl.setAttribute("text-anchor",anchor);
+  n.lbl.setAttribute("opacity", Math.min(1,(op-0.45)/0.4).toFixed(3));
+}
+function setFocus(f,opts){
+  opts=opts||{};
+  focus=f; computeTargets(f);
+  for(const n of nodes){
+    if(n.kind==="root") continue;
+    if(!n.cur) n.cur={a0:n.tgt.a0,a1:n.tgt.a1,rIn:n.tgt.rIn,rOut:n.tgt.rOut,op:0};
+    if(n.cur.op<=0.004){ n.cur.a0=n.tgt.a0; n.cur.a1=n.tgt.a1; n.cur.rIn=n.tgt.rIn; n.cur.rOut=n.tgt.rOut; }
+  }
+  const from=nodes.map(n=> n.cur?{...n.cur}:null), start=performance.now(), dur=620;
+  function frame(t){
+    let k=Math.min(1,(t-start)/dur), e=k<0.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;
+    nodes.forEach((n,i)=>{ if(n.kind==="root"||!from[i]) return; const a=from[i],b=n.tgt;
+      n.cur={a0:a.a0+(b.a0-a.a0)*e,a1:a.a1+(b.a1-a.a1)*e,rIn:a.rIn+(b.rIn-a.rIn)*e,rOut:a.rOut+(b.rOut-a.rOut)*e,op:a.op+(b.op-a.op)*e}; });
+    draw(); if(k<1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+  updateHub(); updateCrumb(); updateMinimap();
+  if(!opts.keepDetail){ selected=null; highlight.clear(); }
+  if(!opts.silent) syncHash();
+}
+function updateHub(){
+  if(focus===DATA){ hubL1.textContent="Playbook"; hubL2.textContent="113 patterns"; hubL3.textContent="click a wedge"; }
+  else { hubL1.textContent=clip(focus.name,16); hubL2.textContent=focus.value+" pattern"+(focus.value===1?"":"s"); hubL3.textContent="\u2190 back"; }
+}
+function chain(n){ const c=[]; while(n){ c.unshift(n); n=n.parent; } return c; }
+function updateCrumb(){
+  crumbEl.innerHTML="";
+  chain(focus).forEach((n,i,arr)=>{
+    if(i){ const s=document.createElement("span"); s.className="sep"; s.textContent="›"; crumbEl.appendChild(s); }
+    if(i<arr.length-1){ const a=document.createElement("a"); a.textContent=(n===DATA?"Home":n.name); a.onclick=()=>setFocus(n); crumbEl.appendChild(a); }
+    else { const b=document.createElement("strong"); b.textContent=(n===DATA?"Home":n.name); crumbEl.appendChild(b); }
+  });
+}
+
+function onClick(n){
+  if(n.kind==="pattern"){ if(n.parent!==focus && n.parent.parent!==focus) setFocus(n.parent,{silent:true}); openDetail(n); }
+  else { setFocus(n); showFamilyOrDim(n); }
+}
+
+function openDetail(p){
+  selected=p;
+  // cross-links: highlight this pattern's home + its other-home dimensions (and their families)
+  highlight=new Set();
+  for(const dn of p.dims){
+    for(const f of families) for(const d of f.children) if(d.name===dn){ highlight.add(d.id); highlight.add(f.id); }
+  }
+  draw();
+  const also=(p.also||[]).map(x=>'<span class="chip" data-go="'+esc(x)+'">'+esc(x)+' \u2197</span>').join("");
+  const rel=relatedTo(p).map(q=>'<li data-k="'+q.id+'"><span class="rt">'+esc(q.name)+'</span><br>'+
+    '<span class="rd">'+esc(q.family)+' › '+esc(q.dimension)+'</span></li>').join("");
+  detailEl.innerHTML=
+    '<div class="panel"><h2>'+esc(p.name)+'</h2>'+
+    '<p class="ol">'+esc(p.one_liner)+'</p>'+
+    '<div class="lbl">Homes</div><div class="chips"><span class="chip home">'+esc(p.dimension)+'</span>'+also+'</div>'+
+    (rel?'<div class="lbl">Related patterns</div><ul class="results">'+rel+'</ul>':'')+
+    '<a class="readmore" target="_blank" rel="noopener" href="'+SITE_BASE+'patterns/'+encodeURIComponent(p.slug)+'.html">Read the full pattern \u2197</a>'+
+    '<p class="hint">Family: '+esc(p.family)+'</p></div>';
+  detailEl.querySelectorAll("li[data-k]").forEach(li=>{ li.onclick=()=>{ const t=nodes[+li.dataset.k]; onClick(t); }; });
+  detailEl.querySelectorAll("[data-go]").forEach(ch=>{ ch.onclick=()=>{ const d=findDim(ch.dataset.go); if(d){ setFocus(d,{silent:true,keepDetail:true}); openDetail(p); } }; });
+  syncHash();
+}
+function findDim(name){ for(const f of families) for(const d of f.children) if(d.name===name) return d; return null; }
+
+function showFamilyOrDim(n){
+  if(!n || n.kind==="root"){ showHome(); return; }
+  const kids=n.children||[];
+  const label=n.kind==="family"?"dimensions":"patterns";
+  const list=n.kind==="family"
+    ? kids.map(d=>'<li data-k="'+d.id+'"><span class="rt">'+esc(d.name)+'</span> <span class="rd">'+d.value+'</span></li>').join("")
+    : kids.map(p=>'<li data-k="'+p.id+'"><span class="rt">'+esc(p.name)+'</span><br><span class="rd">'+esc(clip(p.one_liner,90))+'</span></li>').join("");
+  detailEl.innerHTML='<div class="panel"><h2>'+esc(n.name)+'</h2>'+(n.gloss?'<p class="ol">'+esc(n.gloss)+'</p>':'')+
+    '<p class="count-pill">'+kids.length+' '+label+'</p><ul class="results">'+list+'</ul></div>';
+  detailEl.querySelectorAll("li[data-k]").forEach(li=>{ li.onclick=()=>{ const t=nodes[+li.dataset.k]; onClick(t); }; });
+}
+
+// ---- search ----
+function applyQuery(){
+  query=qEl.value.trim().toLowerCase();
+  for(const n of nodes) n.matchAny=false;
+  if(query){
+    for(const p of leaves){
+      const hay=(p.name+" "+p.one_liner+" "+p.dims.join(" ")).toLowerCase();
+      p.match=hay.indexOf(query)>=0;
+      if(p.match){ let a=p; while(a){ a.matchAny=true; a=a.parent; } }
+    }
+    const hits=leaves.filter(p=>p.match).slice(0,60);
+    detailEl.innerHTML='<div class="panel"><h2>'+hits.length+' match'+(hits.length===1?"":"es")+'</h2><ul class="results">'+
+      hits.map(p=>'<li data-k="'+p.id+'"><span class="rt">'+esc(p.name)+'</span><br><span class="rd">'+esc(p.family)+' › '+esc(p.dimension)+'</span></li>').join("")+'</ul></div>';
+    detailEl.querySelectorAll("li[data-k]").forEach(li=>{ li.onclick=()=>{ const t=nodes[+li.dataset.k]; setFocus(t.parent,{silent:true}); openDetail(t); }; });
+  } else { showHome(); }
+  draw(); filterOutline(); syncHash();
+}
+qEl.addEventListener("input", applyQuery);
+
+function showHome(){
+  detailEl.innerHTML='<div class="panel"><h2>Explore</h2>'+
+    '<p class="ol">Start at the center. Click a family to open its dimensions, then a dimension to see its patterns. '+
+    'Click the dark center (or press <kbd>Esc</kbd>) to zoom out. Search to jump to any pattern.</p>'+
+    '<div class="chips">'+families.map(f=>'<span class="chip" data-k="'+f.id+'" style="background:'+f.color+';color:#fff">'+esc(f.name)+'</span>').join("")+'</div>'+
+    '<p class="hint"><kbd>←</kbd><kbd>→</kbd> siblings · <kbd>↑</kbd>/<kbd>Esc</kbd> out · <kbd>↓</kbd> in · <kbd>/</kbd> search</p></div>';
+  detailEl.querySelectorAll("[data-k]").forEach(el=>{ el.onclick=()=>{ const t=nodes[+el.dataset.k]; setFocus(t); showFamilyOrDim(t); }; });
+}
+
+// ---- outline lens ----
+function buildOutline(){
+  let html="";
+  for(const f of families){
+    html+='<details class="fam" data-fam="'+esc(f.name)+'"><summary><span class="swatch" style="background:'+f.color+'"></span>'+esc(f.name)+' <span class="badge">'+f.value+'</span></summary>';
+    for(const d of f.children){
+      html+='<details class="dim" data-dim="'+esc(f.name+"/"+d.name)+'"><summary>'+esc(d.name)+' <span class="badge">'+d.value+'</span></summary>';
+      for(const p of d.children){
+        html+='<div class="leaf" data-k="'+p.id+'"><span class="rt">'+esc(p.name)+'</span><br><span class="ol">'+esc(clip(p.one_liner,110))+'</span></div>';
+      }
+      html+='</details>';
+    }
+    html+='</details>';
+  }
+  outlineEl.innerHTML=html;
+  outlineEl.querySelectorAll(".leaf").forEach(el=>{ el.onclick=()=>{ const t=nodes[+el.dataset.k]; selected=t; openDetail(t); }; });
+}
+function filterOutline(){
+  if(view!=="outline") return;
+  outlineEl.querySelectorAll(".fam").forEach(fam=>{
+    let famVis=false;
+    fam.querySelectorAll(".dim").forEach(dim=>{
+      let dimVis=false;
+      dim.querySelectorAll(".leaf").forEach(leaf=>{
+        const p=nodes[+leaf.dataset.k];
+        const show=!query || p.match;
+        leaf.style.display=show?"":"none"; if(show) dimVis=true;
+      });
+      dim.style.display=dimVis?"":"none"; if(dimVis) famVis=true;
+      if(query && dimVis) dim.open=true;
+    });
+    fam.style.display=famVis?"":"none";
+    if(query && famVis) fam.open=true;
+  });
+}
+function setView(v){
+  view=v;
+  document.querySelectorAll("#viewseg button").forEach(b=>b.classList.toggle("on", b.dataset.view===v));
+  const wheelOn=(v==="wheel");
+  svg.style.display=wheelOn?"":"none";
+  mapSvg.style.display=wheelOn?"":"none";
+  outlineEl.style.display=wheelOn?"none":"block";
+  if(v==="outline" && !outlineEl.dataset.built){ buildOutline(); outlineEl.dataset.built="1"; }
+  if(v==="outline") filterOutline();
+  syncHash();
+}
+document.querySelectorAll("#viewseg button").forEach(b=>{ b.onclick=()=>setView(b.dataset.view); });
+
+// ---- density heat ----
+const heatEl=document.getElementById("heat");
+function setHeat(on){ heatOn=on; heatEl.checked=on; draw(); updateMinimap(); syncHash(); }
+heatEl.addEventListener("change",()=>setHeat(heatEl.checked));
+
+// ---- keyboard nav ----
+document.addEventListener("keydown",e=>{
+  if(e.target===qEl){ if(e.key==="Escape"){ qEl.blur(); } return; }
+  if(e.key==="/"){ e.preventDefault(); qEl.focus(); return; }
+  if(e.key==="Escape"||e.key==="ArrowUp"){ if(focus.parent){ setFocus(focus.parent); showFamilyOrDim(focus); } e.preventDefault(); }
+  else if(e.key==="ArrowDown"){ if(focus.children&&focus.children.length){ const c=focus.children[0]; setFocus(c); showFamilyOrDim(c); } e.preventDefault(); }
+  else if(e.key==="ArrowLeft"||e.key==="ArrowRight"){
+    if(focus.parent){ const sib=focus.parent.children, i=sib.indexOf(focus);
+      const j=(i+(e.key==="ArrowRight"?1:-1)+sib.length)%sib.length; const c=sib[j]; setFocus(c); showFamilyOrDim(c); }
+    e.preventDefault();
+  }
+});
+
+// ---- deep-linkable URL state ----
+function focusPath(f){ const c=chain(f).filter(n=>n!==DATA); return c.map(n=>n.name).join("/"); }
+function syncHash(){
+  if(_silent) return;
+  const p=new URLSearchParams();
+  const fp=focusPath(focus); if(fp) p.set("focus",fp);
+  if(selected) p.set("p",selected.slug);
+  if(query) p.set("q",query);
+  if(view!=="wheel") p.set("view",view);
+  if(heatOn) p.set("heat","1");
+  const h=p.toString();
+  history.replaceState(null,"", h?("#"+h):location.pathname+location.search);
+}
+function resolveFocus(fp){
+  if(!fp) return DATA;
+  const parts=fp.split("/");
+  if(parts.length===1) return famByName[parts[0]]||DATA;
+  return dimByKey[parts[0]+"/"+parts[1]]||famByName[parts[0]]||DATA;
+}
+function applyHash(){
+  _silent=true;
+  const p=new URLSearchParams(location.hash.replace(/^#/,""));
+  setHeat(p.get("heat")==="1");
+  setView(p.get("view")==="outline"?"outline":"wheel");
+  const f=resolveFocus(p.get("focus")||"");
+  setFocus(f,{silent:true});
+  const q=p.get("q")||""; qEl.value=q;
+  const slug=p.get("p"); const pat=slug?patBySlug[slug]:null;
+  _silent=false;
+  if(q){ applyQuery(); }
+  else if(pat){ openDetail(pat); }
+  else if(f!==DATA){ showFamilyOrDim(f); }
+  else { showHome(); }
+}
+window.addEventListener("hashchange",()=>{ applyHash(); });
+
+// ---- boot ----
+buildMap();
+if(location.hash.length>1){ applyHash(); }
+else { setFocus(DATA,{silent:true}); showHome(); }
+</script>
+</body>
+</html>

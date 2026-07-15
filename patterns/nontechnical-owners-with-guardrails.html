@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nontechnical Owners, With Guardrails</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Nontechnical Owners, With Guardrails</h1><p class="lede">Agentic tooling lets people with clear intent and domain knowledge ship software they could never have built before — but ownership by nontechnical builders only works when surrounded by scaffolds, review loops, acceptance evidence, rollback, and coaching.</p><div class="dims"><a class="tag" href="../index.html#human-factors">human-factors</a><a class="tag" href="../index.html#reliability">reliability</a><a class="tag" href="../index.html#workflow-discipline">workflow-discipline</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Agentic software lowers the barrier between understanding a problem and implementing a solution, which means people who were never trained as engineers — domain experts, operators, analysts, PMs — can now ship applications and internal tools that previously required a developer. This is strategically important: the person who most deeply understands the problem can drive the work directly instead of translating it through a backlog. But nontechnical ownership does not work unsupervised. It works only when it is surrounded by structure that supplies the judgment the builder lacks: clear scaffolds that keep the work on rails, review loops that catch plausible-but-wrong output, production guardrails that contain blast radius, acceptance evidence that proves the thing actually does what it claims, rollback paths for when it does not, domain-specific tools that encode the safe moves, coaching from experienced people, and organizational norms about who is accountable for what. The goal is not to pretend everyone is suddenly a senior engineer, and it is not to hand production keys to anyone with a prompt. The goal is to let people with clear intent and real domain knowledge own more of the work, while embedding them in a system of validation and mentorship strong enough to make that ownership safe.</p>
+<h3>When to reach for it</h3>
+<ul><li>When the person who understands the problem best is not an engineer, and the translation overhead through a traditional dev team is the real bottleneck.</li><li>When you want domain experts to build and own internal tools, but the work touches data, users, or production in ways that demand guardrails.</li><li>When designing onboarding for nontechnical builders: pair the access with scaffolds, review loops, acceptance evidence, and a named coach before granting it.</li><li>When deciding what a nontechnical owner may ship unsupervised versus what requires review, base the line on blast radius and reversibility, not on title.</li><li>When agentic tooling is spreading beyond engineering, get ahead of it by building the rollback paths and accountability norms before the first incident.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>Do not grant nontechnical ownership without the surrounding scaffolds — intent and a capable agent are not enough where the work can damage data, users, or production.</li><li>Do not use this to pretend the validation work is free; the review loops, evidence requirements, and coaching are real cost that must be staffed.</li><li>Avoid this for high-stakes, low-reversibility systems where the consequences of plausible-but-wrong output exceed what guardrails can contain.</li><li>This is not a substitute for engineering judgment in the loop — if no one can actually evaluate the output, ownership has been handed off into a vacuum.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Gartner IT Glossary, &quot;Citizen Developer&quot; — https://www.gartner.com/en/information-technology/glossary/citizen-developer — classic antecedent: names the citizen-developer persona — an employee who creates application capabilities for consumption by themselves or others, using tools not actively forbidden by IT or business units — the nontechnical builder this pattern surrounds with explicit guardrails.</li><li>Microsoft Inside Track, &quot;Empowerment with good governance: How our citizen developers get the most out of the Microsoft Power Platform&quot; — https://www.microsoft.com/insidetrack/blog/empowerment-with-good-governance-how-our-citizen-developers-get-the-most-out-of-the-microsoft-power-platform/ — empirical support: documents Microsoft&#x27;s own &quot;protect, measure, enforce&quot; governance model across 1 million+ Power Platform assets (including 170,000 Power Apps), with tiered permission reviews based on risk rating before production access.</li></ul>
+<h3>Related</h3>
+<ul><li><a href="coaches-and-players.html"><code>patterns/coaches-and-players.md</code></a></li><li><a href="the-new-literacy-is-operating.html"><code>patterns/the-new-literacy-is-operating.md</code></a></li><li><a href="deterministic-rails.html"><code>patterns/deterministic-rails.md</code></a></li><li><a href="shape-work-as-an-attractor.html"><code>patterns/shape-work-as-an-attractor.md</code></a></li><li><a href="agents-amplify-experience.html"><code>patterns/agents-amplify-experience.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

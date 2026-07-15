@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Context Is a Finite Resource</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Context Is a Finite Resource</h1><p class="lede">Curate the smallest high-signal token set — every token of noise degrades every token of signal.</p><div class="dims"><a class="tag" href="../index.html#meta-principles">meta-principles</a><a class="tag" href="../index.html#context-engineering">context-engineering</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>The context window is a budget, not a dump. Every token you place in context competes with every other token for the model&#x27;s attention, and that attention is not uniformly distributed — low-signal content (boilerplate, repetition, irrelevant history) actively degrades the quality of the model&#x27;s engagement with high-signal content. Curation is not optional; it is the discipline of keeping the budget allocated to the content that most changes the output. Agents and orchestrators that accumulate everything they have ever seen into context are not being thorough — they are squandering the most limited resource in the system.</p>
+<h3>When to reach for it</h3>
+<ul><li>When designing what goes into a system prompt, a tool response, or a memory injection: ask what you can remove without hurting outcomes.</li><li>When agent pipelines pass full conversation history between steps — most of it is noise by the time the next step runs.</li><li>When a long-running agent starts producing worse outputs over time — context bloat is a common culprit.</li><li>When evaluating retrieval strategies: retrieve for relevance, not completeness.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>Exploratory conversations where you genuinely need the full thread to maintain continuity — truncating early context breaks reasoning in ways hard to diagnose.</li><li>Tasks where provenance and auditability of every prior step matters (legal, compliance, regulated domains) — don&#x27;t curate context if doing so destroys the audit trail.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Liu et al., &quot;Lost in the Middle: How Language Models Use Long Contexts&quot; (arXiv:2307.03172) — https://arxiv.org/abs/2307.03172 — empirical support: demonstrates a U-shaped performance curve where models perform worst on information in the middle of long contexts, showing that context position and volume actively degrade retrieval quality</li><li>Anthropic — https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents — Effective Context Engineering for AI Agents: frames context as an attention budget, references &quot;context rot&quot; — the finding from needle-in-a-haystack benchmarking that performance degrades as context grows — and treats curation as the core discipline for maintaining signal quality</li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

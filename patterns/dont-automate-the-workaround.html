@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Don&#x27;t Automate the Workaround</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Don&#x27;t Automate the Workaround</h1><p class="lede">In legacy and bureaucratic domains the stated process is often itself a workaround for another broken process — automating it with an agent entrenches the dysfunction at speed; ask whether the workflow should still exist before you accelerate it.</p><div class="dims"><a class="tag" href="../index.html#intent">intent</a><a class="tag" href="../index.html#workflow-discipline">workflow-discipline</a><a class="tag" href="../index.html#meta-principles">meta-principles</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>In legacy and bureaucratic domains, the process you are asked to automate is frequently not a process at all but a workaround — an accretion of steps people invented to route around some other broken process, preserved long after anyone remembers why. Automating such a workflow does not just fail to fix the dysfunction; it entrenches it, and because an agent executes faster and more consistently than the humans who tolerated the friction, automation accelerates the wrong thing and removes the very friction that kept the broken process visible and under pressure to change. The discipline is to ask, before accelerating any workflow, whether it should still exist — to treat the request to automate as a prompt to examine the workflow&#x27;s reason for being rather than a mandate to encode it. This requires distinguishing essential behaviors, which serve a genuine need, from historical accidents, which survive only because no one has questioned them; the steps that exist because of a constraint that no longer holds, a system that was retired, or a person who left should be removed, not reproduced in code. An agent will faithfully implement whatever it is given, so the judgment about whether the workflow deserves to persist has to happen upstream of the automation, in the intent layer, where someone is still asking why. This is the sharpest special case of requirements being disguised solutions: where that pattern addresses an individual stated solution — a field, a rule, a report — this one addresses an entire workflow whose disguised purpose is to paper over a broken process it should not be perpetuating.</p>
+<h3>When to reach for it</h3>
+<ul><li>A request asks you to automate an existing manual process, especially in a legacy, regulated, or bureaucratic domain.</li><li>The workflow has steps nobody can fully justify, or that exist &quot;because that&#x27;s how it&#x27;s always been done.&quot;</li><li>Removing the friction of a manual process would also remove the pressure that might otherwise force the process to improve.</li><li>You can distinguish steps that serve a real need from steps that survive only as historical accidents.</li><li>The cost of entrenching a dysfunction at machine speed is higher than the cost of pausing to question the workflow.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>The workflow is genuinely sound and the manual version is simply slow — automating it is pure win.</li><li>A mandate (legal, regulatory, contractual) requires the workflow to exist exactly as specified, regardless of its origins.</li><li>Questioning the workflow is out of scope or above your authority and would only stall delivery the stakeholder explicitly owns.</li><li>The dysfunction is real but redesigning the process is a separate, larger effort that should not block a clearly-scoped automation.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Michael Hammer, &quot;Reengineering Work: Don&#x27;t Automate, Obliterate&quot; (Harvard Business Review, July–August 1990) — https://hbr.org/1990/07/reengineering-work-dont-automate-obliterate — origin: the seminal article arguing that organizations should obliterate dysfunctional processes rather than embed them in software; the &quot;paving the cow paths&quot; phrase circulates from this reengineering tradition (HBR full text is paywalled; title and thesis verified).</li></ul>
+<h3>Related</h3>
+<ul><li><a href="requirements-are-disguised-solutions.html"><code>patterns/requirements-are-disguised-solutions.md</code></a></li><li><a href="interview-to-a-spec.html"><code>patterns/interview-to-a-spec.md</code></a></li><li><a href="fix-the-root-cause.html"><code>patterns/fix-the-root-cause.md</code></a></li><li><a href="shadow-then-transform.html"><code>patterns/shadow-then-transform.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>

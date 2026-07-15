@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eval-Driven Development</title>
+<style>
+:root { --fg:#1b1b1f; --muted:#5b5b66; --accent:#3858a6; --bg:#fbfbfd; --card:#fff; --line:#e6e6ec; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+.wrap { max-width:820px; margin:0 auto; padding:2.5rem 1.25rem 4rem; }
+a { color:var(--accent); text-decoration:none; }
+a:hover { text-decoration:underline; }
+header.site { border-bottom:1px solid var(--line); margin-bottom:2rem; }
+h1 { font-size:2rem; margin:0 0 .35rem; }
+h2 { font-size:1.3rem; margin:2rem 0 .6rem; }
+h3 { font-size:1.05rem; margin:1.4rem 0 .4rem; }
+.lede { color:var(--muted); font-size:1.05rem; }
+.tag { display:inline-block; font-size:.8rem; padding:.12rem .55rem; margin:0 .3rem .3rem 0;
+  background:#eef1fa; color:var(--accent); border-radius:999px; }
+.toc-tag { font-weight:600; }
+ul.cards { list-style:none; padding:0; margin:.5rem 0 0; }
+ul.cards li { background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:.7rem .9rem; margin:.45rem 0; }
+ul.cards li .ttl { font-weight:600; }
+ul.cards li .ol { color:var(--muted); font-size:.93rem; display:block; margin-top:.15rem; }
+.nav { font-size:.9rem; color:var(--muted); margin-bottom:1.5rem; }
+.pattern-body { background:var(--card); border:1px solid var(--line); border-radius:12px;
+  padding:1.25rem 1.5rem; }
+.pattern-body ul { padding-left:1.2rem; }
+.pattern-body code { background:#f0f0f4; padding:.1rem .35rem; border-radius:5px; font-size:.9em; }
+.dims { margin:.5rem 0 1.5rem; }
+footer.site { margin-top:3rem; padding-top:1.25rem; border-top:1px solid var(--line);
+  color:var(--muted); font-size:.85rem; }
+hr { border:0; border-top:1px solid var(--line); margin:2rem 0; }
+button.tag { border:1px solid var(--line); cursor:pointer; font:inherit; line-height:1.4; }
+button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-color:var(--accent); }
+.card-tags { display:block; margin-top:.4rem; }
+.card-tags .tag { font-size:.72rem; }
+ul.cards li.hide { display:none; }
+.count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="nav"><a href="../index.html">&larr; All patterns</a></div><header class="site"><h1>Eval-Driven Development</h1><p class="lede">Build evals before building features — you cannot improve what you cannot measure, and you cannot trust improvements you have not defined a measurement for.</p><div class="dims"><a class="tag" href="../index.html#verification">verification</a><a class="tag" href="../index.html#workflow-discipline">workflow-discipline</a></div></header><article class="pattern-body"><h3>What it is</h3>
+<p>Eval-driven development (EDD) applies the test-driven development discipline to agentic and LLM-based systems: define the evaluation criteria before building the capability, build the eval harness that measures against those criteria, and then implement the capability until it passes. The eval is the specification made executable. Without an eval, capability development proceeds by intuition and informal inspection — the developer runs the system, looks at the output, and decides it &quot;looks right.&quot; This works for demos and fails at scale because &quot;looks right&quot; cannot be automated, reproducibly measured, or tracked across model changes, prompt changes, or data distribution shifts. Evals make improvement legible: you can say &quot;this change improved success rate on the test set from 71% to 84%&quot; and mean it. They also make regression visible: a change that breaks previously-passing evals is visible immediately rather than discovered in production. Building evals first forces the developer to define success concretely — the same discipline that writing tests first forces concrete interface design. If you cannot write the eval, you do not yet know what the capability is supposed to do.</p>
+<h3>When to reach for it</h3>
+<ul><li>Before building any capability that will be measured by human judgment — translate that judgment into an automated eval before writing the capability. If you cannot automate it, define at least a structured rubric for human evaluators.</li><li>When making a prompt change that is supposed to improve quality — write an eval that would detect the improvement before making the change, not after. Otherwise you cannot distinguish genuine improvement from regression in a different direction.</li><li>Before upgrading to a new model version — run your existing evals against the new model first. Do not assume the upgrade is an improvement; measure it.</li><li>When a capability that worked in development is failing in production — build an eval that reproduces the failure before attempting to fix it. A fix without a reproducing eval may fix the wrong thing.</li><li>When the team has disagreement about whether a change is an improvement — an eval resolves the disagreement with evidence.</li></ul>
+<h3>When NOT to</h3>
+<ul><li>For one-off outputs that will never be produced again — building an eval harness for a capability you will use once has a poor return on investment.</li><li>When the capability is exploratory and the success criteria genuinely cannot be defined yet — run the exploration first, observe what good and bad look like, then define the eval before productionizing.</li><li>When the only credible evaluator is human judgment on genuinely subjective output (creative writing for a specific audience, for example) — in those cases, build a structured human evaluation protocol rather than forcing automation that cannot capture the real quality signal.</li></ul>
+<h3>Exemplars</h3>
+<ul><li>Anthropic — https://www.anthropic.com/research/building-effective-agents — Building Effective Agents: recommends starting with simple prompts and optimizing them &quot;with comprehensive evaluation&quot; before adding agentic complexity — the measurement exists before the architecture grows — and catalogs the evaluator-optimizer workflow, in which one LLM generates while another provides evaluation and feedback in a loop</li><li>Xia et al., &quot;Evaluation-Driven Development and Operations of LLM Agents&quot; (arXiv:2411.13768) — https://arxiv.org/abs/2411.13768 — formalizes: proposes EDDOps embedding evaluation as a continuous governing function rather than a terminal checkpoint, unifying offline and online evaluation in a feedback loop that drives both runtime adaptation and governed redevelopment</li><li>Hamel Husain, &quot;Your AI Product Needs Evals&quot; — https://hamel.dev/blog/posts/evals/ — formalizes: argues that unsuccessful AI products share a common root cause of failing to create robust evaluation systems, and that eval infrastructure is the primary productivity multiplier enabling rapid iteration</li><li>Grace et al., &quot;Demystifying evals for AI agents&quot; (Anthropic Engineering) — https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents — empirical support: presents a comprehensive framework combining code-based, model-based, and human graders across agent categories, treating evaluation as a core development practice equivalent to unit testing</li></ul>
+<h3>Related</h3>
+<ul><li><a href="standing-eval-capability.html"><code>patterns/standing-eval-capability.md</code></a></li><li><a href="test-what-not-how.html"><code>patterns/test-what-not-how.md</code></a></li><li><a href="prove-on-small-sample.html"><code>patterns/prove-on-small-sample.md</code></a></li></ul></article>
+<footer class="site">Generated from <code>patterns/</code> by
+<code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
+<code>/wiki-publish</code>. &middot; <a href="../index.html">Home</a></footer>
+</div>
+</body>
+</html>
