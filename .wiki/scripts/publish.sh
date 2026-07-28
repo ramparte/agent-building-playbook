@@ -77,6 +77,18 @@ button.tag[aria-pressed="true"] { background:var(--accent); color:#fff; border-c
 .card-tags .tag { font-size:.72rem; }
 ul.cards li.hide { display:none; }
 .count { color:var(--muted); font-size:.9rem; margin:.25rem 0 0; }
+.topnav { display:flex; flex-wrap:wrap; gap:.5rem; align-items:center;
+  padding:0 0 1rem; margin-bottom:1.5rem; border-bottom:1px solid var(--line); }
+.topnav .brand { font-weight:700; margin-right:.4rem; }
+.topnav a.navlink { display:inline-block; padding:.32rem .7rem; border:1px solid var(--line);
+  border-radius:999px; background:#fff; font-size:.88rem; }
+.topnav a.navlink:hover { background:#f0f2fa; text-decoration:none; }
+.topnav a.navlink.on { background:var(--accent); color:#fff; border-color:var(--accent); }
+.wheel-cta { display:flex; gap:1rem; align-items:center; background:var(--card);
+  border:1px solid var(--line); border-radius:12px; padding:1rem 1.15rem; margin:0 0 1.5rem; }
+.wheel-cta img { width:96px; height:96px; flex:0 0 auto; }
+.wheel-cta .t { font-weight:600; display:block; margin-bottom:.15rem; }
+.wheel-cta .d { color:var(--muted); font-size:.92rem; }
 """
 
 FILTER_JS = """
@@ -207,8 +219,17 @@ def render_markdown(body: str) -> str:
     return "\n".join(out)
 
 
-def page(title: str, inner: str, depth: int) -> str:
+def page(title: str, inner: str, depth: int, active: str = "") -> str:
     prefix = "../" * depth
+    nav = (
+        '<nav class="topnav">'
+        f'<span class="brand"><a href="{prefix}index.html">Agent-Building Playbook</a></span>'
+        f'<a class="navlink{" on" if active == "list" else ""}" '
+        f'href="{prefix}index.html">&#9776; All patterns</a>'
+        f'<a class="navlink{" on" if active == "wheel" else ""}" '
+        f'href="{prefix}explore.html">&#9673; Explore the wheel</a>'
+        "</nav>"
+    )
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -219,6 +240,7 @@ def page(title: str, inner: str, depth: int) -> str:
 </head>
 <body>
 <div class="wrap">
+{nav}
 {inner}
 <footer class="site">Generated from <code>patterns/</code> by
 <code>.wiki/scripts/publish.sh</code> — do not hand-edit. Regenerate with
@@ -273,9 +295,13 @@ def main():
         '<p class="lede">Patterns for building better in the agentic age. '
         "Generated from the curated <code>patterns/</code> source &mdash; each "
         "pattern is listed once; filter by dimension to narrow the list.</p>",
-        '<p class="nav"><a href="explore.html">&#9673; Explore the interactive wheel</a> '
-        "&mdash; browse by family, zoom, search, and see how patterns connect.</p>",
         "</header>",
+        '<a class="wheel-cta" href="explore.html">'
+        '<img src="wheel.svg" alt="The pattern wheel" loading="lazy">'
+        "<span><span class=\"t\">&#9673; Explore the interactive wheel</span>"
+        '<span class="d">Simple at the center, finer toward the edge. Zoom into a '
+        "family, search, see how patterns connect &mdash; or switch to an outline "
+        "view.</span></span></a>",
         "<h2>Filter by dimension</h2>",
         '<p class="dims">' + "".join(filter_buttons) + "</p>",
         '<p class="count" id="count">Showing all ' + str(total) + " patterns</p>",
@@ -295,7 +321,7 @@ def main():
         )
     inner.append("</ul>")
     inner.append(FILTER_JS)
-    (wiki_dir / "index.html").write_text(page("Agent-Building Playbook", "\n".join(inner), 0), encoding="utf-8")
+    (wiki_dir / "index.html").write_text(page("Agent-Building Playbook", "\n".join(inner), 0, "list"), encoding="utf-8")
 
     # ---- One page per pattern ----
     # Turn `patterns/{slug}.md` code-span references (used in the "Related"
@@ -326,7 +352,7 @@ def main():
             f'<article class="pattern-body">{body_html}</article>'
         )
         (out_patterns / f"{p['slug']}.html").write_text(
-            page(p["title"], inner, 1), encoding="utf-8"
+            page(p["title"], inner, 1, "list"), encoding="utf-8"
         )
 
     print(

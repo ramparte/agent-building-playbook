@@ -459,15 +459,27 @@ EXPLORER_TEMPLATE = r"""<!DOCTYPE html>
   kbd { font:inherit; font-size:.75rem; background:#f0f0f4; border:1px solid var(--line);
     border-bottom-width:2px; border-radius:5px; padding:0 .3rem; }
   .count-pill { color:var(--muted); font-size:.8rem; }
+  .topnav { display:flex; flex-wrap:wrap; gap:.5rem; align-items:center;
+    padding:0 0 .8rem; margin-bottom:.9rem; border-bottom:1px solid var(--line); }
+  .topnav .brand { font-weight:700; margin-right:.4rem; }
+  .topnav .brand a { color:var(--fg); text-decoration:none; }
+  .topnav a.navlink { display:inline-block; padding:.32rem .7rem; border:1px solid var(--line);
+    border-radius:999px; background:#fff; font-size:.88rem; color:var(--accent); text-decoration:none; }
+  .topnav a.navlink:hover { background:#f0f2fa; }
+  .topnav a.navlink.on { background:var(--accent); color:#fff; border-color:var(--accent); }
 </style>
 </head>
 <body>
 <div class="app">
   <div class="stage">
+    <nav class="topnav">
+      <span class="brand"><a href="index.html">Agent-Building Playbook</a></span>
+      <a class="navlink" href="index.html">&#9776; All patterns</a>
+      <a class="navlink on" href="explore.html">&#9673; Explore the wheel</a>
+    </nav>
     <h1>The Agent-Building Playbook Wheel</h1>
     <p class="sub">__COUNT__ patterns · __FAMILIES__ families · __DIMS__ dimensions —
-      click to zoom in, click the center to zoom out. ·
-      <a href="index.html" style="color:var(--accent)">List view ↗</a></p>
+      click to zoom in, click the center to zoom out.</p>
     <div class="controls">
       <span class="seg" id="viewseg">
         <button data-view="wheel" class="on">◉ Wheel</button>
